@@ -1,6 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
+import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
 
 enum AppMenu { HOME, HOTEL, CAR, FIGHT, MENU }
+enum SortBy { Recommended, PriceLowToHigh,PriceHighToLow, RatingLowToHigh }
 
 extension AppMenuExtension on AppMenu {
   String? get appLabelMenu {
@@ -23,15 +27,15 @@ extension AppMenuExtension on AppMenu {
   IconData? get appMenuIcon {
    switch (this) {
       case AppMenu.HOME:
-        return Icons.home;
+        return Booking_ic_home;
       case AppMenu.HOTEL:
-        return Icons.hotel;
+        return Booking_ic_hotel;
       case AppMenu.CAR:
-        return Icons.car_rental;
+        return Booking_ic_car;
       case AppMenu.FIGHT:
-        return Icons.flight;
+        return Booking_ic_fight;
       case AppMenu.MENU:
-        return Icons.menu;
+        return Booking_ic_menu;
       default:
         return null;
     }

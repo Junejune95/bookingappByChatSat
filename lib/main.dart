@@ -1,7 +1,8 @@
-import 'package:bookingapp/screens/menu_pages/car/car.dart';
-import 'package:bookingapp/screens/menu_pages/fight/fight.dart';
-import 'package:bookingapp/screens/menu_pages/home/home.dart';
-import 'package:bookingapp/screens/menu_pages/hotel/hotel.dart';
+import 'package:bookingapp/constants.dart';
+import 'package:bookingapp/screen/menu_pages/car/car.dart';
+import 'package:bookingapp/screen/menu_pages/fight/fight.dart';
+import 'package:bookingapp/screen/menu_pages/home/home.dart';
+import 'package:bookingapp/screen/menu_pages/hotel/hotel.dart';
 import 'package:bookingapp/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -18,25 +19,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Booking App',
       theme: theme(),
-      home: const CheckScreens(),
+      home: const Checkscreen(),
     );
   }
 }
 
-class CheckScreens extends StatefulWidget {
-  const CheckScreens({Key? key}) : super(key: key);
+class Checkscreen extends StatefulWidget {
+  const Checkscreen({Key? key}) : super(key: key);
 
   @override
-  State<CheckScreens> createState() => _CheckScreensState();
+  State<Checkscreen> createState() => _CheckscreenState();
 }
 
-class _CheckScreensState extends State<CheckScreens> {
+class _CheckscreenState extends State<Checkscreen> {
   PageController _pageController = PageController();
 
   int _index = 0;
-  List<Widget> screens = [
+  List<Widget> screen = [
     const Home(),
     const Hotel(),
     const Car(),
@@ -45,7 +47,6 @@ class _CheckScreensState extends State<CheckScreens> {
   ];
 
   _onPageChange(index) {
-    print("hello reach");
     _pageController.jumpToPage(index);
   }
 
@@ -53,11 +54,13 @@ class _CheckScreensState extends State<CheckScreens> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: screens,
+        children: screen,
         controller: _pageController,
         onPageChanged: _onPageChange,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: kPrimaryColor,
+        unselectedItemColor: kSecondaryColor,
         type: BottomNavigationBarType.fixed,
         currentIndex: _index,
         onTap: (i) {
@@ -69,7 +72,10 @@ class _CheckScreensState extends State<CheckScreens> {
         items: AppMenu.values
             .map(
               (e) => BottomNavigationBarItem(
-                icon: Icon(e.appMenuIcon),
+                
+                icon: Icon(
+                  e.appMenuIcon,
+                ),
                 label: e.appLabelMenu,
               ),
             )

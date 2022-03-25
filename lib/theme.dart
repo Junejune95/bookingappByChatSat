@@ -13,10 +13,11 @@ ThemeData theme() {
   );
 }
 
+
 InputDecorationTheme inputDecorationTheme() {
   OutlineInputBorder outlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(24),
-    borderSide:const BorderSide(color: kTextLightColor),
+    borderSide: const BorderSide(color: kTextLightColor),
     gapPadding: 10,
   );
   return InputDecorationTheme(
@@ -24,7 +25,7 @@ InputDecorationTheme inputDecorationTheme() {
     // if you r using flutter less then 1.20.* then maybe this is not working properly
     // if we are define our floatingLabelBehavior in our theme then it's not applayed
     floatingLabelBehavior: FloatingLabelBehavior.always,
-    contentPadding:const EdgeInsets.symmetric(
+    contentPadding: const EdgeInsets.symmetric(
       horizontal: 42,
       vertical: 20,
     ),
@@ -44,15 +45,13 @@ TextTheme textTheme() {
 
 AppBarTheme appBarTheme() {
   return const AppBarTheme(
-    color: Colors.white,
-    elevation: 1,
+    color: kPrimaryLightColor,
+    elevation: 0,
     iconTheme: IconThemeData(color: kPrimaryLightColor),
-    textTheme: TextTheme(
-      headline6: TextStyle(
-        color: kPrimaryColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      ),
+    titleTextStyle: TextStyle(
+      color: kSecondaryColor,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
     ),
   );
 }

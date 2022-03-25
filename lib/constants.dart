@@ -1,8 +1,8 @@
 import 'package:bookingapp/size_config.dart';
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF000000);
-const kPrimaryLightColor = Color(0xFF969494);
+const kPrimaryColor = Color(0xFF5191fa);
+const kPrimaryLightColor = Color(0xFFF0F4FA);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
@@ -11,10 +11,10 @@ const kPrimaryGradientColor = LinearGradient(
     Color(0xFFFF7643),
   ],
 );
-const kSecondaryColor = Color(0xFFdd4b4a);
-const kSecondaryLightColor = Color(0xFFF8E5E5);
-const kTextColor = Color(0xFF000000);
-const kTextLightColor = Color(0xFF525252);
+const kSecondaryColor = Color(0xFF1a2b47);
+const kSecondaryLightColor = Color(0xFF707070);
+const kTextColor = Color(0xFF707070);
+const kTextLightColor = Color(0xFFffffff);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
