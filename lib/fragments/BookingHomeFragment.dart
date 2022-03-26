@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class BookingHomeFragment extends StatelessWidget {
+  const BookingHomeFragment({Key? key}) : super(key: key);
 
 
   @override

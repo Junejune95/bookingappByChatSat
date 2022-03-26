@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Car extends StatelessWidget {
-  const Car({Key? key}) : super(key: key);
+class BookingMenuFragment extends StatelessWidget {
+  const BookingMenuFragment({Key? key}) : super(key: key);
 
 
   @override

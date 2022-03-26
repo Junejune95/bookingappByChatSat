@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Fight extends StatelessWidget {
-  const Fight({Key? key}) : super(key: key);
+class BookingFightFragment extends StatelessWidget {
+  const BookingFightFragment({Key? key}) : super(key: key);
 
 
   @override

@@ -1,12 +1,13 @@
 import 'package:bookingapp/constants.dart';
-import 'package:bookingapp/screen/menu_pages/car/car.dart';
-import 'package:bookingapp/screen/menu_pages/fight/fight.dart';
-import 'package:bookingapp/screen/menu_pages/home/home.dart';
-import 'package:bookingapp/screen/menu_pages/hotel/hotel.dart';
-import 'package:bookingapp/theme.dart';
+import 'package:bookingapp/fragments/BookingCarFragment.dart';
+import 'package:bookingapp/fragments/BookingFightFragment.dart';
+import 'package:bookingapp/fragments/BookingHomeFragment.dart';
+import 'package:bookingapp/fragments/BookingHotelFragment.dart';
 import 'package:flutter/material.dart';
 
 import 'app_enum.dart';
+import 'fragments/BookingMenuFragment.dart';
+import 'utils/AppTheme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Booking App',
-      theme: theme(),
+      theme: AppThemeData.lightTheme,
       home: const Checkscreen(),
     );
   }
@@ -39,11 +40,11 @@ class _CheckscreenState extends State<Checkscreen> {
 
   int _index = 0;
   List<Widget> screen = [
-    const Home(),
-    const Hotel(),
-    const Car(),
-    const Fight(),
-    const Home(),
+    const BookingHomeFragment(),
+    const BookingHotelFragment(),
+    const BookingCarFragment(),
+    const BookingFightFragment(),
+    const BookingMenuFragment(),
   ];
 
   _onPageChange(index) {

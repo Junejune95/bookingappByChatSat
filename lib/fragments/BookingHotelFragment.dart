@@ -1,9 +1,9 @@
 import 'package:bookingapp/constants.dart';
 import 'package:flutter/material.dart';
 
-class Hotel extends StatelessWidget {
-  const Hotel({Key? key}) : super(key: key);
-  
+class BookingHotelFragment extends StatelessWidget {
+  const BookingHotelFragment({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
