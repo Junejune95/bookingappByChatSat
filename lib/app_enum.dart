@@ -3,7 +3,7 @@
 import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
 
-enum AppMenu { HOME, HOTEL, CAR, FIGHT, MENU }
+enum AppMenu { HOME, HOTEL, CAR, FIGHT, MORE }
 enum SortBy { Recommended, PriceLowToHigh,PriceHighToLow, RatingLowToHigh }
 
 extension AppMenuExtension on AppMenu {
@@ -17,8 +17,8 @@ extension AppMenuExtension on AppMenu {
         return "Car";
       case AppMenu.FIGHT:
         return "Fight";
-      case AppMenu.MENU:
-        return "Menu";
+      case AppMenu.MORE:
+        return "MORE";
       default:
         return null;
     }
@@ -34,8 +34,8 @@ extension AppMenuExtension on AppMenu {
         return Booking_ic_car;
       case AppMenu.FIGHT:
         return Booking_ic_fight;
-      case AppMenu.MENU:
-        return Booking_ic_menu;
+      case AppMenu.MORE:
+        return Booking_ic_more;
       default:
         return null;
     }
