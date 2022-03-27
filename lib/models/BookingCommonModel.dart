@@ -15,4 +15,15 @@ class BookingHotelModel {
       required this.image,
       required this.location,
       required this.price});
+  factory BookingHotelModel.fromJson(Map<String, dynamic> json) {
+    return BookingHotelModel(
+      rating: json['rating'],
+      name: json['name'],
+      reviewer: json['reviewer'],
+      reviewstatus: json['reviewstatus'],
+      image: json['image'],
+      location: json['location'],
+      price: json['price'],
+    );
+  }
 }
