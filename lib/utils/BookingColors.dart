@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 const Booking_Primary = Color(0xFF5191fa);
+const Booking_Primary_light = Color(0xFFF0F4FA);
 const Booking_Secondary = Color(0xFF1a2b47);
 const Booking_Secondary_light = Color(0xFF2B4B80);
 const Booking_ColorPrimaryDark = Color.fromARGB(15, 0, 0, 0);
@@ -22,6 +23,8 @@ const Booking_view_color = Color(0XFFDADADA);
 const Booking_blackLightColor = Color(0xFF242525);
 const Booking_shadowColor = Color(0X955191FA);
 const Booking_greyColor = Color(0xFFF2F2F2);
+const Booking_greenColor = Color(0xFF17A2B8);
+const Booking_orangeColor = Color(0xFFCC6C00);
 
 const iconColorPrimary = Color(0xFF1A2B47);
 

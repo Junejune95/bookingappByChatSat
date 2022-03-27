@@ -1,12 +1,13 @@
-import 'package:bookingapp/constants.dart';
+
 import 'package:bookingapp/fragments/BookingCarFragment.dart';
 import 'package:bookingapp/fragments/BookingFightFragment.dart';
 import 'package:bookingapp/fragments/BookingHomeFragment.dart';
 import 'package:bookingapp/fragments/BookingHotelFragment.dart';
+import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
 
 import 'app_enum.dart';
-import 'fragments/BookingMenuFragment.dart';
+import 'fragments/BookingMoreFragment.dart';
 import 'utils/AppTheme.dart';
 
 void main() {
@@ -44,7 +45,7 @@ class _CheckscreenState extends State<Checkscreen> {
     const BookingHotelFragment(),
     const BookingCarFragment(),
     const BookingFightFragment(),
-    const BookingMenuFragment(),
+    const BookingMoreFragment(),
   ];
 
   _onPageChange(index) {
@@ -60,8 +61,8 @@ class _CheckscreenState extends State<Checkscreen> {
         onPageChanged: _onPageChange,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: kSecondaryColor,
+        selectedItemColor: Booking_Primary,
+        unselectedItemColor: Booking_Secondary,
         type: BottomNavigationBarType.fixed,
         currentIndex: _index,
         onTap: (i) {
