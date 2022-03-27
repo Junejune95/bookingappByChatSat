@@ -72,8 +72,21 @@ const Booking_lbl_Change_password= "Change Password";
 const Booking_lbl_Setting= "Setting";
 const Booking_lbl_Log_out= "Log Out";
 
+const Booking_lbl_Booking_history1= "ALL BOOKING";
+const Booking_lbl_Booking_history2= "COMPLETED";
+const Booking_lbl_Booking_history3= "PROCESSING";
+const Booking_lbl_Booking_history4= "CONFIRMED";
+const Booking_lbl_Booking_history5= "CANCELLED";
+const Booking_lbl_Booking_history6= "PAID";
+const Booking_lbl_Booking_history7= "UNPAID";
+const Booking_lbl_Booking_history8= "PARTIAL PAYMENT";
+
+
+
 
 const Booking_lbl_btn_Choose= "Choose";
 const Booking_lbl__btn_Cancel= "Cancel";
 const Booking_lbl_btn_Apply= "Apply";
 const Booking_lbl_btn_Search = "Search";
+const Booking_lbl_btn_Detail = "Detail";
+const Booking_lbl_btn_Invoice = "Invoice";

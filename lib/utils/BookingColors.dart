@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-const Booking_Primary = Color(0xFF5191fa);
+const Booking_Secondary = Color(0xFF5191fa);
 const Booking_Primary_light = Color(0xFFF0F4FA);
-const Booking_Secondary = Color(0xFF1a2b47);
+const Booking_Primary = Color(0xFF1a2b47);
 const Booking_Secondary_light = Color(0xFF2B4B80);
 const Booking_ColorPrimaryDark = Color.fromARGB(15, 0, 0, 0);
 const Booking_LineColor = Color(0xFFE2E2E2);
@@ -35,6 +35,7 @@ const appTextColorPrimary = Color(0xFF212121);
 const appTextColorSecondary = Color(0xFF5A5C5E);
 const appShadowColor = Color(0x95E9EBF0);
 const appColorPrimaryLight = Color(0xFFF9FAFF);
+const appBackgroundColorLight = Color(0xFFFAFBFD);
 
 // Dark Theme Colors
 const appBackgroundColorDark = Color(0xFF121212);

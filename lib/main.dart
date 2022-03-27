@@ -61,8 +61,8 @@ class _CheckscreenState extends State<Checkscreen> {
         onPageChanged: _onPageChange,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Booking_Primary,
-        unselectedItemColor: Booking_Secondary,
+        selectedItemColor: Booking_Secondary,
+        unselectedItemColor: Booking_Primary,
         type: BottomNavigationBarType.fixed,
         currentIndex: _index,
         onTap: (i) {

@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_if_null_operators
 
+import 'dart:ffi';
+
+import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +20,14 @@ Widget headerText({required String title}) {
   );
 }
 
-Widget titleText({required String title, int? size, int? maxLines}) {
+Widget titleText(
+    {required String title, int? size, int? maxLines, Color? color}) {
   return Text(
     title,
     style: boldTextStyle(
-        size: size != null ? size : 20, color: Booking_TextColorPrimary),
+        decoration: TextDecoration.none,
+        size: size != null ? size : 20,
+        color: color != null ? color : Booking_TextColorPrimary),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
   );
@@ -55,20 +61,86 @@ Widget locationWrapper(
   );
 }
 
-
 Widget priceWrapper(
     {required double price, bool? isHorizontal, double? iconSize}) {
   return Row(
     children: [
       Text('From'),
-      Text(
-        price.toString(),
-        style:const TextStyle(
-          color: Booking_TextColorBlue,
-          fontSize: 14,
-          fontWeight: FontWeight.w500
-        )
-      )
+      Text(price.toString(),
+          style: const TextStyle(
+              color: Booking_TextColorBlue,
+              fontSize: 14,
+              fontWeight: FontWeight.w500))
     ],
+  );
+}
+
+Container statusBoxWidget(String status, Color color) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+    decoration: BoxDecoration(borderRadius: radius(8), color: color),
+    child: Text(
+      status,
+      style: boldTextStyle(
+        color: Booking_TextColorWhite,
+        size: 12,
+        decoration: TextDecoration.none,
+      ),
+    ),
+  );
+}
+
+Divider dividerWidget({Color? color}) {
+  return Divider(
+    color: color != null ? color : Booking_TextColorWhite,
+    height: 20,
+    thickness: 1.5,
+  );
+}
+
+Container defaultCard({required Widget child}) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: radius(8),
+      boxShadow: defaultBoxShadow(
+        shadowColor: Booking_Primary.withOpacity(0.2),
+        blurRadius: 4.0,
+        spreadRadius: 0.3,
+      ),
+    ),
+    child: child,
+  );
+}
+
+Widget defaultButton(
+    {Color? color,
+    int? size,
+    double? width,
+    required String text,
+    required VoidCallback tap}) {
+  return GestureDetector(
+    onTap: tap,
+    child: Container(
+      width: width != null ? width : SizeConfig.screenWidth,
+      padding: const EdgeInsets.all(10),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Booking_Secondary,
+        borderRadius: radius(8),
+        boxShadow: defaultBoxShadow(
+          shadowColor: Booking_Secondary.withOpacity(0.4),
+          blurRadius: 4.0,
+          spreadRadius: 0.3,
+        ),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+            fontSize: 16,
+            color: Booking_TextColorWhite,
+            decoration: TextDecoration.none),
+      ),
+    ),
   );
 }

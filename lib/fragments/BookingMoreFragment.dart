@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bookingapp/screen/BookingHistoryScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
@@ -16,7 +17,7 @@ class BookingMoreFragment extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: Booking_Secondary,
+          color: Booking_Primary,
           child: Column(
             children: [
               upperContainer(),
@@ -30,13 +31,18 @@ class BookingMoreFragment extends StatelessWidget {
               itemWidget(
                 Booking_lbl_Booking_history,
                 Booking_ic_history,
-                () {},
+                () {
+                    BookingHistory().launch(context);
+                },
               ),
               dividerWidget(),
               itemWidget(
                 Booking_lbl_Change_password,
                 Booking_ic_lock,
-                () {},
+                () {
+                  
+
+                },
               ),
               dividerWidget(),
               itemWidget(
@@ -58,13 +64,7 @@ class BookingMoreFragment extends StatelessWidget {
     );
   }
 
-  Divider dividerWidget() {
-    return Divider(
-              color: Booking_TextColorWhite,
-              height: 20,
-              thickness: 1.5,
-            );
-  }
+
 
   SettingItemWidget itemWidget(String label, IconData icon, Function press) {
     return SettingItemWidget(
@@ -124,14 +124,5 @@ class BookingMoreFragment extends StatelessWidget {
     );
   }
 
-  Container statusBoxWidget(String status, Color color) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(borderRadius: radius(8), color: color),
-      child: Text(
-        status,
-        style: boldTextStyle(color: Booking_TextColorWhite, size: 12),
-      ),
-    );
-  }
+
 }
