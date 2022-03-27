@@ -9,3 +9,4 @@ IconData Booking_ic_fight = Icons.flight;
 IconData Booking_ic_menu = Icons.menu;
 IconData Booking_ic_space = Icons.apartment;
 IconData Booking_ic_tour = Icons.tour;
+IconData Booking_ic_location = Icons.location_on;

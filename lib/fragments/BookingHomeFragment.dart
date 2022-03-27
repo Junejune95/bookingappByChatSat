@@ -1,5 +1,8 @@
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
+import 'package:bookingapp/components/HotelListComponent.dart';
+import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
+import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -26,6 +29,8 @@ class BookingHomeFragment extends StatelessWidget {
                   title: 'Bestseller Listing',
                   subtitle: 'Hotel highly rated for thoughtful design'),
               20.height,
+
+               HolelListComponent(isHome: true)
             ],
           ),
         ),
@@ -41,7 +46,6 @@ Widget titleWrapper({required String title, required String subtitle}) {
       titleText(title: title),
       8.height,
       descriptionText(description: subtitle)
-      //     .paddingSymmetric(horizontal: 16),
     ],
   ).paddingSymmetric(horizontal: 16);
 }
