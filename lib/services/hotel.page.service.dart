@@ -1,9 +1,8 @@
 import 'package:bookingapp/models/BookingCommonModel.dart';
-import 'package:bookingapp/models/HomePageModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-Future<HomePageModel> getHomeData() async {
+Future<List<BookingHotelModel>> getHotelData() async {
   var url = Uri.parse('http://dev.bookingcore.org/api/hotel/search');
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
@@ -11,10 +10,7 @@ Future<HomePageModel> getHomeData() async {
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     List<BookingHotelModel> hotelmodelList = [];
-    HomePageModel homePageModel =
-        // ignore: unnecessary_new
-        new HomePageModel(hotellist: [], title: '', subtitle: '');
-    jsonResponse['data'][2]['model']['data'].forEach((dynamic val) {
+    jsonResponse['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       BookingHotelModel bookingHotelModel = new BookingHotelModel(
           rating: double.parse(val['review_score']['score_total']),
@@ -28,14 +24,9 @@ Future<HomePageModel> getHomeData() async {
           subtitle: jsonResponse['data'][2]['model']['desc']);
       hotelmodelList.add(bookingHotelModel);
     });
-    homePageModel.title = jsonResponse['data'][0]['model']['title'];
-    homePageModel.subtitle = jsonResponse['data'][0]['model']['sub_title'];
-    homePageModel.hotellist = hotelmodelList;
-    return homePageModel;
+
+    return hotelmodelList;
   } else {
-    HomePageModel homePageModel =
-        // ignore: unnecessary_new
-        new HomePageModel(hotellist: [], title: '', subtitle: '');
-    return homePageModel;
+    return [];
   }
 }
