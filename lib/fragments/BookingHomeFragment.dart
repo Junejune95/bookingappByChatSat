@@ -17,53 +17,48 @@ class BookingHomeFragment extends StatelessWidget {
       child: Scaffold(
         backgroundColor: appColorPrimaryLight,
         body: SingleChildScrollView(
-            child: Column(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            titleWrapper(
-              title: 'Hi There!',
-              subtitle: 'Where would you like to go?',
-            ),
-            20.height,
-            BookingTypeComponent(),
-            20.height,
-            FutureBuilder<HomePageModel>(
-                future: homepage,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                    // return SpinKitFadingFour(color: Colors.green);
-                    default:
-                      if (snapshot.hasError)
-                        // ignore: curly_braces_in_flow_control_structures
-                        return Text('Error: ${snapshot.error}');
-                      else {
-                        HomePageModel? data = snapshot.data;
+          child: FutureBuilder<HomePageModel>(
+              future: homepage,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  // return SpinKitFadingFour(color: Colors.green);
+                  default:
+                    if (snapshot.hasError)
+                      // ignore: curly_braces_in_flow_control_structures
+                      return Text('Error: ${snapshot.error}');
+                    else {
+                      HomePageModel? data = snapshot.data;
 
-                        // selectedOne = null;
-                        return data != null
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    titleWrapper(
-                                        title: data.hotellist[0].title,
-                                        subtitle: data.hotellist[0].subtitle),
-                                    20.height,
-                                    HolelListComponent(
-                                      isHome: true,
-                                      hotellist: data.hotellist,
-                                    )
-                                  ])
-                            : Container(
-                                child: const Text(" No Data Exist "),
-                              );
-                      }
-                  }
-                }),
-          ],
-        )),
+                      // selectedOne = null;
+                      return data != null
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                  titleWrapper(
+                                    title: data.title,
+                                    subtitle: data.subtitle,
+                                  ),
+                                  20.height,
+                                  BookingTypeComponent(),
+                                  20.height,
+                                  titleWrapper(
+                                      title: data.hotellist[0].title,
+                                      subtitle: data.hotellist[0].subtitle),
+                                  20.height,
+                                  HolelListComponent(
+                                    isHome: true,
+                                    hotellist: data.hotellist,
+                                  )
+                                ])
+                          : Container(
+                              child: const Text(" No Data Exist "),
+                            );
+                    }
+                }
+              }),
+        ),
       ),
     );
   }
