@@ -1,6 +1,8 @@
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
 import 'package:bookingapp/components/HotelListComponent.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/models/HomePageModel.dart';
+import 'package:bookingapp/services/home.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
@@ -12,6 +14,7 @@ class BookingHomeFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<HomePageModel> homepage = getHomeData();
     return SafeArea(
       child: Scaffold(
         backgroundColor: appColorPrimaryLight,
@@ -29,8 +32,31 @@ class BookingHomeFragment extends StatelessWidget {
                   title: 'Bestseller Listing',
                   subtitle: 'Hotel highly rated for thoughtful design'),
               20.height,
+              FutureBuilder<HomePageModel>(
+                  future: homepage,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                      // return SpinKitFadingFour(color: Colors.green);
+                      default:
+                        if (snapshot.hasError)
+                          // ignore: curly_braces_in_flow_control_structures
+                          return Text('Error: ${snapshot.error}');
+                        else {
+                          HomePageModel? data = snapshot.data;
 
-               HolelListComponent(isHome: true)
+                          // selectedOne = null;
+                          return data != null
+                              ? HolelListComponent(
+                                  isHome: true,
+                                  hotellist: data.hotellist,
+                                )
+                              : Container(
+                                  child: const Text(" No Data Exist "),
+                                );
+                        }
+                    }
+                  })
             ],
           ),
         ),
