@@ -62,15 +62,37 @@ Widget locationWrapper(
 }
 
 Widget priceWrapper(
-    {required double price, bool? isHorizontal, double? iconSize}) {
+    {required double price,
+    bool? isHorizontal,
+    double? iconSize,
+    required String unit}) {
   return Row(
     children: [
-      Text('From'),
-      Text(price.toString(),
-          style: const TextStyle(
-              color: Booking_TextColorBlue,
-              fontSize: 14,
-              fontWeight: FontWeight.w500))
+     const Text(
+        'From',
+        style: TextStyle(
+          color: Booking_TextColorSecondary,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      8.width,
+      Text(
+        price.toString(),
+        style: const TextStyle(
+          color: Booking_TextColorBlue,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      8.width,
+
+      Text(
+        '/' + unit,
+        style:const TextStyle(
+          color: Booking_TextColorSecondary,
+          // fontWeight: FontWeight.bold,
+        ),
+      ),
     ],
   );
 }
