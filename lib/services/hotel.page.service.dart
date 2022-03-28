@@ -20,8 +20,8 @@ Future<List<BookingHotelModel>> getHotelData() async {
           image: val['image'],
           location: val['location']['name'],
           price: double.parse(val['price']),
-          title: jsonResponse['data'][2]['model']['title'],
-          subtitle: jsonResponse['data'][2]['model']['desc']);
+          title: "",
+          subtitle: "");
       hotelmodelList.add(bookingHotelModel);
     });
 
