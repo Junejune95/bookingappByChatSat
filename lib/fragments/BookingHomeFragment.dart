@@ -1,10 +1,8 @@
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
 import 'package:bookingapp/components/HotelListComponent.dart';
-import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/HomePageModel.dart';
 import 'package:bookingapp/services/home.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
-import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
