@@ -19,7 +19,18 @@ class BookingHomeFragment extends StatelessWidget {
       child: Scaffold(
         backgroundColor: appColorPrimaryLight,
         body: SingleChildScrollView(
-            child: FutureBuilder<HomePageModel>(
+            child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            titleWrapper(
+              title: 'Hi There!',
+              subtitle: 'Where would you like to go?',
+            ),
+            20.height,
+            BookingTypeComponent(),
+            20.height,
+            FutureBuilder<HomePageModel>(
                 future: homepage,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -39,12 +50,6 @@ class BookingHomeFragment extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                     titleWrapper(
-                                        title: data.title,
-                                        subtitle: data.subtitle),
-                                    20.height,
-                                    BookingTypeComponent(),
-                                    20.height,
-                                    titleWrapper(
                                         title: data.hotellist[0].title,
                                         subtitle: data.hotellist[0].subtitle),
                                     20.height,
@@ -58,7 +63,9 @@ class BookingHomeFragment extends StatelessWidget {
                               );
                       }
                   }
-                })),
+                }),
+          ],
+        )),
       ),
     );
   }
