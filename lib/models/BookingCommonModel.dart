@@ -6,6 +6,8 @@ class BookingHotelModel {
   String location;
   double price;
   String image;
+  String title;
+  String subtitle;
 
   BookingHotelModel(
       {required this.rating,
@@ -14,7 +16,9 @@ class BookingHotelModel {
       required this.reviewstatus,
       required this.image,
       required this.location,
-      required this.price});
+      required this.price,
+      required this.title,
+      required this.subtitle});
   factory BookingHotelModel.fromJson(Map<String, dynamic> json) {
     return BookingHotelModel(
       rating: json['rating'],
@@ -24,6 +28,8 @@ class BookingHotelModel {
       image: json['image'],
       location: json['location'],
       price: json['price'],
+      title: json['title'],
+      subtitle: json['sub_title'],
     );
   }
 }

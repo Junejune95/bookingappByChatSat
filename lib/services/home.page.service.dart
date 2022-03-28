@@ -11,8 +11,9 @@ Future<HomePageModel> getHomeData() async {
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     List<BookingHotelModel> hotelmodelList = [];
-    // ignore: unnecessary_new
-    HomePageModel homePageModel = new HomePageModel(hotellist: []);
+    HomePageModel homePageModel =
+        // ignore: unnecessary_new
+        new HomePageModel(hotellist: [], title: '', subtitle: '');
     jsonResponse['data'][2]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       BookingHotelModel bookingHotelModel = new BookingHotelModel(
@@ -22,14 +23,19 @@ Future<HomePageModel> getHomeData() async {
           reviewstatus: val['review_score']['review_text'],
           image: val['image'],
           location: val['location']['name'],
-          price: double.parse(val['price']));
+          price: double.parse(val['price']),
+          title: jsonResponse['data'][2]['model']['title'],
+          subtitle: jsonResponse['data'][2]['model']['desc']);
       hotelmodelList.add(bookingHotelModel);
     });
+    homePageModel.title = jsonResponse['data'][0]['model']['title'];
+    homePageModel.subtitle = jsonResponse['data'][0]['model']['sub_title'];
     homePageModel.hotellist = hotelmodelList;
     return homePageModel;
   } else {
-    // ignore: unnecessary_new
-    HomePageModel homePageModel = new HomePageModel(hotellist: []);
+    HomePageModel homePageModel =
+        // ignore: unnecessary_new
+        new HomePageModel(hotellist: [], title: '', subtitle: '');
     return homePageModel;
   }
 }
