@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class HolelListComponent extends StatelessWidget {
@@ -15,23 +17,66 @@ class HolelListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return isHome == true ? horizontalListWidget() : verticalListWidget();
+  }
+
+  Widget verticalListWidget() {
+    return ListView.builder(
+      itemCount: hotellist.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      // physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return defaultCard(
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 200,
+                width: SizeConfig.screenWidth,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(hotellist[index].image),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ratingIndicator(rating: hotellist[index].rating),
+                        priceWrapper(price: hotellist[index].price, unit: 'night',isFullScreen: true)
+                      ],
+                    ),
+                    8.height,
+                    titleText(title: hotellist[index].name),
+                    8.height,
+
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  HorizontalList horizontalListWidget() {
     return HorizontalList(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       spacing: 16,
       itemCount: hotellist.length,
       itemBuilder: (context, index) {
-        return Container(
+        return defaultCard(
           width: 220,
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: radius(16),
-            boxShadow: defaultBoxShadow(
-              shadowColor: Colors.black.withOpacity(0.1),
-              blurRadius: 4.0,
-              spreadRadius: 0.3,
-            ),
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(
             children: [
               Column(
@@ -51,19 +96,18 @@ class HolelListComponent extends StatelessWidget {
                   8.height,
                   locationWrapper(location: hotellist[index].location),
                   8.height,
-                  priceWrapper(price: hotellist[index].price, unit: 'night'),
+                  priceWrapper(price: hotellist[index].price, unit: 'night',isFullScreen: false),
                   10.height,
                 ],
               ),
-                 Positioned(
-                top: 15,
-                right: 15,
-                child:const Icon(
-                  Icons.favorite,
-                  color: Booking_TextColorWhite,
-                  size: 24,
-                ).onTap((){})
-              ),
+              Positioned(
+                  top: 15,
+                  right: 15,
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Booking_TextColorWhite,
+                    size: 24,
+                  ).onTap(() {})),
             ],
           ),
         );

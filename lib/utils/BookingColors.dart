@@ -25,6 +25,7 @@ const Booking_shadowColor = Color(0X955191FA);
 const Booking_greyColor = Color(0xFFF2F2F2);
 const Booking_greenColor = Color(0xFF17A2B8);
 const Booking_orangeColor = Color(0xFFCC6C00);
+const Booking_OrangeDarkColor = Color(0xFFFA5636);
 
 const iconColorPrimary = Color(0xFF1A2B47);
 

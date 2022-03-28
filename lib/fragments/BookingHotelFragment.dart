@@ -18,53 +18,56 @@ class BookingHotelFragment extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Hotel'),
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // DropdownButton(items: items, onChanged: (String? newValue) { }),
-              TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(40, 40),
-                  backgroundColor: kPrimaryColor,
-                  elevation: 2,
+      body: SingleChildScrollView(
+        child: Column(
+        
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // DropdownButton(items: items, onChanged: (String? newValue) { }),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(40, 40),
+                    backgroundColor: kPrimaryColor,
+                    elevation: 2,
+                  ),
+                  onPressed: () {},
+                  child: const Icon(
+                    Icons.filter_list,
+                    size: 30,
+                    color: kTextLightColor,
+                  ),
                 ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.filter_list,
-                  size: 30,
-                  color: kTextLightColor,
-                ),
-              ),
-            ],
-          ),
-          FutureBuilder<List<BookingHotelModel>>(
-              future: hotelList,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                  // return SpinKitFadingFour(color: Colors.green);
-                  default:
-                    if (snapshot.hasError)
-                      // ignore: curly_braces_in_flow_control_structures
-                      return Text('Error: ${snapshot.error}');
-                    else {
-                      List<BookingHotelModel>? data = snapshot.data;
-                      print(snapshot);
-                      // selectedOne = null;
-                      return data != null
-                          ? HolelListComponent(
-                              hotellist: data,
-                              isHome: false,
-                            )
-                          : Container(
-                              child: const Text(" No Data Exist "),
-                            );
-                    }
-                }
-              }),
-        ],
+              ],
+            ),
+            FutureBuilder<List<BookingHotelModel>>(
+                future: hotelList,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    // return SpinKitFadingFour(color: Colors.green);
+                    default:
+                      if (snapshot.hasError)
+                        // ignore: curly_braces_in_flow_control_structures
+                        return Text('Error: ${snapshot.error}');
+                      else {
+                        List<BookingHotelModel>? data = snapshot.data;
+
+                        // selectedOne = null;
+                        return data != null
+                            ? HolelListComponent(
+                                hotellist: data,
+                                isHome: false,
+                              )
+                            : Container(
+                                child: const Text(" No Data Exist "),
+                              );
+                      }
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }

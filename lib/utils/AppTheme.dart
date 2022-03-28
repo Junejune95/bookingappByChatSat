@@ -17,7 +17,7 @@ class AppThemeData {
     errorColor: Colors.red,
     hoverColor: Colors.white54,
     dividerColor: Booking_LineColor,
-    fontFamily: GoogleFonts.openSans().fontFamily,
+    fontFamily: 'Source Sans Pro',
     appBarTheme: const AppBarTheme(
       color: Booking_AppBar,
       iconTheme: IconThemeData(color: Booking_TextColorPrimary),

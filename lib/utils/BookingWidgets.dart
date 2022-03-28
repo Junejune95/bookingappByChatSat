@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_if_null_operators
 
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
+import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Widget headerText({required String title}) {
@@ -61,37 +63,38 @@ Widget locationWrapper(
   );
 }
 
-Widget priceWrapper(
-    {required double price,
-    bool? isHorizontal,
-    double? iconSize,
-    required String unit}) {
+Widget priceWrapper({
+  required double price,
+  required String unit,
+  required bool isFullScreen,
+}) {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
     children: [
-     const Text(
+      Text(
         'From',
         style: TextStyle(
           color: Booking_TextColorSecondary,
           fontWeight: FontWeight.w500,
+          fontSize: isFullScreen == false ? textSizeSmall : textSizeSMedium,
         ),
       ),
       8.width,
       Text(
         price.toString(),
-        style: const TextStyle(
+        style: TextStyle(
           color: Booking_TextColorBlue,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontSize: isFullScreen == false ? textSizeMedium : textSizeLargeMedium,
+          fontWeight: FontWeight.w800,
         ),
       ),
       8.width,
-
       Text(
         '/' + unit,
-        style:const TextStyle(
-          color: Booking_TextColorSecondary,
-          // fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(
+            color: Booking_TextColorSecondary,
+            fontWeight: FontWeight.w500,
+            fontSize: isFullScreen == false ? textSizeSMedium : textSizeMedium),
       ),
     ],
   );
@@ -120,8 +123,15 @@ Divider dividerWidget({Color? color}) {
   );
 }
 
-Container defaultCard({required Widget child}) {
+Container defaultCard(
+    {required Widget child,
+    double? width,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin}) {
   return Container(
+    width: width != null ? width : SizeConfig.screenWidth,
+    padding: padding != null ? padding : const EdgeInsets.all(0),
+    margin: margin != null ? margin : const EdgeInsets.all(0),
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: radius(8),
@@ -164,5 +174,18 @@ Widget defaultButton(
             decoration: TextDecoration.none),
       ),
     ),
+  );
+}
+
+Widget ratingIndicator({required double rating}) {
+  return RatingBarIndicator(
+    rating: rating,
+    itemBuilder: (context, index) => const Icon(
+      Icons.star,
+      color: Booking_OrangeDarkColor,
+    ),
+    itemCount: 5,
+    itemSize: 24.0,
+    direction: Axis.horizontal,
   );
 }
