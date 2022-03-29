@@ -20,9 +20,7 @@ Future<List<BookingHotelModel>> getHotelData() async {
           reviewstatus: val['review_score']['review_text'],
           image: val['image'],
           location: val['location']['name'],
-          price: double.parse(val['price']),
-          title: "",
-          subtitle: "");
+          price: double.parse(val['price']));
       hotelmodelList.add(bookingHotelModel);
     });
 
