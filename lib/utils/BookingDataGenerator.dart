@@ -1,4 +1,5 @@
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/models/CommonModel.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 
@@ -16,12 +17,37 @@ List<BookingTypeModel> getBookingTypeList() {
   return list;
 }
 
-List<BookingHotelModel> getHotelList() {
-  List<BookingHotelModel> list = [];
 
-  // list.add(BookingHotelModel(rating: 4.8, name: 'Hotel Stanford', reviewer: 10, reviewstatus: 'Excellent', image: 'https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg', location: 'Paris', price: 350));
-  // list.add(BookingHotelModel(rating: 4, name: 'Hotel WBF Hommachi', reviewer: 6, reviewstatus: 'Very Good', image: 'https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg', location: 'Paris', price: 350));
-  // list.add(BookingHotelModel(rating: 4.5, name: 'Castello Casole Hotel', reviewer: 8, reviewstatus: 'Excellent', image: 'https://www.luxuryabode.com/mona/img/hotels.jpg', location: 'Paris', price: 350));
+List<TypeSelectedModel> propertyTypeList = [
+  TypeSelectedModel(type: "Apartments", isSelected: false),
+  TypeSelectedModel(type: "Hotels", isSelected: false),
+  TypeSelectedModel(type: "Homestays", isSelected: false),
+  TypeSelectedModel(type: "Villas", isSelected: false),
+  TypeSelectedModel(type: "Boats", isSelected: false),
+  TypeSelectedModel(type: "Motels", isSelected: false),
+  TypeSelectedModel(type: "Resorts", isSelected: false),
+  TypeSelectedModel(type: "Lodges", isSelected: false),
+  TypeSelectedModel(type: "Holiday homes", isSelected: false),
+  TypeSelectedModel(type: "Cruises", isSelected: false),
+];
 
-  return list;
-}
+List<TypeSelectedModel> facilitiesList = [
+  TypeSelectedModel(icon: Booking_ic_wakeupcall, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_car, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_bike, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_tv, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_recycle, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_wifi, isSelected: false),
+  TypeSelectedModel(icon: Booking_ic_coffee, isSelected: false),
+];
+
+List<TypeSelectedModel> hotelServiceList = [
+    TypeSelectedModel(type: "Havana Lobby bar", isSelected: false),
+    TypeSelectedModel(type: "Fiesta Restaurant", isSelected: false),
+    TypeSelectedModel(type: "Hotel transport services", isSelected: false),
+    TypeSelectedModel(type: "Free luggage deposit", isSelected: false),
+    TypeSelectedModel(type: "Laundry Services", isSelected: false),
+    TypeSelectedModel(type: "Pets welcome", isSelected: false),
+    TypeSelectedModel(type: "Tickets", isSelected: false),
+
+];

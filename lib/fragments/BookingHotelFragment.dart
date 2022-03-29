@@ -1,6 +1,8 @@
+import 'package:bookingapp/components/FilterButtonComponent.dart';
 import 'package:bookingapp/components/SortByComponent.dart';
 import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/screen/HotelFilterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,19 +30,7 @@ class BookingHotelFragment extends StatelessWidget {
                 children: [
                   SortByComponent(),
                   10.width,
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(40, 40),
-                      backgroundColor: kPrimaryColor,
-                      elevation: 2,
-                    ),
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.filter_list,
-                      size: 30,
-                      color: kTextLightColor,
-                    ),
-                  ),
+                  FilterButtonComponent()
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
+import 'package:bookingapp/components/RatingComponent.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
@@ -49,8 +50,15 @@ class HolelListComponent extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ratingIndicator(rating: hotellist[index].rating),
-                        priceWrapper(price: hotellist[index].price, unit: 'night',isFullScreen: true)
+                        RatingComponent(
+                          isIndicator: true,
+                          rating: hotellist[index].rating,
+                        ),
+                        priceWrapper(
+                          price: hotellist[index].price,
+                          unit: 'night',
+                          isFullScreen: true,
+                        ),
                       ],
                     ),
                     12.height,
@@ -95,7 +103,10 @@ class HolelListComponent extends StatelessWidget {
                   8.height,
                   locationWrapper(location: hotellist[index].location),
                   8.height,
-                  priceWrapper(price: hotellist[index].price, unit: 'night',isFullScreen: false),
+                  priceWrapper(
+                      price: hotellist[index].price,
+                      unit: 'night',
+                      isFullScreen: false),
                   10.height,
                 ],
               ),

@@ -15,3 +15,13 @@ IconData Booking_ic_history = Icons.history;
 IconData Booking_ic_lock = Icons.lock;
 IconData Booking_ic_setting= Icons.settings;
 IconData Booking_ic_logout= Icons.logout;
+
+// Facilities
+IconData Booking_ic_bike= Icons.pedal_bike;
+IconData Booking_ic_recycle= Icons.local_laundry_service;
+IconData Booking_ic_tv= Icons.tv;
+IconData Booking_ic_wifi= Icons.wifi;
+IconData Booking_ic_coffee= Icons.coffee;
+IconData Booking_ic_wakeupcall= Icons.call;
+
+

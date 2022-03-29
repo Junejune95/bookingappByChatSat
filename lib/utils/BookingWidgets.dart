@@ -7,7 +7,6 @@ import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Widget headerText({required String title}) {
@@ -22,13 +21,24 @@ Widget headerText({required String title}) {
   );
 }
 
+Widget labelText(
+    {required String title, int? size, int? maxLines, Color? color}) {
+  return Text(
+    title,
+    style: boldTextStyle(
+        color: color != null ? color : Booking_TextColorSecondary),
+    maxLines: maxLines != null ? maxLines : 1,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 Widget titleText(
     {required String title, int? size, int? maxLines, Color? color}) {
   return Text(
     title,
     style: boldTextStyle(
         decoration: TextDecoration.none,
-        size: size != null ? size : 20,
+        size: size != null ? size : textSizeNormal.toInt(),
         color: color != null ? color : Booking_TextColorPrimary),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
@@ -40,7 +50,7 @@ Widget descriptionText(
   return Text(
     description,
     style: boldTextStyle(
-        size: size != null ? size : 12, color: Booking_TextColorSecondary),
+        size: size != null ? size : textSizeSmall.toInt(), color: Booking_TextColorSecondary),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
   );
@@ -149,12 +159,14 @@ Widget defaultButton(
     {Color? color,
     int? size,
     double? width,
+    double? height,
     required String text,
     required VoidCallback tap}) {
   return GestureDetector(
     onTap: tap,
     child: Container(
       width: width != null ? width : SizeConfig.screenWidth,
+      height: height !=null  ? height : SizeConfig.screenHeight,
       padding: const EdgeInsets.all(10),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -177,15 +189,3 @@ Widget defaultButton(
   );
 }
 
-Widget ratingIndicator({required double rating}) {
-  return RatingBarIndicator(
-    rating: rating,
-    itemBuilder: (context, index) => const Icon(
-      Icons.star,
-      color: Booking_OrangeDarkColor,
-    ),
-    itemCount: 5,
-    itemSize: 22.0,
-    direction: Axis.horizontal,
-  );
-}
