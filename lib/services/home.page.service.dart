@@ -2,6 +2,7 @@ import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CarModel.dart';
 import 'package:bookingapp/models/DestinationModel.dart';
 import 'package:bookingapp/models/HomePageModel.dart';
+import 'package:bookingapp/models/TourModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -15,6 +16,7 @@ Future<HomePageModel> getHomeData() async {
     List<BookingHotelModel> hotelmodelList = [];
     List<DestinationModel> distmodelList = [];
     List<CarModel> carmodelList = [];
+    List<TourModel> tourList = [];
     HomePageModel homePageModel =
         // ignore: unnecessary_new
         new HomePageModel(
@@ -28,7 +30,10 @@ Future<HomePageModel> getHomeData() async {
             dsubtitle: '',
             carlist: [],
             ctitle: '',
-            csubtitle: '');
+            csubtitle: '',
+            tourlist: [],
+            ttitle: '',
+            tsubtitle: '');
     jsonResponse['data'][2]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       BookingHotelModel bookingHotelModel = new BookingHotelModel(
@@ -52,6 +57,20 @@ Future<HomePageModel> getHomeData() async {
           content: val['content'] ?? '');
       distmodelList.add(distinationModel);
     });
+    jsonResponse['data'][4]['model']['data'].forEach((dynamic val) {
+      // ignore: unnecessary_new
+      TourModel tourModel = new TourModel(
+          id: val['id'],
+          rating: double.parse(val['review_score']['score_total']),
+          title: val['title'],
+          reviewer: val['review_score']['total_review'],
+          image: val['image'],
+          location: val['location']['name'],
+          price: double.parse(val['price']),
+          saleprice: double.parse(val['sale_price']),
+          content: val['content']);
+      tourList.add(tourModel);
+    });
     jsonResponse['data'][6]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       CarModel carModel = new CarModel(
@@ -74,6 +93,9 @@ Future<HomePageModel> getHomeData() async {
     homePageModel.distlist = distmodelList;
     homePageModel.dtitle = jsonResponse['data'][3]['model']['title'];
     homePageModel.dsubtitle = jsonResponse['data'][3]['model']['desc'];
+    homePageModel.tourlist = tourList;
+    homePageModel.ttitle = jsonResponse['data'][4]['model']['title'];
+    homePageModel.tsubtitle = jsonResponse['data'][4]['model']['desc'];
     homePageModel.carlist = carmodelList;
     homePageModel.ctitle = jsonResponse['data'][6]['model']['title'];
     homePageModel.csubtitle = jsonResponse['data'][6]['model']['desc'];
@@ -92,7 +114,10 @@ Future<HomePageModel> getHomeData() async {
             dsubtitle: '',
             carlist: [],
             ctitle: '',
-            csubtitle: '');
+            csubtitle: '',
+            tourlist: [],
+            ttitle: '',
+            tsubtitle: '');
     return homePageModel;
   }
 }
