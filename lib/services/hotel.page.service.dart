@@ -13,6 +13,7 @@ Future<List<BookingHotelModel>> getHotelData() async {
     jsonResponse['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       BookingHotelModel bookingHotelModel = new BookingHotelModel(
+          id: val['id'],
           rating: double.parse(val['review_score']['score_total']),
           name: val['title'],
           reviewer: val['review_score']['total_review'],
