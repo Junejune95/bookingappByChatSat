@@ -1,4 +1,5 @@
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
+import 'package:bookingapp/components/CarListComponent.dart';
 import 'package:bookingapp/components/DestinationListComponent.dart';
 import 'package:bookingapp/components/HotelListComponent.dart';
 import 'package:bookingapp/models/HomePageModel.dart';
@@ -59,7 +60,13 @@ class BookingHomeFragment extends StatelessWidget {
                                 20.height,
                                 DestinationListComponent(
                                   destinationlist: data.distlist,
-                                )
+                                ),
+                                20.height,
+                                titleWrapper(
+                                    title: data.ctitle,
+                                    subtitle: data.csubtitle),
+                                20.height,
+                                CarListComponent(carlist: data.carlist)
                               ],
                             )
                           : Container(

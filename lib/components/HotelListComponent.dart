@@ -29,49 +29,62 @@ class HolelListComponent extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return defaultCard(
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              AspectRatio(
-                aspectRatio: 3/2,
-                child: Container(
-                  height: 200,
-                  width: SizeConfig.screenWidth,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(hotellist[index].image),
-                      fit: BoxFit.cover,
+              Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 3/2,
+                  child: Container(
+                    height: 200,
+                    width: SizeConfig.screenWidth,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(hotellist[index].image),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RatingComponent(
-                          isIndicator: true,
-                          rating: hotellist[index].rating,
-                        ),
-                        priceWrapper(
-                          price: hotellist[index].price,
-                          unit: 'night',
-                          isFullScreen: true,
-                        ),
-                      ],
-                    ),
-                    12.height,
-                    titleText(title: hotellist[index].name),
-                    12.height,
-                    locationWrapper(location: hotellist[index].location)
-                  ],
+                  ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RatingComponent(
+                            isIndicator: true,
+                            rating: hotellist[index].rating,
+                          ),
+                          priceWrapper(
+                            price: hotellist[index].price,
+                            unit: 'night',
+                            isFullScreen: true,
+                          ),
+                        ],
+                      ),
+                      12.height,
+                      titleText(title: hotellist[index].name),
+                      12.height,
+                      locationWrapper(location: hotellist[index].location)
+                    ],
+                  ),
+
+                )
+              ],
+            ),
+              Positioned(
+                  top: 15,
+                  right: 15,
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Booking_TextColorWhite,
+                    size: 24,
+                  ).onTap(() {})),
+            ]
           ),
         );
       },
@@ -104,14 +117,14 @@ class HolelListComponent extends StatelessWidget {
                       ).cornerRadiusWithClipRRect(8),
                     ),
                   ),
-                    8.height,
+                    10.height,
                   titleText(
                     title: hotellist[index].name,
                     size: 16,
                   ),
-                  10.height,
+                  12.height,
                   locationWrapper(location: hotellist[index].location),
-                  10.height,
+                  12.height,
                   priceWrapper(
                       price: hotellist[index].price,
                       unit: 'night',

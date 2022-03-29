@@ -64,6 +64,7 @@ Widget locationWrapper(
       Icon(Booking_ic_location,
           size: iconSize != null ? iconSize : 16,
           color: color != null ? color : iconColorSecondary),
+          8.width,
       Text(
         location,
         style: boldTextStyle(
@@ -78,9 +79,10 @@ Widget priceWrapper({
   required double price,
   required String unit,
   required bool isFullScreen,
+  MainAxisAlignment? alignment
 }) {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.end,
+    mainAxisAlignment: alignment != null ? alignment : MainAxisAlignment.end,
     children: [
       Text(
         'From',
