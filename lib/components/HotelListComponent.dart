@@ -32,16 +32,19 @@ class HolelListComponent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 200,
-                width: SizeConfig.screenWidth,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(hotellist[index].image),
-                    fit: BoxFit.cover,
+              AspectRatio(
+                aspectRatio: 3/2,
+                child: Container(
+                  height: 200,
+                  width: SizeConfig.screenWidth,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(hotellist[index].image),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
+                ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
+              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
