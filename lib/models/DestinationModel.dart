@@ -1,5 +1,5 @@
 class DistinationModel {
-  String id;
+  int id;
   String title;
   String image;
   String content;
