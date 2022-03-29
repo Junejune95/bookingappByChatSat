@@ -1,8 +1,8 @@
+import 'package:bookingapp/components/SortByComponent.dart';
 import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
-import 'package:bookingapp/models/HomePageModel.dart';
-import 'package:bookingapp/services/home.page.service.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../components/HotelListComponent.dart';
 import '../services/hotel.page.service.dart';
@@ -20,26 +20,29 @@ class BookingHotelFragment extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-        
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // DropdownButton(items: items, onChanged: (String? newValue) { }),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(40, 40),
-                    backgroundColor: kPrimaryColor,
-                    elevation: 2,
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SortByComponent(),
+                  10.width,
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(40, 40),
+                      backgroundColor: kPrimaryColor,
+                      elevation: 2,
+                    ),
+                    onPressed: () {},
+                    child: const Icon(
+                      Icons.filter_list,
+                      size: 30,
+                      color: kTextLightColor,
+                    ),
                   ),
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.filter_list,
-                    size: 30,
-                    color: kTextLightColor,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             FutureBuilder<List<BookingHotelModel>>(
                 future: hotelList,

@@ -5,7 +5,6 @@ import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class HolelListComponent extends StatelessWidget {
@@ -25,7 +24,7 @@ class HolelListComponent extends StatelessWidget {
       itemCount: hotellist.length,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      // physics: NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return defaultCard(
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -54,10 +53,10 @@ class HolelListComponent extends StatelessWidget {
                         priceWrapper(price: hotellist[index].price, unit: 'night',isFullScreen: true)
                       ],
                     ),
-                    8.height,
+                    12.height,
                     titleText(title: hotellist[index].name),
-                    8.height,
-
+                    12.height,
+                    locationWrapper(location: hotellist[index].location)
                   ],
                 ),
               )

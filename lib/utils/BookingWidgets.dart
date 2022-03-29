@@ -81,7 +81,7 @@ Widget priceWrapper({
       ),
       8.width,
       Text(
-        price.toString(),
+       '\$'+price.toString(),
         style: TextStyle(
           color: Booking_TextColorBlue,
           fontSize: isFullScreen == false ? textSizeMedium : textSizeLargeMedium,
@@ -185,7 +185,7 @@ Widget ratingIndicator({required double rating}) {
       color: Booking_OrangeDarkColor,
     ),
     itemCount: 5,
-    itemSize: 24.0,
+    itemSize: 22.0,
     direction: Axis.horizontal,
   );
 }

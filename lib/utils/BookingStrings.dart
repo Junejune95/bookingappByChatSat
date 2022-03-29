@@ -81,6 +81,11 @@ const Booking_lbl_Booking_history6= "PAID";
 const Booking_lbl_Booking_history7= "UNPAID";
 const Booking_lbl_Booking_history8= "PARTIAL PAYMENT";
 
+const Booking_lbl_Booking_SortBy1= "Recommended";
+const Booking_lbl_Booking_SortBy2= "Price (Low to high)";
+const Booking_lbl_Booking_SortBy3= "Price (High to low)";
+const Booking_lbl_Booking_SortBy4= "Rating (High to low)";
+
 
 
 
