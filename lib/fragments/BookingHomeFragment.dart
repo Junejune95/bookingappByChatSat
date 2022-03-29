@@ -1,4 +1,5 @@
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
+import 'package:bookingapp/components/DestinationListComponent.dart';
 import 'package:bookingapp/components/HotelListComponent.dart';
 import 'package:bookingapp/models/HomePageModel.dart';
 import 'package:bookingapp/services/home.page.service.dart';
@@ -36,22 +37,31 @@ class BookingHomeFragment extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                  titleWrapper(
-                                    title: data.title,
-                                    subtitle: data.subtitle,
-                                  ),
-                                  20.height,
-                                  BookingTypeComponent(),
-                                  20.height,
-                                  titleWrapper(
-                                      title: data.htitle,
-                                      subtitle: data.hsubtitle),
-                                  20.height,
-                                  HolelListComponent(
-                                    isHome: true,
-                                    hotellist: data.hotellist,
-                                  )
-                                ])
+                                titleWrapper(
+                                  title: data.title,
+                                  subtitle: data.subtitle,
+                                ),
+                                20.height,
+                                BookingTypeComponent(),
+                                20.height,
+                                titleWrapper(
+                                    title: data.htitle,
+                                    subtitle: data.hsubtitle),
+                                20.height,
+                                HolelListComponent(
+                                  isHome: true,
+                                  hotellist: data.hotellist,
+                                ),
+                                20.height,
+                                titleWrapper(
+                                    title: data.dtitle,
+                                    subtitle: data.dsubtitle),
+                                20.height,
+                                DestinationListComponent(
+                                  destinationlist: data.distlist,
+                                )
+                              ],
+                            )
                           : Container(
                               child: const Text(" No Data Exist "),
                             );

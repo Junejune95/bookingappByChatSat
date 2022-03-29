@@ -7,7 +7,7 @@ class HomePageModel {
   String htitle, hsubtitle;
   List<BookingHotelModel> hotellist;
   String dtitle, dsubtitle;
-  List<DistinationModel> distlist;
+  List<DestinationModel> distlist;
   String ctitle, csubtitle;
   List<CarModel> carlist;
 
@@ -34,7 +34,7 @@ class HomePageModel {
             .map((data) => BookingHotelModel.fromJson(data))
             .toList(),
         distlist: (json['hotel'] as List)
-            .map((data) => DistinationModel.fromJson(data))
+            .map((data) => DestinationModel.fromJson(data))
             .toList(),
         dtitle: json['dtitle'],
         dsubtitle: json['dsubtitle'],

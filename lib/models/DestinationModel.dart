@@ -1,17 +1,17 @@
-class DistinationModel {
+class DestinationModel {
   int id;
   String title;
   String image;
   String content;
 
-  DistinationModel({
+  DestinationModel({
     required this.id,
     required this.title,
     required this.image,
     required this.content,
   });
-  factory DistinationModel.fromJson(Map<String, dynamic> json) {
-    return DistinationModel(
+  factory DestinationModel.fromJson(Map<String, dynamic> json) {
+    return DestinationModel(
         id: json['id'],
         title: json['title'],
         image: json['image'],

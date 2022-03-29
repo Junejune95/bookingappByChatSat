@@ -50,7 +50,8 @@ Widget descriptionText(
   return Text(
     description,
     style: boldTextStyle(
-        size: size != null ? size : textSizeSmall.toInt(), color: Booking_TextColorSecondary),
+        size: size != null ? size : textSizeSmall.toInt(),
+        color: Booking_TextColorSecondary),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
   );
@@ -91,10 +92,11 @@ Widget priceWrapper({
       ),
       8.width,
       Text(
-       '\$'+price.toString(),
+        '\$' + price.toString(),
         style: TextStyle(
           color: Booking_TextColorBlue,
-          fontSize: isFullScreen == false ? textSizeMedium : textSizeLargeMedium,
+          fontSize:
+              isFullScreen == false ? textSizeMedium : textSizeLargeMedium,
           fontWeight: FontWeight.w800,
         ),
       ),
@@ -148,7 +150,7 @@ Container defaultCard(
       boxShadow: defaultBoxShadow(
         shadowColor: Booking_Primary.withOpacity(0.2),
         blurRadius: 4.0,
-        spreadRadius: 0.3,
+        spreadRadius: 0.4,
       ),
     ),
     child: child,
@@ -166,7 +168,7 @@ Widget defaultButton(
     onTap: tap,
     child: Container(
       width: width != null ? width : SizeConfig.screenWidth,
-      height: height !=null  ? height : SizeConfig.screenHeight,
+      height: height != null ? height : SizeConfig.screenHeight,
       padding: const EdgeInsets.all(10),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -188,4 +190,3 @@ Widget defaultButton(
     ),
   );
 }
-

@@ -86,6 +86,7 @@ class HolelListComponent extends StatelessWidget {
       itemBuilder: (context, index) {
         return defaultCard(
           width: 220,
+          margin: EdgeInsets.symmetric(vertical: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(
             children: [
@@ -93,24 +94,29 @@ class HolelListComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Image.network(
-                      hotellist[index].image,
-                      fit: BoxFit.cover,
-                    ).cornerRadiusWithClipRRect(10),
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: AspectRatio(
+                      aspectRatio: 3/2,
+                      child: Image.network(
+
+                        hotellist[index].image,
+                        fit: BoxFit.cover,
+                      ).cornerRadiusWithClipRRect(8),
+                    ),
                   ),
+                    8.height,
                   titleText(
                     title: hotellist[index].name,
                     size: 16,
                   ),
-                  8.height,
+                  10.height,
                   locationWrapper(location: hotellist[index].location),
-                  8.height,
+                  10.height,
                   priceWrapper(
                       price: hotellist[index].price,
                       unit: 'night',
                       isFullScreen: false),
-                  10.height,
+                  12.height,
                 ],
               ),
               Positioned(

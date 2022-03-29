@@ -13,7 +13,7 @@ Future<HomePageModel> getHomeData() async {
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     List<BookingHotelModel> hotelmodelList = [];
-    List<DistinationModel> distmodelList = [];
+    List<DestinationModel> distmodelList = [];
     List<CarModel> carmodelList = [];
     HomePageModel homePageModel =
         // ignore: unnecessary_new
@@ -45,7 +45,7 @@ Future<HomePageModel> getHomeData() async {
     });
     jsonResponse['data'][3]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
-      DistinationModel distinationModel = new DistinationModel(
+      DestinationModel distinationModel = new DestinationModel(
           id: val['id'],
           title: val['title'],
           image: val['image'],
