@@ -4,14 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+typedef intCallBack(int val);
+
 class RatingComponent extends StatelessWidget {
   RatingComponent(
-      {Key? key, required this.isIndicator, this.label, this.rating})
+      {Key? key,
+      required this.isIndicator,
+      this.label,
+      this.rating,
+      this.callback})
       : super(key: key);
 
   final bool isIndicator;
   final String? label;
   final double? rating;
+  final intCallBack? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class RatingComponent extends StatelessWidget {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,
-                unratedColor:Color(0xFFFFCFC6),
+                unratedColor: Color(0xFFFFCFC6),
                 itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
@@ -36,6 +43,7 @@ class RatingComponent extends StatelessWidget {
                 ),
                 onRatingUpdate: (rating) {
                   print(rating);
+                  callback!(rating.toInt());
                 },
               ),
             ],

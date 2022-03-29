@@ -8,6 +8,8 @@ class CarModel {
   int reviewer;
   String reviewstatus;
   double price;
+  int passenger, baggage, door;
+  String gear;
 
   CarModel({
     required this.id,
@@ -19,6 +21,10 @@ class CarModel {
     required this.reviewer,
     required this.reviewstatus,
     required this.price,
+    required this.passenger,
+    required this.baggage,
+    required this.door,
+    required this.gear,
   });
   factory CarModel.fromJson(Map<String, dynamic> json) {
     return CarModel(
@@ -30,6 +36,10 @@ class CarModel {
         reviewstatus: json['reviewstatus'],
         rating: json['rating'],
         location: json['location'],
-        price: json['price']);
+        price: json['price'],
+        passenger: json['passenger'],
+        baggage: json['baggage'],
+        door: json['door'],
+        gear: json['gear']);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/components/PriceRangeComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
+import 'package:bookingapp/models/HotelFilterModel.dart';
+import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDataGenerator.dart';
@@ -10,14 +12,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class HotelFilterScreen extends StatefulWidget {
-  HotelFilterScreen({Key? key}) : super(key: key);
+typedef StringCallBack(String val);
 
+class HotelFilterScreen extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
+  HotelFilterScreen({Key? key, this.callBack}) : super(key: key);
+  final StringCallBack? callBack;
   @override
   State<HotelFilterScreen> createState() => _HotelFilterScreenState();
 }
 
 class _HotelFilterScreenState extends State<HotelFilterScreen> {
+  late Future<HotelFilterModel> hotelFilterModel;
+  String params = "";
+  String starrate = '', reviewscore = '', pricerange = '';
+  List<String> terms = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    hotelFilterModel = getHotelFilter();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,57 +45,142 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
         child: defaultButton(
-          text: Booking_lbl_btn_Apply,
-          tap: () {},
-          height: 40
-        ),
+            text: Booking_lbl_btn_Apply,
+            tap: () {
+              params += terms.join("&") +
+                  "&" +
+                  starrate +
+                  reviewscore +
+                  "&" +
+                  pricerange;
+              widget.callBack!(params);
+            },
+            height: 40),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            20.height,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: PriceRangeComponent(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: RatingComponent(
-                isIndicator: false,
-                label: 'Hotel Star',
-              ),
-            ),
-            20.height,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: RatingComponent(
-                isIndicator: false,
-                label: 'Review Score',
-              ),
-            ),
-            20.height,
-            FilterTagListComponent(
-              typeList: propertyTypeList,
-              label: 'Property type',
-              isIcon: false,
-            ),
-            20.height,
-            FilterTagListComponent(
-              typeList: facilitiesList,
-              label: 'Facilities',
-              isIcon: true,
-            ),
-            20.height,
-            FilterTagListComponent(
-              typeList: hotelServiceList,
-              label: 'Hotel Service',
-              isIcon: false,
-            )
-          ],
-        ),
+        child: FutureBuilder<HotelFilterModel>(
+            future: hotelFilterModel,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                // return SpinKitFadingFour(color: Colors.green);
+                default:
+                  if (snapshot.hasError)
+                    // ignore: curly_braces_in_flow_control_structures
+                    return Text('Error: ${snapshot.error}');
+                  else {
+                    HotelFilterModel? data = snapshot.data;
+
+                    // selectedOne = null;
+                    return data != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              20.height,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: PriceRangeComponent(
+                                  minprice: data.minprice,
+                                  maxprice: data.maxprice,
+                                  callback: (val) {
+                                    setState(() {
+                                      pricerange = "price_range=" + val;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: RatingComponent(
+                                  isIndicator: false,
+                                  label: 'Hotel Star',
+                                  callback: (val) {
+                                    setState(() {
+                                      starrate =
+                                          "star_rate[]=" + val.toString() + "&";
+                                    });
+                                  },
+                                ),
+                              ),
+                              20.height,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: RatingComponent(
+                                  isIndicator: false,
+                                  label: 'Review Score',
+                                  callback: (val) {
+                                    setState(() {
+                                      reviewscore = "review_score[]=" +
+                                          val.toString() +
+                                          "&";
+                                    });
+                                  },
+                                ),
+                              ),
+                              20.height,
+                              FilterTagListComponent(
+                                typeList: data.propertylist,
+                                label: 'Property type',
+                                isIcon: false,
+                                callback: (val) {
+                                  setState(() {
+                                    // ignore: prefer_contains
+                                    terms.indexOf(
+                                                "terms[]=" + val.toString()) ==
+                                            -1
+                                        ? terms.add("terms[]=" + val.toString())
+                                        : terms.removeAt(terms.indexOf(
+                                            "terms[]=" + val.toString()));
+                                  });
+                                },
+                              ),
+                              20.height,
+                              FilterTagListComponent(
+                                typeList: data.facilitylist,
+                                label: 'Facilities',
+                                isIcon: true,
+                                callback: (val) {
+                                  setState(() {
+                                    // ignore: prefer_contains
+                                    terms.indexOf(
+                                                "terms[]=" + val.toString()) ==
+                                            -1
+                                        ? terms.add("terms[]=" + val.toString())
+                                        : terms.removeAt(terms.indexOf(
+                                            "terms[]=" + val.toString()));
+                                  });
+                                },
+                              ),
+                              20.height,
+                              FilterTagListComponent(
+                                typeList: data.servicelist,
+                                label: 'Hotel Service',
+                                isIcon: false,
+                                callback: (val) {
+                                  setState(() {
+                                    // ignore: prefer_contains
+                                    terms.indexOf(
+                                                "terms[]=" + val.toString()) ==
+                                            -1
+                                        ? terms.add("terms[]=" + val.toString())
+                                        : terms.removeAt(terms.indexOf(
+                                            "terms[]=" + val.toString()));
+                                  });
+                                },
+                              )
+                            ],
+                          )
+                        : Container(
+                            child: const Text(" No Data Exist "),
+                          );
+                  }
+              }
+            }),
       ),
     );
   }

@@ -2,20 +2,29 @@ import 'package:bookingapp/components/FilterButtonComponent.dart';
 import 'package:bookingapp/components/SortByComponent.dart';
 import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
-import 'package:bookingapp/screen/HotelFilterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../components/HotelListComponent.dart';
 import '../services/hotel.page.service.dart';
 
-class BookingHotelFragment extends StatelessWidget {
+class BookingHotelFragment extends StatefulWidget {
   const BookingHotelFragment({Key? key}) : super(key: key);
+  @override
+  State<BookingHotelFragment> createState() => _BookingHotelFragmentState();
+}
+
+class _BookingHotelFragmentState extends State<BookingHotelFragment> {
+  late Future<List<BookingHotelModel>> hotelList;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    hotelList = getHotelData("");
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<List<BookingHotelModel>> hotelList = getHotelData();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hotel'),
@@ -30,7 +39,13 @@ class BookingHotelFragment extends StatelessWidget {
                 children: [
                   SortByComponent(),
                   10.width,
-                  FilterButtonComponent()
+                  FilterButtonComponent(
+                    callBack: (val) {
+                      setState(() {
+                        hotelList = getHotelData(val);
+                      });
+                    },
+                  )
                 ],
               ),
             ),

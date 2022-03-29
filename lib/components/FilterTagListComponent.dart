@@ -4,17 +4,21 @@ import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+typedef intCallBack(int val);
+
 class FilterTagListComponent extends StatefulWidget {
   const FilterTagListComponent(
       {Key? key,
       required this.typeList,
       required this.label,
-      required this.isIcon})
+      required this.isIcon,
+      this.callback})
       : super(key: key);
 
   final List<TypeSelectedModel> typeList;
   final String label;
   final bool isIcon;
+  final intCallBack? callback;
 
   @override
   State<FilterTagListComponent> createState() => _FilterTagListComponentState();
@@ -59,7 +63,9 @@ class _FilterTagListComponentState extends State<FilterTagListComponent> {
             ).onTap(() {
               widget.typeList[i].isSelected = !widget.typeList[i].isSelected;
               log(widget.typeList[i].isSelected);
-              setState(() {});
+              setState(() {
+                widget.callback!(widget.typeList[i].id ?? 0);
+              });
             });
           },
         ),

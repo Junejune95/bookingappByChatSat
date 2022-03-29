@@ -4,5 +4,6 @@ class TypeSelectedModel {
   String? type;
   bool isSelected;
   IconData? icon;
-  TypeSelectedModel({ this.type, this.isSelected = false,this.icon});
+  int? id;
+  TypeSelectedModel({this.type, this.isSelected = false, this.icon, this.id});
 }

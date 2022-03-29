@@ -74,15 +74,20 @@ Future<HomePageModel> getHomeData() async {
     jsonResponse['data'][6]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       CarModel carModel = new CarModel(
-          id: val['id'],
-          rating: double.parse(val['review_score']['score_total']),
-          title: val['title'],
-          reviewer: val['review_score']['total_review'],
-          reviewstatus: val['review_score']['review_text'],
-          image: val['image'],
-          location: val['location']['name'],
-          price: double.parse(val['price'].toString()),
-          content: val['content']);
+        id: val['id'],
+        rating: double.parse(val['review_score']['score_total']),
+        title: val['title'],
+        reviewer: val['review_score']['total_review'],
+        reviewstatus: val['review_score']['review_text'],
+        image: val['image'],
+        location: val['location']['name'],
+        price: double.parse(val['price'].toString()),
+        content: val['content'],
+        passenger: val['passenger'],
+        baggage: val['baggage'],
+        door: val['door'],
+        gear: val['gear'],
+      );
       carmodelList.add(carModel);
     });
     homePageModel.title = jsonResponse['data'][0]['model']['title'];
