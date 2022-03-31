@@ -56,6 +56,7 @@ class _CheckscreenState extends State<Checkscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        padEnds: false,
         children: screen,
         controller: _pageController,
         onPageChanged: _onPageChange,

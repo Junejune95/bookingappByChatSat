@@ -1,5 +1,6 @@
 import 'package:bookingapp/models/CarModel.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
+import 'package:bookingapp/utils/BookingIcons.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -18,7 +19,7 @@ class CarListComponent extends StatelessWidget {
       itemCount: carlist.length,
       itemBuilder: (context, index) {
         return defaultCard(
-          width: 260,
+          width: 280,
           margin: EdgeInsets.symmetric(vertical: 10),
           // padding: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(
@@ -27,7 +28,8 @@ class CarListComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                     child: AspectRatio(
                       aspectRatio: 3 / 2,
                       child: Image.network(
@@ -37,43 +39,62 @@ class CarListComponent extends StatelessWidget {
                     ),
                   ),
                   10.height,
-                  titleText(
-                    title: carlist[index].title,
-                    size: 16,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: titleText(
+                      title: carlist[index].title,
+                      size: 16,
+                    ),
                   ),
                   12.height,
-                  locationWrapper(location: carlist[index].location),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: locationWrapper(location: carlist[index].location),
+                  ),
                   12.height,
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.price_change,
-                        color: Booking_TextColorSecondary,
-                      ),
-                      10.width,
-                      priceWrapper(
-                          price: carlist[index].price,
-                          unit: 'day',
-                          isFullScreen: false,
-                          alignment: MainAxisAlignment.start),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.price_change,
+                          color: Booking_TextColorSecondary,
+                        ),
+                        10.width,
+                        priceWrapper(
+                            price: carlist[index].price,
+                            unit: 'day',
+                            isFullScreen: false,
+                            alignment: MainAxisAlignment.start),
+                      ],
+                    ),
                   ),
                   12.height,
                   Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: Booking_AppBar,
                       borderRadius: radiusOnly(bottomLeft: 8, bottomRight: 8),
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          children: [
-                            Icon(
-                              Icons.people,
-                            ),
-                            // Text(carlist[index].passenger)
-                          ],
-                        )
+                        carServiceWidget(
+                          carlist[index].passenger.toString(),
+                          Booking_ic_people,
+                        ),
+                        carServiceWidget(
+                          carlist[index].gear,
+                          Booking_ic_auto,
+                        ),
+                        carServiceWidget(
+                          carlist[index].baggage.toString(),
+                          Booking_ic_baggage,
+                        ),
+                        carServiceWidget(
+                          carlist[index].door.toString(),
+                          Booking_ic_door,
+                        ),
                       ],
                     ),
                   )
@@ -83,14 +104,27 @@ class CarListComponent extends StatelessWidget {
                   top: 15,
                   right: 15,
                   child: const Icon(
-                    Icons.favorite,
-                    color: Booking_TextColorWhite,
+                    Icons.favorite_outline,
+                    color: Booking_TextColorPrimary,
                     size: 24,
                   ).onTap(() {})),
             ],
           ),
         );
       },
+    );
+  }
+
+  Column carServiceWidget(String service, IconData ic) {
+    return Column(
+      children: [
+        Icon(ic),
+        8.height,
+        Text(
+          service,
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+      ],
     );
   }
 }

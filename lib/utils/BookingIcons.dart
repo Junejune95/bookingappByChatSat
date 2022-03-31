@@ -24,4 +24,11 @@ IconData Booking_ic_wifi= Icons.wifi;
 IconData Booking_ic_coffee= Icons.coffee;
 IconData Booking_ic_wakeupcall= Icons.call;
 
+// Car Services
+IconData Booking_ic_people = Icons.people;
+IconData Booking_ic_auto = Icons.hdr_auto;
+IconData Booking_ic_baggage = Icons.luggage;
+IconData Booking_ic_door = Icons.door_back_door;
+
+
 
