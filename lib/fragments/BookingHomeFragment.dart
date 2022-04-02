@@ -66,7 +66,7 @@ class BookingHomeFragment extends StatelessWidget {
                                     title: data.ctitle,
                                     subtitle: data.csubtitle),
                                 20.height,
-                                CarListComponent(carlist: data.carlist)
+                                CarListComponent(carlist: data.carlist,isHome: true,)
                               ],
                             )
                           : Container(

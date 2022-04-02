@@ -33,15 +33,19 @@ Widget labelText(
 }
 
 Widget titleText(
-    {required String title, int? size, int? maxLines, Color? color}) {
-  return Text(
-    title,
-    style: boldTextStyle(
-        decoration: TextDecoration.none,
-        size: size != null ? size : textSizeNormal.toInt(),
-        color: color != null ? color : Booking_TextColorPrimary),
-    maxLines: maxLines != null ? maxLines : 1,
-    overflow: TextOverflow.ellipsis,
+    {required String title, int? size, int? maxLines, Color? color,double? width}) {
+  return SizedBox(
+    width: width != null ? width : 120 ,
+    child: Text(
+      title,
+      
+      style: boldTextStyle(
+          decoration: TextDecoration.none,
+          size: size != null ? size : textSizeNormal.toInt(),
+          color: color != null ? color : Booking_TextColorPrimary),
+      maxLines: maxLines != null ? maxLines : 1,
+      overflow: TextOverflow.ellipsis,
+    ),
   );
 }
 
@@ -64,7 +68,7 @@ Widget locationWrapper(
       Icon(Booking_ic_location,
           size: iconSize != null ? iconSize : 16,
           color: color != null ? color : iconColorSecondary),
-          8.width,
+      8.width,
       Text(
         location,
         style: boldTextStyle(
@@ -75,12 +79,11 @@ Widget locationWrapper(
   );
 }
 
-Widget priceWrapper({
-  required double price,
-  required String unit,
-  required bool isFullScreen,
-  MainAxisAlignment? alignment
-}) {
+Widget priceWrapper(
+    {required double price,
+    required String unit,
+    required bool isFullScreen,
+    MainAxisAlignment? alignment}) {
   return Row(
     mainAxisAlignment: alignment != null ? alignment : MainAxisAlignment.end,
     children: [

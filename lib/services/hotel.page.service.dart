@@ -33,6 +33,7 @@ Future<List<BookingHotelModel>> getHotelData(String params) async {
   }
 }
 
+
 Future<HotelFilterModel> getHotelFilter() async {
   var url = Uri.parse('http://dev.bookingcore.org/api/hotel/filters');
   var response =

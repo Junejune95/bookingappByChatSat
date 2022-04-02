@@ -1,6 +1,5 @@
 import 'package:bookingapp/components/FilterButtonComponent.dart';
 import 'package:bookingapp/components/SortByComponent.dart';
-import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';

@@ -6,7 +6,7 @@ const Booking_Secondary = Color(0xFF5191fa);
 const Booking_Primary_light = Color(0xFFF0F4FA);
 const Booking_Primary = Color(0xFF1a2b47);
 const Booking_Secondary_light = Color(0xFF2B4B80);
-const Booking_ColorPrimaryDark = Color.fromARGB(15, 0, 0, 0);
+const Booking_ColorPrimaryDark = Color.fromARGB(15, 254, 16, 16);
 const Booking_LineColor = Color(0xFFE2E2E2);
 const Booking_AppBar= Color(0xFFE6F0FF);
 

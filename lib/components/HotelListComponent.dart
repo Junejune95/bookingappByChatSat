@@ -32,7 +32,7 @@ class HolelListComponent extends StatelessWidget {
           child: Stack(
             children: [
               Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
+              // crossA xisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
                   aspectRatio: 3/2,
