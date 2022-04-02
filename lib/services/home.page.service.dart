@@ -1,3 +1,4 @@
+import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CarModel.dart';
 import 'package:bookingapp/models/DestinationModel.dart';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 Future<HomePageModel> getHomeData() async {
-  var url = Uri.parse('http://dev.bookingcore.org/api/home-page');
+  var url = Uri.parse(baseUrl + '/home-page');
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
 

@@ -1,25 +1,13 @@
 class FlightModel {
   int id;
-  int reviewer;
   double price;
-  String departuretime,
-      arrivaltime,
-      saleprice,
-      reviewstatus,
-      content,
-      image,
-      code,
-      title,
-      duration;
+  String departuretime, arrivaltime, saleprice, content, image, title, duration;
 
   FlightModel({
     required this.id,
-    required this.code,
     required this.title,
     required this.image,
     required this.content,
-    required this.reviewer,
-    required this.reviewstatus,
     required this.price,
     required this.saleprice,
     required this.departuretime,

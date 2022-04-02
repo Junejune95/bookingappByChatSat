@@ -1,3 +1,4 @@
+import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
@@ -6,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 Future<List<BookingHotelModel>> getHotelData(String params) async {
-  var url = Uri.parse('http://dev.bookingcore.org/api/hotel/search?' + params);
+  var url = Uri.parse(baseUrl + '/hotel/search?' + params);
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
 
@@ -33,9 +34,8 @@ Future<List<BookingHotelModel>> getHotelData(String params) async {
   }
 }
 
-
 Future<HotelFilterModel> getHotelFilter() async {
-  var url = Uri.parse('http://dev.bookingcore.org/api/hotel/filters');
+  var url = Uri.parse(baseUrl + '/hotel/filters');
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
 

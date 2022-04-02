@@ -1,10 +1,10 @@
+import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/CarModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-
 Future<List<CarModel>> getCarData(String params) async {
-  var url = Uri.parse('http://dev.bookingcore.org/api/car/search?' + params);
+  var url = Uri.parse(baseUrl + '/car/search?' + params);
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
 
