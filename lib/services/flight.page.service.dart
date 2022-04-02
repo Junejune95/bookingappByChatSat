@@ -25,6 +25,7 @@ Future<List<FlightModel>> getFlightData(String params) async {
           arrivaltime: "",
           duration: "",
           location: val['location'] ?? "");
+          print(flightModel.image);
       flightmodelList.add(flightModel);
     });
     return flightmodelList;

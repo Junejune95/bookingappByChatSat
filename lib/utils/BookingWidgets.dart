@@ -33,20 +33,33 @@ Widget labelText(
 }
 
 Widget titleText(
-    {required String title, int? size, int? maxLines, Color? color,double? width}) {
-  return SizedBox(
-    width: width != null ? width : 120 ,
-    child: Text(
-      title,
-      
-      style: boldTextStyle(
-          decoration: TextDecoration.none,
-          size: size != null ? size : textSizeNormal.toInt(),
-          color: color != null ? color : Booking_TextColorPrimary),
-      maxLines: maxLines != null ? maxLines : 1,
-      overflow: TextOverflow.ellipsis,
-    ),
-  );
+    {required String title,
+    int? size,
+    int? maxLines,
+    Color? color,
+    double? width}) {
+  return width != null
+      ? SizedBox(
+          width: width,
+          child: Text(
+            title,
+            style: boldTextStyle(
+                decoration: TextDecoration.none,
+                size: size != null ? size : textSizeNormal.toInt(),
+                color: color != null ? color : Booking_TextColorPrimary),
+            maxLines: maxLines != null ? maxLines : 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      : Text(
+          title,
+          style: boldTextStyle(
+              decoration: TextDecoration.none,
+              size: size != null ? size : textSizeNormal.toInt(),
+              color: color != null ? color : Booking_TextColorPrimary),
+          maxLines: maxLines != null ? maxLines : 1,
+          overflow: TextOverflow.ellipsis,
+        );
 }
 
 Widget descriptionText(
@@ -83,18 +96,20 @@ Widget priceWrapper(
     {required double price,
     required String unit,
     required bool isFullScreen,
-    MainAxisAlignment? alignment}) {
+    MainAxisAlignment? alignment,
+    bool? isFromText=true}) {
   return Row(
     mainAxisAlignment: alignment != null ? alignment : MainAxisAlignment.end,
     children: [
-      Text(
-        'From',
-        style: TextStyle(
-          color: Booking_TextColorSecondary,
-          fontWeight: FontWeight.w500,
-          fontSize: isFullScreen == false ? textSizeSmall : textSizeSMedium,
+      if (isFromText == true)
+        Text(
+          'From',
+          style: TextStyle(
+            color: Booking_TextColorSecondary,
+            fontWeight: FontWeight.w500,
+            fontSize: isFullScreen == false ? textSizeSmall : textSizeSMedium,
+          ),
         ),
-      ),
       8.width,
       Text(
         '\$' + price.toString(),
@@ -107,7 +122,7 @@ Widget priceWrapper(
       ),
       8.width,
       Text(
-        '/' + unit,
+        unit,
         style: TextStyle(
             color: Booking_TextColorSecondary,
             fontWeight: FontWeight.w500,

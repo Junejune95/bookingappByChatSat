@@ -30,5 +30,9 @@ IconData Booking_ic_auto = Icons.hdr_auto;
 IconData Booking_ic_baggage = Icons.luggage;
 IconData Booking_ic_door = Icons.door_back_door;
 
+IconData Booking_ic_landing = Icons.flight_land;
+IconData Booking_ic_takeof = Icons.flight_takeoff;
+
+
 
 
