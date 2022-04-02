@@ -63,7 +63,7 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
 
                         // selectedOne = null;
                         return data != null
-                            ? HolelListComponent(
+                            ? HotelListComponent(
                                 hotellist: data,
                                 isHome: false,
                               )

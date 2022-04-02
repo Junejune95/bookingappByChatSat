@@ -8,8 +8,8 @@ import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class HolelListComponent extends StatelessWidget {
-  HolelListComponent({required this.isHome, Key? key, required this.hotellist})
+class HotelListComponent extends StatelessWidget {
+  HotelListComponent({required this.isHome, Key? key, required this.hotellist})
       : super(key: key);
 
   final bool isHome;

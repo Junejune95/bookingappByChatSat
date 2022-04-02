@@ -49,7 +49,7 @@ class BookingHomeFragment extends StatelessWidget {
                                     title: data.htitle,
                                     subtitle: data.hsubtitle),
                                 20.height,
-                                HolelListComponent(
+                                HotelListComponent(
                                   isHome: true,
                                   hotellist: data.hotellist,
                                 ),

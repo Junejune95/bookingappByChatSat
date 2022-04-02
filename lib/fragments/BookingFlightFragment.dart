@@ -1,5 +1,8 @@
 import 'package:bookingapp/components/FilterButtonComponent.dart';
+import 'package:bookingapp/components/FlightListComponent.dart';
 import 'package:bookingapp/components/SortByComponent.dart';
+import 'package:bookingapp/models/FightModel.dart';
+import 'package:bookingapp/services/flight.page.service.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -11,14 +14,13 @@ class BookingFightFragment extends StatefulWidget {
 }
 
 class _BookingFightFragmentState extends State<BookingFightFragment> {
-    late Future<List<BookingHotelModel>> hotelList;
+  late Future<List<FlightModel>> flightList;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    hotelList = getHotelData("");
+    flightList = getFlightData("");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,37 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
                   FilterButtonComponent(
                     callBack: (val) {
                       setState(() {
-                        hotelList = getHotelData(val);
+                        flightList = getFlightData(val);
                       });
                     },
                   )
                 ],
               ),
             ),
+            FutureBuilder<List<FlightModel>>(
+                future: flightList,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    // return SpinKitFadingFour(color: Colors.green);
+                    default:
+                      if (snapshot.hasError)
+                        // ignore: curly_braces_in_flow_control_structures
+                        return Text('Error: ${snapshot.error}');
+                      else {
+                        List<FlightModel>? data = snapshot.data;
+
+                        // selectedOne = null;
+                        return data != null
+                            ? FlightListComponent(
+                                flightlist: data,
+                              )
+                            : Container(
+                                child: const Text(" No Data Exist "),
+                              );
+                      }
+                  }
+                }),
           ],
         ),
       ),
