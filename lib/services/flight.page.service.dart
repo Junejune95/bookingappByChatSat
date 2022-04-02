@@ -20,7 +20,7 @@ Future<List<FlightModel>> getFlightData(String params) async {
           image: val['image'] ?? "",
           content: val['content'] ?? "",
           price: val['price'] ?? 0.0,
-          saleprice: val['sale_price'] ?? 0.0,
+          saleprice: val['sale_price'] ?? "",
           departuretime: "",
           arrivaltime: "",
           duration: "",
