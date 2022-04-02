@@ -1,6 +1,6 @@
 
 import 'package:bookingapp/fragments/BookingCarFragment.dart';
-import 'package:bookingapp/fragments/BookingFightFragment.dart';
+import 'package:bookingapp/fragments/BookingFlightFragment.dart';
 import 'package:bookingapp/fragments/BookingHomeFragment.dart';
 import 'package:bookingapp/fragments/BookingHotelFragment.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
