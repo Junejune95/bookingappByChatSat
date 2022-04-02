@@ -1,7 +1,14 @@
 class FlightModel {
   int id;
   double price;
-  String departuretime, arrivaltime, saleprice, content, image, title, duration;
+  String departuretime,
+      arrivaltime,
+      saleprice,
+      content,
+      image,
+      title,
+      duration,
+      location;
 
   FlightModel({
     required this.id,
@@ -13,6 +20,7 @@ class FlightModel {
     required this.departuretime,
     required this.arrivaltime,
     required this.duration,
+    required this.location,
   });
   // factory FlightModel.fromJson(Map<String, dynamic> json) {
   //   return FlightModel(

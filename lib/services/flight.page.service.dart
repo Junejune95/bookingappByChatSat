@@ -17,13 +17,14 @@ Future<List<FlightModel>> getFlightData(String params) async {
       FlightModel flightModel = new FlightModel(
           id: val['id'],
           title: val['title'],
-          image: val['image'],
-          content: val['content'],
+          image: val['image'] ?? "",
+          content: val['content'] ?? "",
           price: val['price'] ?? 0.0,
           saleprice: val['sale_price'] ?? 0.0,
           departuretime: "",
           arrivaltime: "",
-          duration: "");
+          duration: "",
+          location: val['location'] ?? "");
       flightmodelList.add(flightModel);
     });
     return flightmodelList;
