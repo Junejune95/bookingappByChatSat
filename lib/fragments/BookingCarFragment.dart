@@ -42,6 +42,7 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                         carList = getCarData(val);
                       });
                     },
+                    type: 'Car',
                   )
                 ],
               ),

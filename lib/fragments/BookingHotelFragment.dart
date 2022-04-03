@@ -39,6 +39,8 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
                   SortByComponent(),
                   10.width,
                   FilterButtonComponent(
+                    type: 'Hotel',
+
                     callBack: (val) {
                       setState(() {
                         hotelList = getHotelData(val);

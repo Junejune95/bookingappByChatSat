@@ -44,6 +44,7 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
                         flightList = getFlightData(val);
                       });
                     },
+                    type: 'Flight',
                   )
                 ],
               ),

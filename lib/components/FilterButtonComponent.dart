@@ -1,3 +1,4 @@
+import 'package:bookingapp/screen/CarFilterScreen.dart';
 import 'package:bookingapp/screen/HotelFilterScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,10 @@ import 'package:nb_utils/nb_utils.dart';
 typedef StringCallBack(String val);
 
 class FilterButtonComponent extends StatelessWidget {
-  const FilterButtonComponent({Key? key, this.callBack}) : super(key: key);
+  const FilterButtonComponent({Key? key, this.callBack, required this.type})
+      : super(key: key);
   final StringCallBack? callBack;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -17,12 +20,21 @@ class FilterButtonComponent extends StatelessWidget {
         elevation: 2,
       ),
       onPressed: () {
-        HotelFilterScreen(
-          callBack: (val) {
-            callBack!(val);
-          },
-        ).launch(context,
-            pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+        if (type == 'Hotel') {
+          HotelFilterScreen(
+            callBack: (val) {
+              callBack!(val);
+            },
+          ).launch(context,
+              pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+        } else if (type == 'Car') {
+          CarFilterScreen(
+            callBack: (val) {
+              callBack!(val);
+            },
+          ).launch(context,
+              pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+        }
       },
       child: const Icon(
         Icons.filter_list,
