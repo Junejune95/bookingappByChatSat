@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
-import 'package:bookingapp/components/RatingComponent.dart';
-import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/FightModel.dart';
-import 'package:bookingapp/size_config.dart';
+import 'package:bookingapp/screen/FlightDetailScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIcons.dart';
@@ -60,19 +58,25 @@ class FlightListComponent extends StatelessWidget {
                 commonWidget(Booking_ic_takeof, Booking_lbl_Take_Off),
                 26.height,
                 commonWidget(Booking_ic_landing, Booking_lbl_Landing),
-                26.height,
+                28.height,
                 InkWell(
-                  onTap: ()=>{},
+                  onTap: () => {
+                    FlightDetailScreen().launch(context,
+                        pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
+                  },
                   child: Container(
                     width: context.width(),
                     alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(vertical: 12),
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                       color: Booking_Secondary,
                       borderRadius: radiusOnly(bottomLeft: 8, bottomRight: 8),
                     ),
-                    child:
-                        titleText(title: 'CHOOSE', color: Booking_TextColorWhite,size: textSizeLargeMedium.toInt()),
+                    child: titleText(
+                      title: 'CHOOSE',
+                      color: Booking_TextColorWhite,
+                      size: textSizeLargeMedium.toInt(),
+                    ),
                   ),
                 )
               ],

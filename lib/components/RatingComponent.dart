@@ -42,7 +42,6 @@ class RatingComponent extends StatelessWidget {
                   color: Booking_OrangeDarkColor,
                 ),
                 onRatingUpdate: (rating) {
-                  print(rating);
                   callback!(rating.toInt());
                 },
               ),

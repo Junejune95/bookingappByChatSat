@@ -15,6 +15,7 @@ IconData Booking_ic_history = Icons.history;
 IconData Booking_ic_lock = Icons.lock;
 IconData Booking_ic_setting= Icons.settings;
 IconData Booking_ic_logout= Icons.logout;
+IconData Booking_ic_time= Icons.watch_later_outlined;
 
 // Facilities
 IconData Booking_ic_bike= Icons.pedal_bike;
