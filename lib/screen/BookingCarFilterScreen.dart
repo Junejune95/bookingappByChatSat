@@ -1,15 +1,13 @@
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/components/PriceRangeComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
+import 'package:bookingapp/models/CarFilterModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
+import 'package:bookingapp/services/car.page.service.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
-import 'package:bookingapp/size_config.dart';
-import 'package:bookingapp/utils/BookingColors.dart';
-import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 typedef StringCallBack(String val);
@@ -23,7 +21,7 @@ class BookingCarFilterScreen extends StatefulWidget {
 }
 
 class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
-  late Future<HotelFilterModel> hotelFilterModel;
+  late Future<CarFilterModel> carFilterModel;
   String params = "";
   String starrate = '', reviewscore = '', pricerange = '';
   List<String> terms = [];
@@ -31,7 +29,7 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    hotelFilterModel = getHotelFilter();
+    carFilterModel = getCarFilter();
   }
 
   @override
@@ -56,12 +54,13 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                   "&" +
                   pricerange;
               widget.callBack!(params);
+              Navigator.of(context).pop();
             },
             height: 40),
       ),
       body: SingleChildScrollView(
-        child: FutureBuilder<HotelFilterModel>(
-            future: hotelFilterModel,
+        child: FutureBuilder<CarFilterModel>(
+            future: carFilterModel,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -71,7 +70,7 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                     // ignore: curly_braces_in_flow_control_structures
                     return Text('Error: ${snapshot.error}');
                   else {
-                    HotelFilterModel? data = snapshot.data;
+                    CarFilterModel? data = snapshot.data;
 
                     // selectedOne = null;
                     return data != null
@@ -88,20 +87,6 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                                   callback: (val) {
                                     setState(() {
                                       pricerange = "price_range=" + val;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                child: RatingComponent(
-                                  isIndicator: false,
-                                  label: 'Hotel Star',
-                                  callback: (val) {
-                                    setState(() {
-                                      starrate =
-                                          "star_rate[]=" + val.toString() + "&";
                                     });
                                   },
                                 ),
@@ -124,8 +109,8 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                               ),
                               20.height,
                               FilterTagListComponent(
-                                typeList: data.propertylist,
-                                label: 'Property type',
+                                typeList: data.cartypelist,
+                                label: 'Car type',
                                 isIcon: false,
                                 callback: (val) {
                                   setState(() {
@@ -141,9 +126,9 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                               ),
                               20.height,
                               FilterTagListComponent(
-                                typeList: data.facilitylist,
-                                label: 'Facilities',
-                                isIcon: true,
+                                typeList: data.featurelist,
+                                label: 'Features',
+                                isIcon: false,
                                 callback: (val) {
                                   setState(() {
                                     // ignore: prefer_contains
@@ -157,22 +142,6 @@ class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
                                 },
                               ),
                               20.height,
-                              FilterTagListComponent(
-                                typeList: data.servicelist,
-                                label: 'Hotel Service',
-                                isIcon: false,
-                                callback: (val) {
-                                  setState(() {
-                                    // ignore: prefer_contains
-                                    terms.indexOf(
-                                                "terms[]=" + val.toString()) ==
-                                            -1
-                                        ? terms.add("terms[]=" + val.toString())
-                                        : terms.removeAt(terms.indexOf(
-                                            "terms[]=" + val.toString()));
-                                  });
-                                },
-                              )
                             ],
                           )
                         : Container(

@@ -16,7 +16,15 @@ class PriceRangeComponent extends StatefulWidget {
 }
 
 class _PriceRangeComponentState extends State<PriceRangeComponent> {
-  RangeValues _currentRangeValues = const RangeValues(300, 900);
+  late RangeValues _currentRangeValues;
+  @override
+  void initState() {
+    // TODO: implement initState
+    double ranmin = widget.minprice.toDouble();
+    double ranmax = widget.maxprice.toDouble();
+    _currentRangeValues = RangeValues(ranmin, ranmax);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,7 @@ class _PriceRangeComponentState extends State<PriceRangeComponent> {
                 values: _currentRangeValues,
                 min: widget.minprice.toDouble(),
                 max: widget.maxprice.toDouble(),
-                divisions: 300,
+                // divisions: 300,
                 labels: RangeLabels(
                   '\$' + _currentRangeValues.start.round().toString(),
                   '\$' + _currentRangeValues.end.round().toString(),

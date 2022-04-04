@@ -1,29 +1,27 @@
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/components/PriceRangeComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
-import 'package:bookingapp/models/HotelFilterModel.dart';
-import 'package:bookingapp/services/hotel.page.service.dart';
-import 'package:bookingapp/size_config.dart';
-import 'package:bookingapp/utils/BookingColors.dart';
-import 'package:bookingapp/utils/BookingDataGenerator.dart';
+import 'package:bookingapp/models/CarFilterModel.dart';
+import 'package:bookingapp/models/FlightFliterModel.dart';
+import 'package:bookingapp/services/flight.page.service.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 typedef StringCallBack(String val);
 
-class HotelFilterScreen extends StatefulWidget {
+class BookingFlightFilterScreen extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  HotelFilterScreen({Key? key, this.callBack}) : super(key: key);
+  BookingFlightFilterScreen({Key? key, this.callBack}) : super(key: key);
   final StringCallBack? callBack;
   @override
-  State<HotelFilterScreen> createState() => _HotelFilterScreenState();
+  State<BookingFlightFilterScreen> createState() =>
+      _BookingFlightFilterScreenState();
 }
 
-class _HotelFilterScreenState extends State<HotelFilterScreen> {
-  late Future<HotelFilterModel> hotelFilterModel;
+class _BookingFlightFilterScreenState extends State<BookingFlightFilterScreen> {
+  late Future<FligthFilterModel> flightFilterModel;
   String params = "";
   String starrate = '', reviewscore = '', pricerange = '';
   List<String> terms = [];
@@ -31,7 +29,7 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    hotelFilterModel = getHotelFilter();
+    flightFilterModel = getFlightFilter();
   }
 
   @override
@@ -61,8 +59,8 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
             height: 40),
       ),
       body: SingleChildScrollView(
-        child: FutureBuilder<HotelFilterModel>(
-            future: hotelFilterModel,
+        child: FutureBuilder<FligthFilterModel>(
+            future: flightFilterModel,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -72,7 +70,7 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
                     // ignore: curly_braces_in_flow_control_structures
                     return Text('Error: ${snapshot.error}');
                   else {
-                    HotelFilterModel? data = snapshot.data;
+                    FligthFilterModel? data = snapshot.data;
 
                     // selectedOne = null;
                     return data != null
@@ -89,20 +87,6 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
                                   callback: (val) {
                                     setState(() {
                                       pricerange = "price_range=" + val;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                child: RatingComponent(
-                                  isIndicator: false,
-                                  label: 'Hotel Star',
-                                  callback: (val) {
-                                    setState(() {
-                                      starrate =
-                                          "star_rate[]=" + val.toString() + "&";
                                     });
                                   },
                                 ),
@@ -125,8 +109,8 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
                               ),
                               20.height,
                               FilterTagListComponent(
-                                typeList: data.propertylist,
-                                label: 'Property type',
+                                typeList: data.flighttypelist,
+                                label: 'Flight type',
                                 isIcon: false,
                                 callback: (val) {
                                   setState(() {
@@ -142,9 +126,9 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
                               ),
                               20.height,
                               FilterTagListComponent(
-                                typeList: data.facilitylist,
-                                label: 'Facilities',
-                                isIcon: true,
+                                typeList: data.inflightexplist,
+                                label: 'In Flight Experience',
+                                isIcon: false,
                                 callback: (val) {
                                   setState(() {
                                     // ignore: prefer_contains
@@ -158,22 +142,6 @@ class _HotelFilterScreenState extends State<HotelFilterScreen> {
                                 },
                               ),
                               20.height,
-                              FilterTagListComponent(
-                                typeList: data.servicelist,
-                                label: 'Hotel Service',
-                                isIcon: false,
-                                callback: (val) {
-                                  setState(() {
-                                    // ignore: prefer_contains
-                                    terms.indexOf(
-                                                "terms[]=" + val.toString()) ==
-                                            -1
-                                        ? terms.add("terms[]=" + val.toString())
-                                        : terms.removeAt(terms.indexOf(
-                                            "terms[]=" + val.toString()));
-                                  });
-                                },
-                              )
                             ],
                           )
                         : Container(
