@@ -39,12 +39,8 @@ class HotelListComponent extends StatelessWidget {
                   child: Container(
                     height: 200,
                     width: SizeConfig.screenWidth,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(hotellist[index].image),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                 
+                    child: commonCacheImageWidget(hotellist[index].image, 0),
                   ).cornerRadiusWithClipRRectOnly(topLeft: 10, topRight: 10),
                 ),
                 Padding(

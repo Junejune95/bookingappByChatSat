@@ -27,15 +27,14 @@ class FlightListComponent extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
               children: [
-                Padding(
+                Container(
                   padding: const EdgeInsets.all(20),
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
-                    child: Image.network(
-                      'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/flight/airline/img1.jpg',
-                      fit: BoxFit.cover,
-                    ).cornerRadiusWithClipRRect(8),
-                  ),
+                    child: commonCacheImageWidget(
+                        'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/flight/airline/img1.jpg',
+                        0),
+                  ).cornerRadiusWithClipRRect(10),
                 ),
                 10.height,
                 Padding(
