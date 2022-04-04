@@ -1,7 +1,7 @@
 import 'package:bookingapp/models/CarModel.dart';
 import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 

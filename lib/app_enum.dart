@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:flutter/material.dart';
 
 enum AppMenu { HOME, HOTEL, CAR, FIGHT, MORE }

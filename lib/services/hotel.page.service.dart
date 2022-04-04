@@ -2,7 +2,7 @@ import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

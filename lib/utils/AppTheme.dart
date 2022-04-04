@@ -18,6 +18,8 @@ class AppThemeData {
     hoverColor: Colors.white54,
     dividerColor: Booking_LineColor,
     fontFamily: 'Source Sans Pro',
+    inputDecorationTheme: inputDecorationTheme(),
+
     appBarTheme: const AppBarTheme(
       color: Booking_AppBar,
       iconTheme: IconThemeData(color: Booking_TextColorPrimary),
@@ -70,6 +72,8 @@ class AppThemeData {
     textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
     hoverColor: Colors.black12,
     fontFamily: GoogleFonts.openSans().fontFamily,
+    inputDecorationTheme: inputDecorationTheme(),
+
     bottomSheetTheme:
         const BottomSheetThemeData(backgroundColor: appBackgroundColorDark),
     primaryTextTheme: TextTheme(
@@ -97,5 +101,34 @@ class AppThemeData {
       TargetPlatform.linux: OpenUpwardsPageTransitionsBuilder(),
       TargetPlatform.macOS: OpenUpwardsPageTransitionsBuilder(),
     }),
+  );
+}
+
+
+InputDecorationTheme inputDecorationTheme() {
+  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide:  BorderSide(color: Booking_LineColor),
+    gapPadding: 10,
+  );
+    OutlineInputBorder focusoutlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide:  BorderSide(color: Booking_Primary),
+    gapPadding: 10,
+  );
+  return InputDecorationTheme(
+    // If  you are using latest version of flutter then lable text and hint text shown like this
+    // if you r using flutter less then 1.20.* then maybe this is not working properly
+    // if we are define our floatingLabelBehavior in our theme then it's not applayed
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    contentPadding: const EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 20,
+    ),
+    enabledBorder: outlineInputBorder,
+    focusedBorder: focusoutlineInputBorder,
+    border: outlineInputBorder,
+    suffixIconColor: Booking_InputBorder,
+    focusColor: Booking_Primary
   );
 }

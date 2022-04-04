@@ -1,5 +1,6 @@
-import 'package:bookingapp/screen/CarFilterScreen.dart';
-import 'package:bookingapp/screen/HotelFilterScreen.dart';
+
+import 'package:bookingapp/screen/BookingCarFilterScreen.dart';
+import 'package:bookingapp/screen/BookingHotelFilterScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -28,7 +29,7 @@ class FilterButtonComponent extends StatelessWidget {
           ).launch(context,
               pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
         } else if (type == 'Car') {
-          CarFilterScreen(
+          BookingCarFilterScreen(
             callBack: (val) {
               callBack!(val);
             },

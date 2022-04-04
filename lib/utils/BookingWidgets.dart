@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_if_null_operators
 
 // import 'dart:ffi';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:bookingapp/size_config.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -97,7 +98,7 @@ Widget priceWrapper(
     required String unit,
     required bool isFullScreen,
     MainAxisAlignment? alignment,
-    bool? isFromText=true}) {
+    bool? isFromText = true}) {
   return Row(
     mainAxisAlignment: alignment != null ? alignment : MainAxisAlignment.end,
     children: [
@@ -209,4 +210,31 @@ Widget defaultButton(
       ),
     ),
   );
+
+  
 }
+
+Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit? fit}) {
+  if (url.validate().startsWith('http')) {
+    if (isMobile) {
+      return CachedNetworkImage(
+        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+        imageUrl: '$url',
+        height: height,
+        width: width,
+        fit: fit ?? BoxFit.cover,
+        errorWidget: (_, __, ___) {
+          return SizedBox(height: height, width: width);
+        },
+      );
+    } else {
+      return Image.network(url!, height: height, width: width, fit: fit ?? BoxFit.cover);
+    }
+  } else {
+    return Image.asset(url!, height: height, width: width, fit: fit ?? BoxFit.cover);
+  }
+}
+
+Widget? Function(BuildContext, String) placeholderWidgetFn() => (_, s) => placeholderWidget();
+
+Widget placeholderWidget() => Image.asset('images/placeholder.jpg', fit: BoxFit.cover);

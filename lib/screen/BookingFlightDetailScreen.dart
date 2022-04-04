@@ -3,20 +3,20 @@
 import 'package:bookingapp/components/CounterComponent.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class FlightDetailScreen extends StatefulWidget {
-  const FlightDetailScreen({Key? key}) : super(key: key);
+class BookingFlightDetailScreen extends StatefulWidget {
+  const BookingFlightDetailScreen({Key? key}) : super(key: key);
 
   @override
-  State<FlightDetailScreen> createState() => _FlightDetailScreenState();
+  State<BookingFlightDetailScreen> createState() => _BookingFlightDetailScreenState();
 }
 
-class _FlightDetailScreenState extends State<FlightDetailScreen> {
+class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
   int _itemCount = 0;
   @override
   Widget build(BuildContext context) {

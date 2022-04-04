@@ -16,6 +16,8 @@ IconData Booking_ic_lock = Icons.lock;
 IconData Booking_ic_setting= Icons.settings;
 IconData Booking_ic_logout= Icons.logout;
 IconData Booking_ic_time= Icons.watch_later_outlined;
+IconData Booking_ic_email= Icons.email;
+IconData Booking_ic_phone= Icons.phone;
 
 // Facilities
 IconData Booking_ic_bike= Icons.pedal_bike;
@@ -33,6 +35,11 @@ IconData Booking_ic_door = Icons.door_back_door;
 
 IconData Booking_ic_landing = Icons.flight_land;
 IconData Booking_ic_takeof = Icons.flight_takeoff;
+
+
+// images
+const BookingLogo = 'images/booking_logo.png';
+
 
 
 

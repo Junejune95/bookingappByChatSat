@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:bookingapp/models/FightModel.dart';
-import 'package:bookingapp/screen/FlightDetailScreen.dart';
+import 'package:bookingapp/screen/BookingFlightDetailScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class FlightListComponent extends StatelessWidget {
                 28.height,
                 InkWell(
                   onTap: () => {
-                    FlightDetailScreen().launch(context,
+                    BookingFlightDetailScreen().launch(context,
                         pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
                   },
                   child: Container(

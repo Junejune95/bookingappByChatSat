@@ -1,4 +1,3 @@
-
 import 'package:bookingapp/fragments/BookingCarFragment.dart';
 import 'package:bookingapp/fragments/BookingFlightFragment.dart';
 import 'package:bookingapp/fragments/BookingHomeFragment.dart';
@@ -45,7 +44,7 @@ class _CheckscreenState extends State<Checkscreen> {
     const BookingHotelFragment(),
     const BookingCarFragment(),
     const BookingFightFragment(),
-    const BookingMoreFragment(),
+    BookingMoreFragment(),
   ];
 
   _onPageChange(index) {
@@ -75,7 +74,6 @@ class _CheckscreenState extends State<Checkscreen> {
         items: AppMenu.values
             .map(
               (e) => BottomNavigationBarItem(
-                
                 icon: Icon(
                   e.appMenuIcon,
                 ),

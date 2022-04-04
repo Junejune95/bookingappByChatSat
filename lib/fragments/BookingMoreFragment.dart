@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/screen/BookingHistoryScreen.dart';
+import 'package:bookingapp/screen/BookingSignInScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingMoreFragment extends StatelessWidget {
-  const BookingMoreFragment({Key? key}) : super(key: key);
+   BookingMoreFragment({Key? key}) : super(key: key);
+
+  bool isLogin=false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,50 +21,55 @@ class BookingMoreFragment extends StatelessWidget {
       child: Scaffold(
         body: Container(
           color: Booking_Primary,
-          child: Column(
-            children: [
-              upperContainer(),
-              10.height,
-              itemWidget(
-                Booking_lbl_My_profile,
-                Booking_ic_person,
-                () {},
-              ),
-              dividerWidget(),
-              itemWidget(
-                Booking_lbl_Booking_history,
-                Booking_ic_history,
-                () {
-                    BookingHistory().launch(context);
-                },
-              ),
-              dividerWidget(),
-              itemWidget(
-                Booking_lbl_Change_password,
-                Booking_ic_lock,
-                () {
-                  
-
-                },
-              ),
-              dividerWidget(),
-              itemWidget(
-                Booking_lbl_Setting,
-                Booking_ic_setting,
-                () {},
-              ),
-              dividerWidget(),
-              itemWidget(
-                Booking_lbl_Log_out,
-                Booking_ic_logout,
-                () {},
-              ),
-              dividerWidget(),
-            ],
-          ),
+          child: isLogin==true ? afteruserloginWidget(context) : BookingSignInScreen()
         ),
       ),
     );
+  }
+
+
+  Column afteruserloginWidget(BuildContext context) {
+    return Column(
+          children: [
+            upperContainer(),
+            10.height,
+            itemWidget(
+              Booking_lbl_My_profile,
+              Booking_ic_person,
+              () {},
+            ),
+            dividerWidget(),
+            itemWidget(
+              Booking_lbl_Booking_history,
+              Booking_ic_history,
+              () {
+                  BookingHistory().launch(context);
+              },
+            ),
+            dividerWidget(),
+            itemWidget(
+              Booking_lbl_Change_password,
+              Booking_ic_lock,
+              () {
+                
+
+              },
+            ),
+            dividerWidget(),
+            itemWidget(
+              Booking_lbl_Setting,
+              Booking_ic_setting,
+              () {},
+            ),
+            dividerWidget(),
+            itemWidget(
+              Booking_lbl_Log_out,
+              Booking_ic_logout,
+              () {},
+            ),
+            dividerWidget(),
+          ],
+        );
   }
 
 

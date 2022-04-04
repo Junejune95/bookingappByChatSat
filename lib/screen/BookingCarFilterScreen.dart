@@ -14,15 +14,15 @@ import 'package:nb_utils/nb_utils.dart';
 
 typedef StringCallBack(String val);
 
-class CarFilterScreen extends StatefulWidget {
+class BookingCarFilterScreen extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  CarFilterScreen({Key? key, this.callBack}) : super(key: key);
+  BookingCarFilterScreen({Key? key, this.callBack}) : super(key: key);
   final StringCallBack? callBack;
   @override
-  State<CarFilterScreen> createState() => _CarFilterScreenState();
+  State<BookingCarFilterScreen> createState() => _BookingCarFilterScreenState();
 }
 
-class _CarFilterScreenState extends State<CarFilterScreen> {
+class _BookingCarFilterScreenState extends State<BookingCarFilterScreen> {
   late Future<HotelFilterModel> hotelFilterModel;
   String params = "";
   String starrate = '', reviewscore = '', pricerange = '';

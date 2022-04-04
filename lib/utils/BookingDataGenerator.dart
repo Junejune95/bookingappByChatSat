@@ -1,6 +1,6 @@
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
-import 'package:bookingapp/utils/BookingIcons.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 
 import '../models/BookingIconModel.dart';
