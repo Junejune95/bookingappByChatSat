@@ -2,6 +2,7 @@
 
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
+import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -142,7 +143,14 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                     }
                   } else {
                     isSignUp = !isSignUp;
-                    setState(() {});
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                    // setState(() {});
                   }
                 }),
               ],
@@ -153,10 +161,16 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
     );
   }
 
-  TextFormField buildPhoneNumberField() {
-    return TextFormField(
+  AppTextField buildPhoneNumberField() {
+    return AppTextField(
       controller: phoneNumber,
-      keyboardType: TextInputType.phone,
+      textFieldType: TextFieldType.PHONE,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return Booking_err_txt_phone;
+        }
+        return null;
+      },
       decoration: InputDecoration(
           hintText: 'Phone Number',
           suffixIcon: Icon(Booking_ic_phone),
@@ -170,7 +184,9 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
       textFieldType: TextFieldType.PASSWORD,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+          return Booking_err_txt_cpwd;
+        } else if (cPassCont.value != passCont.value) {
+          return Booking_err_txt_pwd_match;
         }
         return null;
       },
@@ -179,13 +195,13 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
     );
   }
 
-  TextFormField buildPasswordField() {
-    return TextFormField(
+  AppTextField buildPasswordField() {
+    return AppTextField(
       controller: passCont,
-      keyboardType: TextInputType.visiblePassword,
-       validator: (value) {
+      textFieldType: TextFieldType.PASSWORD,
+      validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+          return Booking_err_txt_pwd;
         }
         return null;
       },
@@ -194,32 +210,52 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
     );
   }
 
-  TextFormField buildEmailField() {
-    return TextFormField(
+  AppTextField buildEmailField() {
+    return AppTextField(
       controller: emailCont,
-      keyboardType: TextInputType.emailAddress,
+      textFieldType: TextFieldType.EMAIL,
       decoration: InputDecoration(
         hintText: 'Email Id',
         suffixIcon: Icon(Booking_ic_email),
       ),
+        validator: (value) {
+        if (value == null || value.isEmpty) {
+          return Booking_err_txt_email;
+        }else if(!emailValidatorRegExp.hasMatch(value)){
+          return Booking_err_txt_email_invalid;
+        }
+        return null;
+      },
     );
   }
 
-  TextFormField buildLastNameField() {
-    return TextFormField(
+  AppTextField buildLastNameField() {
+    return AppTextField(
       controller: lastName,
-      keyboardType: TextInputType.name,
+      textFieldType: TextFieldType.NAME,
       decoration: InputDecoration(
         hintText: 'Last Name',
         suffixIcon: Icon(Booking_ic_person),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return Booking_err_txt_phone;
+        }
+        return null;
+      },
     );
   }
 
-  TextFormField buildFirstNameField() {
-    return TextFormField(
+  AppTextField buildFirstNameField() {
+    return AppTextField(
       controller: firstName,
-      keyboardType: TextInputType.name,
+      textFieldType: TextFieldType.NAME,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return Booking_err_txt_name1;
+        }
+        return null;
+      },
       decoration: InputDecoration(
         hintText: 'First Name',
         suffixIcon: Icon(Booking_ic_person),

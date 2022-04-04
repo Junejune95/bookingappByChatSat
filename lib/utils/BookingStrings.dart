@@ -95,3 +95,18 @@ const Booking_lbl_btn_Apply= "Apply";
 const Booking_lbl_btn_Search = "Search";
 const Booking_lbl_btn_Detail = "Detail";
 const Booking_lbl_btn_Invoice = "Invoice";
+
+// validation
+const Booking_err_txt_name1= "The first name is required field";
+const Booking_err_txt_name2= "The last name is required field";
+const Booking_err_txt_phone= "Phone is required field";
+const Booking_err_txt_email_token= "The email has already been taken.";
+const Booking_err_txt_email= "Email is required field.";
+const Booking_err_txt_email_invalid= "Email invalidate.";
+const Booking_err_txt_pwd= "Password is required field.";
+const Booking_err_txt_cpwd= "Confirm Password is required field.";
+const Booking_err_txt_pwd_match= "Password not match.";
+const Booking_err_txt_terms= "The terms and conditions field is required";
+
+final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
