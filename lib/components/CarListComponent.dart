@@ -35,12 +35,14 @@ class CarListComponent extends StatelessWidget {
                       child: Container(
                         height: 200,
                         width: SizeConfig.screenWidth,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(carlist[index].image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        padding: EdgeInsets.all(20),
+                        child: commonCacheImageWidget(carlist[index].image, 0),
+                        // decoration: BoxDecoration(
+                        //   image: DecorationImage(
+                        //     image: NetworkImage(carlist[index].image),
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
                       ).cornerRadiusWithClipRRectOnly(
                           topLeft: 10, topRight: 10),
                     ),
