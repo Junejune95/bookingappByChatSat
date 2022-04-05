@@ -30,7 +30,6 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
           horizontal: 20,
         ),
         child: Column(
-
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

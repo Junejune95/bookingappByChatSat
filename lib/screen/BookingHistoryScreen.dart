@@ -108,7 +108,7 @@ Widget bookingHistoryList() {
   return Container(
     color: Booking_Primary_light,
     width: SizeConfig.screenWidth,
-    padding: EdgeInsets.symmetric(vertical: 16,horizontal: 20),
+    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
     child: Column(
       children: [
         defaultCard(

@@ -21,6 +21,7 @@ const Booking_lbl_Home_Description3 = "Most popular destinations";
 const Booking_lbl_Gallery = "Gallery";
 const Booking_lbl_Facilities = "Facilities";
 const Booking_lbl_Description = "Description";
+const Booking_lbl_Highlight = "HIGHLIGHTS";
 const Booking_lbl_BookNow = "Book Now";
 const Booking_lbl_Rules = "Rules";
 const Booking_lbl_HotelPolicies = "Hotel Policies";

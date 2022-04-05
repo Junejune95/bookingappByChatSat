@@ -21,10 +21,18 @@ class BookingHotelDetailScreen extends StatelessWidget {
     'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-5.jpg',
     'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-4.jpg',
   ];
+
+  List<String> highlights = [
+    'See amazing works of contemporary art, including Vincent van Gogh’s The Starry Night',
+    'Check out Campbell’s Soup Cans by Warhol and The Dance (I) by Matisse',
+    'Enjoy free audio guides available in English, French, German, Italian, Spanish, Portuguese',
+    'See amazing works of contemporary art, including Vincent van Gogh’s The Starry Night',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: bottomNavigationWidget(context),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -48,6 +56,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
               24.height,
               galleryWidget(),
               reviewBoxWidget(context),
+              20.height,
               FilterTagListComponent(
                 typeList: facilitiesList,
                 label: 'Facilities',
@@ -55,36 +64,168 @@ class BookingHotelDetailScreen extends StatelessWidget {
                 callback: (val) {},
                 labelColor: Booking_Primary,
               ),
+              14.height,
               Padding(
                 padding: const EdgeInsets.only(left: 14),
                 child: labelText(
                     title: Booking_lbl_Description,
                     color: Booking_TextColorPrimary),
               ),
-              10.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 14, right: 14),
-                child: ReadMoreText(
-                  'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as',
-                  trimLines: 2,
-                  colorClickableText: Booking_TextColorSecondary,
-                  trimMode: TrimMode.Line,
-                  style: TextStyle(
-                    color: Booking_TextColorSecondary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  trimCollapsedText: 'Show more',
-                  // trimExpandedText: 'Show less',
-                  lessStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  moreStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              )
+              14.height,
+              descriptionWrapper(),
+              28.height,
+              highlightWidget()
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container bottomNavigationWidget(BuildContext context) {
+    return Container(
+      color: Booking_Primary_light,
+      height: 120,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text(
+                  'From',
+                  style: TextStyle(
+                    color: Booking_Primary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                10.height,
+                Row(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    Text(
+                      '\$300',
+                      style: TextStyle(
+                        color: Booking_Secondary,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '/ night',
+                      style: TextStyle(
+                        color: Booking_TextColorSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: context.width() / 2,
+                height: 50,
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Booking_Secondary,
+                  borderRadius: radius(8),
+                  boxShadow: defaultBoxShadow(
+                    shadowColor: Booking_Secondary.withOpacity(0.4),
+                    blurRadius: 4.0,
+                    spreadRadius: 0.3,
+                  ),
+                ),
+                child: Text(
+                  Booking_lbl_BookNow,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Booking_TextColorWhite,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            )
+          ]),
+    );
+  }
+
+  Column highlightWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 14),
+          child: labelText(
+            title: Booking_lbl_Highlight,
+            color: Booking_TextColorPrimary,
+          ),
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.fromLTRB(16, 15, 16, 16),
+          child: Column(
+            children: highlights.map((str) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '\u2022',
+                    style: TextStyle(
+                      fontSize: 16,
+                      height: 1.55,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Text(
+                        str,
+                        textAlign: TextAlign.left,
+                        softWrap: true,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Booking_TextColorSecondary,
+                            height: 1.55,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Padding descriptionWrapper() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 14, right: 14),
+      child: ReadMoreText(
+        'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as',
+        trimLines: 4,
+
+        colorClickableText: Booking_TextColorSecondary,
+        trimMode: TrimMode.Line,
+        style: TextStyle(
+            color: Booking_TextColorSecondary,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            height: 1.5),
+        trimCollapsedText: 'Show more',
+        // trimExpandedText: 'Show less',
+        lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
     );
   }
