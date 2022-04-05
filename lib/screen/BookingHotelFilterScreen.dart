@@ -3,13 +3,9 @@ import 'package:bookingapp/components/PriceRangeComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
-import 'package:bookingapp/size_config.dart';
-import 'package:bookingapp/utils/BookingColors.dart';
-import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 typedef StringCallBack(String val);

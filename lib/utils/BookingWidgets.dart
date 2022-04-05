@@ -76,7 +76,11 @@ Widget descriptionText(
 }
 
 Widget locationWrapper(
-    {required String location, int? size, double? iconSize, Color? color}) {
+    {required String location,
+    int? size,
+    double? iconSize,
+    Color? color,
+    bool? isFontWeight}) {
   return Row(
     children: [
       Icon(Booking_ic_location,
@@ -85,10 +89,16 @@ Widget locationWrapper(
       8.width,
       Text(
         location,
-        style: boldTextStyle(
-            size: size != null ? size : 14, color: Booking_TextColorSecondary),
+        style: isFontWeight == true
+            ? boldTextStyle(
+                size: size != null ? size : 14,
+                color: color != null ? color : Booking_TextColorPrimary)
+            : TextStyle(
+                fontSize: size != null ? size.toDouble() : 14.0,
+                color: color != null ? color : Booking_TextColorPrimary,
+                fontWeight: FontWeight.w500),
         overflow: TextOverflow.ellipsis,
-      ),
+      )
     ],
   );
 }
@@ -210,15 +220,15 @@ Widget defaultButton(
       ),
     ),
   );
-
-  
 }
 
-Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit? fit}) {
+Widget commonCacheImageWidget(String? url, double height,
+    {double? width, BoxFit? fit}) {
   if (url.validate().startsWith('http')) {
     if (isMobile) {
       return CachedNetworkImage(
-        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+        placeholder:
+            placeholderWidgetFn() as Widget Function(BuildContext, String)?,
         imageUrl: '$url',
         height: height,
         width: width,
@@ -228,13 +238,17 @@ Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit
         },
       );
     } else {
-      return Image.network(url!, height: height, width: width, fit: fit ?? BoxFit.cover);
+      return Image.network(url!,
+          height: height, width: width, fit: fit ?? BoxFit.cover);
     }
   } else {
-    return Image.asset(url!, height: height, width: width, fit: fit ?? BoxFit.cover);
+    return Image.asset(url!,
+        height: height, width: width, fit: fit ?? BoxFit.cover);
   }
 }
 
-Widget? Function(BuildContext, String) placeholderWidgetFn() => (_, s) => placeholderWidget();
+Widget? Function(BuildContext, String) placeholderWidgetFn() =>
+    (_, s) => placeholderWidget();
 
-Widget placeholderWidget() => Image.asset('images/placeholder.jpg', fit: BoxFit.cover);
+Widget placeholderWidget() =>
+    Image.asset('images/placeholder.jpg', fit: BoxFit.cover);

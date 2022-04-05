@@ -18,6 +18,12 @@ IconData Booking_ic_logout= Icons.logout;
 IconData Booking_ic_time= Icons.watch_later_outlined;
 IconData Booking_ic_email= Icons.email;
 IconData Booking_ic_phone= Icons.phone;
+IconData Booking_ic_fav= Icons.favorite_outline;
+IconData Booking_ic_back= Icons.arrow_back_ios_new_outlined;
+IconData Booking_ic_forward= Icons.arrow_forward_ios;
+IconData Booking_ic_zoomout= Icons.zoom_out_map;
+IconData Booking_ic_share= Icons.share;
+IconData Booking_ic_video= Icons.videocam_outlined;
 
 // Facilities
 IconData Booking_ic_bike= Icons.pedal_bike;

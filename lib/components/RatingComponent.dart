@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators, prefer_const_constructors
+
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
@@ -12,18 +14,20 @@ class RatingComponent extends StatelessWidget {
       required this.isIndicator,
       this.label,
       this.rating,
-      this.callback})
+      this.callback,
+      this.iconSize = 22})
       : super(key: key);
 
   final bool isIndicator;
   final String? label;
   final double? rating;
   final intCallBack? callback;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
     return isIndicator
-        ? ratingIndicator(rating)
+        ? ratingIndicator(rating, iconSize)
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,6 +41,7 @@ class RatingComponent extends StatelessWidget {
                 itemCount: 5,
                 unratedColor: Color(0xFFFFCFC6),
                 itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemSize: iconSize != null ? iconSize : 22,
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
                   color: Booking_OrangeDarkColor,
@@ -50,16 +55,16 @@ class RatingComponent extends StatelessWidget {
   }
 }
 
-Widget ratingIndicator(rating) {
+Widget ratingIndicator(rating, iconSize) {
   return RatingBarIndicator(
     rating: rating,
     unratedColor: Color(0xFFFFCFC6),
-    itemBuilder: (context, index) => const Icon(
+    itemSize: iconSize != null ? iconSize : 22,
+    itemBuilder: (context, index) => Icon(
       Icons.star,
       color: Booking_OrangeDarkColor,
     ),
     itemCount: 5,
-    itemSize: 22.0,
     direction: Axis.horizontal,
   );
 }
