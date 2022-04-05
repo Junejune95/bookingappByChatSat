@@ -1,5 +1,5 @@
-
 import 'package:bookingapp/screen/BookingCarFilterScreen.dart';
+import 'package:bookingapp/screen/BookingFlightFilterScreen.dart';
 import 'package:bookingapp/screen/BookingHotelFilterScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +30,13 @@ class FilterButtonComponent extends StatelessWidget {
               pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
         } else if (type == 'Car') {
           BookingCarFilterScreen(
+            callBack: (val) {
+              callBack!(val);
+            },
+          ).launch(context,
+              pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+        } else if (type == 'Flight') {
+          BookingFlightFilterScreen(
             callBack: (val) {
               callBack!(val);
             },
