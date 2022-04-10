@@ -99,3 +99,68 @@ Future<HotelFilterModel> getHotelFilter() async {
     return hotelFilterModel;
   }
 }
+
+Future<BookingHotelModel> getHotelDetail(String id) async {
+  var url = Uri.parse(baseUrl + '/hotel/detail/' + id);
+  var response =
+      await http.get(url, headers: {"Content-Type": "application/json"});
+
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    var hoteldata = jsonResponse['data'];
+
+    List<TypeSelectedModel> facilitylist = [];
+    List<String> gallery = [];
+    hoteldata['terms']['6']['child'].forEach((dynamic val) {
+      TypeSelectedModel facility =
+          // ignore: unnecessary_new
+          new TypeSelectedModel(type: val['name'], id: val['id']);
+      facility.id == 42
+          ? facility.icon = Booking_ic_wakeupcall
+          : facility.id == 43
+              ? facility.icon = Booking_ic_car
+              : facility.id == 44
+                  ? facility.icon = Booking_ic_bike
+                  : facility.id == 45
+                      ? facility.icon = Booking_ic_tv
+                      : facility.id == 46
+                          ? facility.icon = Booking_ic_recycle
+                          : facility.id == 47
+                              ? facility.icon = Booking_ic_wifi
+                              : facility.icon = Booking_ic_coffee;
+      facilitylist.add(facility);
+    });
+    print(facilitylist.length);
+    hoteldata['gallery'].forEach((dynamic val) {
+      String gal = val;
+      gallery.add(gal);
+    });
+    // ignore: unnecessary_new
+    BookingHotelModel bookingHotelModel = new BookingHotelModel(
+        id: hoteldata['id'],
+        rating: double.parse(hoteldata['review_score']['score_total']),
+        name: hoteldata['title'],
+        reviewer: hoteldata['review_score']['total_review'],
+        reviewstatus: hoteldata['review_score']['score_text'],
+        image: hoteldata['image'],
+        location: hoteldata['location']['name'],
+        price: double.parse(hoteldata['price']),
+        content: hoteldata['content'],
+        facilitylist: facilitylist,
+        gallaries: gallery,
+        video: hoteldata['video']);
+    return bookingHotelModel;
+  } else {
+    // ignore: unnecessary_new
+    BookingHotelModel bookingHotelModel = new BookingHotelModel(
+        id: 0,
+        rating: 0.0,
+        name: '',
+        reviewer: 0,
+        reviewstatus: '',
+        image: '',
+        location: '',
+        price: 0.0);
+    return bookingHotelModel;
+  }
+}
