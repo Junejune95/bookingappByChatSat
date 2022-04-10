@@ -74,10 +74,103 @@ class BookingHotelDetailScreen extends StatelessWidget {
               14.height,
               descriptionWrapper(),
               28.height,
-              highlightWidget()
+              highlightWidget(),
+              10.height,
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: labelText(
+                  title: Booking_lbl_Rules,
+                  color: Booking_TextColorPrimary,
+                ),
+              ),
+              16.height,
+              Container(
+                height: 80,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Booking_AppBar,
+                  borderRadius: radius(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ruleTimeWidget(context, Booking_lbl_CheckIn, '12:00 AM'),
+                    Container(
+                      width: 1,
+                      color: Booking_TextColorSecondary.withOpacity(0.3),
+                    ),
+                    ruleTimeWidget(context, Booking_lbl_CheckOut, '12:00 PM'),
+                  ],
+                ),
+              ),
+              10.height,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    labelText(
+                      title: Booking_lbl_HotelPolicies,
+                      color: Booking_TextColorPrimary,
+                    ),
+                    8.height,
+                    expandWidget('Guarantee Policy'),
+                    expandWidget('Children Policy'),
+                    expandWidget('Cancellation/Amendment Policy'),
+                    expandWidget('Late check-out policy'),
+                  ],
+                ),
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  ExpansionTile expandWidget(String title) {
+    return ExpansionTile(
+      title: Container(
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Booking_TextColorSecondary,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+          // textAlign: TextAlign.center,
+        ),
+      ),
+      // ignore: prefer_const_literals_to_create_immutables
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, bottom: 20),
+          child: Text(
+            'Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffee species.',
+            style: TextStyle(
+              fontSize: 16,
+              color: Booking_TextColorSecondary,
+            ),
+            maxLines: 3,
+            softWrap: true,
+            // textAlign: TextAlign.start,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Container ruleTimeWidget(BuildContext context, String label, String time) {
+    return Container(
+      width: context.width() / 2.6,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          labelText(title: label, size: 14),
+          titleText(title: time, size: 14)
+        ],
       ),
     );
   }
