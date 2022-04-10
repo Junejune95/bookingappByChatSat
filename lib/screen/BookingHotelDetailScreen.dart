@@ -2,6 +2,7 @@
 
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
+import 'package:bookingapp/screen/BookingImagePreviewScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -414,7 +415,11 @@ class BookingHotelDetailScreen extends StatelessWidget {
         Positioned(
           right: 118,
           top: 20,
-          child: imageactionWidget(ic: Booking_ic_zoomout, onTap: () => {}),
+          child: imageactionWidget(ic: Booking_ic_zoomout, onTap: () => {
+               BookingImagePreviewScreen(images: this.urls,
+          ).launch(context,
+              pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
+          }),
         ),
         Positioned(
           right: 68,

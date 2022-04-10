@@ -65,7 +65,6 @@ class _FilterTagListComponentState extends State<FilterTagListComponent> {
                     ),
             ).onTap(() {
               widget.typeList[i].isSelected = !widget.typeList[i].isSelected;
-              log(widget.typeList[i].isSelected);
               setState(() {
                 widget.callback!(widget.typeList[i].id ?? 0);
               });
