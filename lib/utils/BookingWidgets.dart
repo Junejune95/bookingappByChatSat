@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_if_null_operators
+// ignore_for_file: prefer_if_null_operators, prefer_const_constructors
 
 // import 'dart:ffi';
+import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:bookingapp/size_config.dart';
@@ -252,3 +253,80 @@ Widget? Function(BuildContext, String) placeholderWidgetFn() =>
 
 Widget placeholderWidget() =>
     Image.asset('images/placeholder.jpg', fit: BoxFit.cover);
+
+
+Container bottomBookNowWidget(BuildContext context,VoidCallback onTap,label) {
+    return Container(
+      color: Booking_Primary_light,
+      height: 120,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text(
+                  'From',
+                  style: TextStyle(
+                    color: Booking_Primary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                10.height,
+                Row(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    Text(
+                      '\$300',
+                      style: TextStyle(
+                        color: Booking_Secondary,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                     label,
+                      style: TextStyle(
+                        color: Booking_TextColorSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: onTap,
+              child: Container(
+                width: context.width() / 2,
+                height: 50,
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Booking_Secondary,
+                  borderRadius: radius(8),
+                  boxShadow: defaultBoxShadow(
+                    shadowColor: Booking_Secondary.withOpacity(0.4),
+                    blurRadius: 4.0,
+                    spreadRadius: 0.3,
+                  ),
+                ),
+                child: Text(
+                  Booking_lbl_BookNow,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Booking_TextColorWhite,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            )
+          ]),
+    );
+  }
+
+  
