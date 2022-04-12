@@ -34,13 +34,13 @@ class BookingHotelDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: bottomBookNowWidget(context,(){},'/ night'),
+      bottomNavigationBar: bottomBookNowWidget(context, () {}, '/ night'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              upperImageViewWidget(context,urls),
+              upperImageViewWidget(context, urls),
               12.height,
               Padding(
                 padding: const EdgeInsets.only(left: 16),
@@ -66,15 +66,9 @@ class BookingHotelDetailScreen extends StatelessWidget {
                 callback: (val) {},
                 labelColor: Booking_Primary,
               ),
-              14.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 14),
-                child: labelText(
-                    title: Booking_lbl_Description,
-                    color: Booking_TextColorPrimary),
-              ),
-              14.height,
-              descriptionWrapper(),
+              20.height,
+              descriptionWrapper(
+                  'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as'),
               28.height,
               highlightWidget(),
               10.height,
@@ -177,8 +171,6 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  
-
   Column highlightWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,35 +222,4 @@ class BookingHotelDetailScreen extends StatelessWidget {
       ],
     );
   }
-
-  Padding descriptionWrapper() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 14, right: 14),
-      child: ReadMoreText(
-        'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as',
-        trimLines: 4,
-
-        colorClickableText: Booking_TextColorSecondary,
-        trimMode: TrimMode.Line,
-        style: TextStyle(
-            color: Booking_TextColorSecondary,
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            height: 1.5),
-        trimCollapsedText: 'Show more',
-        // trimExpandedText: 'Show less',
-        lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  
-
-  
-
-  
-
-
-
 }

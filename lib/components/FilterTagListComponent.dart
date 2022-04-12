@@ -13,8 +13,7 @@ class FilterTagListComponent extends StatefulWidget {
       required this.label,
       required this.isIcon,
       this.callback,
-      this.labelColor
-      })
+      this.labelColor})
       : super(key: key);
 
   final List<TypeSelectedModel> typeList;
@@ -35,7 +34,9 @@ class _FilterTagListComponentState extends State<FilterTagListComponent> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: labelText(title: widget.label,color: widget.labelColor != null ? widget.labelColor : null),
+          child: labelText(
+              title: widget.label,
+              color: widget.labelColor != null ? widget.labelColor : null),
         ),
         4.height,
         HorizontalList(

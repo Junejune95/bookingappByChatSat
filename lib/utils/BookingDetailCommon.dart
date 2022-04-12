@@ -6,6 +6,7 @@ import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:readmore/readmore.dart';
 
 Stack upperImageViewWidget(BuildContext context, List<String> urls) {
   return Stack(
@@ -112,80 +113,111 @@ InkWell videoViewBtn() {
     ),
   );
 }
-Container reviewBoxWidget(BuildContext context) {
-    return Container(
-      width: context.width(),
-      margin: EdgeInsets.all(14),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Booking_Primary_light,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RatingComponent(
-            isIndicator: true,
-            rating: 4.5,
-            iconSize: 26,
-          ),
-          14.height,
-          Row(
-            children: [
-              Text('5.0 (10) / Excellent'),
-              10.width,
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                    color: Booking_TextColorSecondary, shape: BoxShape.circle),
-              ),
-              10.width,
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Text(
-                      '2 Reviews',
-                      style: TextStyle(
-                        color: Booking_Secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(
-                      Booking_ic_forward,
-                      size: 16,
-                      color: Booking_Secondary,
-                    )
-                  ],
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
 
-  Column galleryWidget(urls) {
-    return Column(
+Container reviewBoxWidget(BuildContext context) {
+  return Container(
+    width: context.width(),
+    margin: EdgeInsets.all(14),
+    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    decoration: BoxDecoration(
+      color: Booking_Primary_light,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 14),
-          child: labelText(
-              title: Booking_lbl_Gallery, color: Booking_TextColorPrimary),
+        RatingComponent(
+          isIndicator: true,
+          rating: 4.5,
+          iconSize: 26,
         ),
-        10.height,
-        HorizontalList(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.only(left: 10),
-                child: commonCacheImageWidget(urls[index], 100, width: 100)
-                    .cornerRadiusWithClipRRect(14),
-              );
-            })
+        14.height,
+        Row(
+          children: [
+            Text('5.0 (10) / Excellent'),
+            10.width,
+            Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                  color: Booking_TextColorSecondary, shape: BoxShape.circle),
+            ),
+            10.width,
+            InkWell(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Text(
+                    '2 Reviews',
+                    style: TextStyle(
+                      color: Booking_Secondary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(
+                    Booking_ic_forward,
+                    size: 16,
+                    color: Booking_Secondary,
+                  )
+                ],
+              ),
+            ),
+          ],
+        )
       ],
-    );
-  }
+    ),
+  );
+}
+
+Column galleryWidget(urls) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 14),
+        child: labelText(
+            title: Booking_lbl_Gallery, color: Booking_TextColorPrimary),
+      ),
+      10.height,
+      HorizontalList(
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: EdgeInsets.only(left: 10),
+              child: commonCacheImageWidget(urls[index], 100, width: 100)
+                  .cornerRadiusWithClipRRect(14),
+            );
+          })
+    ],
+  );
+}
+
+Padding descriptionWrapper(description) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        labelText(
+            title: Booking_lbl_Description, color: Booking_TextColorPrimary),
+            10.height,
+        ReadMoreText(
+          description,
+          trimLines: 4,
+
+          colorClickableText: Booking_TextColorSecondary,
+          trimMode: TrimMode.Line,
+          style: TextStyle(
+              color: Booking_TextColorSecondary,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              height: 1.5),
+          trimCollapsedText: 'Show more',
+          // trimExpandedText: 'Show less',
+          lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
