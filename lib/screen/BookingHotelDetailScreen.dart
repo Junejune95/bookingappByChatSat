@@ -2,6 +2,8 @@
 
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/components/RatingComponent.dart';
+import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -11,8 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:readmore/readmore.dart';
 
+late Future<BookingHotelModel> bookinghotelmodel;
+
 class BookingHotelDetailScreen extends StatelessWidget {
-  BookingHotelDetailScreen({Key? key}) : super(key: key);
+  final int id;
+  BookingHotelDetailScreen({Key? key, required this.id}) : super(key: key);
   List<String> urls = [
     'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-4.jpg',
     'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-1.jpg',
@@ -30,102 +35,155 @@ class BookingHotelDetailScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    bookinghotelmodel = getHotelDetail(id.toString());
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: bottomNavigationWidget(context),
+      bottomNavigationBar: FutureBuilder<BookingHotelModel>(
+          future: bookinghotelmodel,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+              // return SpinKitFadingFour(color: Colors.green);
+              default:
+                if (snapshot.hasError)
+                  // ignore: curly_braces_in_flow_control_structures
+                  return Text('Error: ${snapshot.error}');
+                else {
+                  BookingHotelModel? data = snapshot.data;
+                  if (data?.facilitylist != null) {
+                    print(data?.facilitylist?.length);
+                  } // selectedOne = null;
+                  return data != null
+                      ? bottomNavigationWidget(context, data.price)
+                      : Container(
+                          child: const Text(" No Data Exist "),
+                        );
+                }
+            }
+          }),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              upperImageViewWidget(context),
-              12.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: titleText(title: 'Dylan Hotel'),
-              ),
-              20.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: locationWrapper(
-                    location: 'New York, United States',
-                    color: Booking_TextColorPrimary,
-                    size: 16,
-                    iconSize: 20),
-              ),
-              24.height,
-              galleryWidget(),
-              reviewBoxWidget(context),
-              20.height,
-              FilterTagListComponent(
-                typeList: facilitiesList,
-                label: 'Facilities',
-                isIcon: true,
-                callback: (val) {},
-                labelColor: Booking_Primary,
-              ),
-              14.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 14),
-                child: labelText(
-                    title: Booking_lbl_Description,
-                    color: Booking_TextColorPrimary),
-              ),
-              14.height,
-              descriptionWrapper(),
-              28.height,
-              highlightWidget(),
-              10.height,
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: labelText(
-                  title: Booking_lbl_Rules,
-                  color: Booking_TextColorPrimary,
-                ),
-              ),
-              16.height,
-              Container(
-                height: 80,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Booking_AppBar,
-                  borderRadius: radius(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ruleTimeWidget(context, Booking_lbl_CheckIn, '12:00 AM'),
-                    Container(
-                      width: 1,
-                      color: Booking_TextColorSecondary.withOpacity(0.3),
-                    ),
-                    ruleTimeWidget(context, Booking_lbl_CheckOut, '12:00 PM'),
-                  ],
-                ),
-              ),
-              10.height,
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    labelText(
-                      title: Booking_lbl_HotelPolicies,
-                      color: Booking_TextColorPrimary,
-                    ),
-                    8.height,
-                    expandWidget('Guarantee Policy'),
-                    expandWidget('Children Policy'),
-                    expandWidget('Cancellation/Amendment Policy'),
-                    expandWidget('Late check-out policy'),
-                  ],
-                ),
-              )
-            ],
-          ),
+          child: FutureBuilder<BookingHotelModel>(
+              future: bookinghotelmodel,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  // return SpinKitFadingFour(color: Colors.green);
+                  default:
+                    if (snapshot.hasError)
+                      // ignore: curly_braces_in_flow_control_structures
+                      return Text('Error: ${snapshot.error}');
+                    else {
+                      BookingHotelModel? data = snapshot.data;
+                      if (data?.facilitylist != null) {
+                        print(data?.facilitylist?.length);
+                      } // selectedOne = null;
+                      return data != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                upperImageViewWidget(
+                                    context, data.image, data.video ?? ''),
+                                12.height,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: titleText(title: 'Dylan Hotel'),
+                                ),
+                                20.height,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: locationWrapper(
+                                      location: 'New York, United States',
+                                      color: Booking_TextColorPrimary,
+                                      size: 16,
+                                      iconSize: 20),
+                                ),
+                                24.height,
+                                galleryWidget(data.gallaries ?? []),
+                                reviewBoxWidget(context, data.reviewer,
+                                    data.reviewstatus, data.rating),
+                                20.height,
+                                FilterTagListComponent(
+                                  typeList: data.facilitylist ?? [],
+                                  label: 'Facilities',
+                                  isIcon: true,
+                                  callback: (val) {},
+                                  labelColor: Booking_Primary,
+                                ),
+                                14.height,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 14),
+                                  child: labelText(
+                                      title: Booking_lbl_Description,
+                                      color: Booking_TextColorPrimary),
+                                ),
+                                14.height,
+                                descriptionWrapper(),
+                                28.height,
+                                highlightWidget(),
+                                10.height,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: labelText(
+                                    title: Booking_lbl_Rules,
+                                    color: Booking_TextColorPrimary,
+                                  ),
+                                ),
+                                16.height,
+                                Container(
+                                  height: 80,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  margin: EdgeInsets.symmetric(horizontal: 16),
+                                  decoration: BoxDecoration(
+                                    color: Booking_AppBar,
+                                    borderRadius: radius(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ruleTimeWidget(context,
+                                          Booking_lbl_CheckIn, '12:00 AM'),
+                                      Container(
+                                        width: 1,
+                                        color: Booking_TextColorSecondary
+                                            .withOpacity(0.3),
+                                      ),
+                                      ruleTimeWidget(context,
+                                          Booking_lbl_CheckOut, '12:00 PM'),
+                                    ],
+                                  ),
+                                ),
+                                10.height,
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      labelText(
+                                        title: Booking_lbl_HotelPolicies,
+                                        color: Booking_TextColorPrimary,
+                                      ),
+                                      8.height,
+                                      expandWidget('Guarantee Policy'),
+                                      expandWidget('Children Policy'),
+                                      expandWidget(
+                                          'Cancellation/Amendment Policy'),
+                                      expandWidget('Late check-out policy'),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(
+                              child: const Text(" No Data Exist "),
+                            );
+                    }
+                }
+              }),
         ),
       ),
     );
@@ -175,7 +233,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  Container bottomNavigationWidget(BuildContext context) {
+  Container bottomNavigationWidget(BuildContext context, double price) {
     return Container(
       color: Booking_Primary_light,
       height: 120,
@@ -201,7 +259,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     Text(
-                      '\$300',
+                      '\$' + price.toString(),
                       style: TextStyle(
                         color: Booking_Secondary,
                         fontSize: 18,
@@ -323,7 +381,8 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  Container reviewBoxWidget(BuildContext context) {
+  Container reviewBoxWidget(
+      BuildContext context, int reviewer, String reviewstatus, double rating) {
     return Container(
       width: context.width(),
       margin: EdgeInsets.all(14),
@@ -337,13 +396,13 @@ class BookingHotelDetailScreen extends StatelessWidget {
         children: [
           RatingComponent(
             isIndicator: true,
-            rating: 4.5,
+            rating: rating,
             iconSize: 26,
           ),
           14.height,
           Row(
             children: [
-              Text('5.0 (10) / Excellent'),
+              Text(rating.toString() + ' (5) / ' + reviewstatus),
               10.width,
               Container(
                 width: 6,
@@ -357,7 +416,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '2 Reviews',
+                      reviewer.toString() + ' Reviews',
                       style: TextStyle(
                         color: Booking_Secondary,
                         fontWeight: FontWeight.bold,
@@ -378,7 +437,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  Column galleryWidget() {
+  Column galleryWidget(List<String> gallerylist) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -389,22 +448,24 @@ class BookingHotelDetailScreen extends StatelessWidget {
         ),
         10.height,
         HorizontalList(
-            itemCount: 5,
+            itemCount: gallerylist.length,
             itemBuilder: (context, index) {
               return Container(
                 padding: EdgeInsets.only(left: 10),
-                child: commonCacheImageWidget(urls[index], 100, width: 100)
-                    .cornerRadiusWithClipRRect(14),
+                child:
+                    commonCacheImageWidget(gallerylist[index], 100, width: 100)
+                        .cornerRadiusWithClipRRect(14),
               );
             })
       ],
     );
   }
 
-  Stack upperImageViewWidget(BuildContext context) {
+  Stack upperImageViewWidget(
+      BuildContext context, String imageUrl, String videoUrl) {
     return Stack(
       children: [
-        imageViewWidget(context),
+        imageViewWidget(context, imageUrl),
         Positioned(
           left: 20,
           top: 20,
@@ -429,13 +490,13 @@ class BookingHotelDetailScreen extends StatelessWidget {
         Positioned(
           right: 20,
           bottom: 20,
-          child: videoViewBtn(),
+          child: videoViewBtn(videoUrl),
         ),
       ],
     );
   }
 
-  Container videoViewBtn() {
+  Container videoViewBtn(String videoUrl) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -466,13 +527,10 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  Container imageViewWidget(BuildContext context) {
+  Container imageViewWidget(BuildContext context, String imageUrl) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: commonCacheImageWidget(
-              'https://media.istockphoto.com/photos/luxury-resort-picture-id104731717?k=20&m=104731717&s=612x612&w=0&h=40INtJRzhmU1O4Rj24zdY8vj4aGsWpPaEfojaVQ8xBo=',
-              240,
-              width: context.width())
+      child: commonCacheImageWidget(imageUrl, 240, width: context.width())
           .cornerRadiusWithClipRRect(14),
     );
   }
