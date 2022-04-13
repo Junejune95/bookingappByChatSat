@@ -23,6 +23,7 @@ const Booking_lbl_Facilities = "Facilities";
 const Booking_lbl_Description = "Description";
 const Booking_lbl_Highlight = "HIGHLIGHTS";
 const Booking_lbl_BookNow = "Book Now";
+const Booking_lbl_SendNow = "Send Now";
 const Booking_lbl_Rules = "Rules";
 const Booking_lbl_HotelPolicies = "Hotel Policies";
 const Booking_lbl_Enquiry = "ENQUIRY";
