@@ -23,6 +23,7 @@ const Booking_lbl_Facilities = "Facilities";
 const Booking_lbl_Description = "Description";
 const Booking_lbl_Highlight = "HIGHLIGHTS";
 const Booking_lbl_BookNow = "Book Now";
+const Booking_lbl_SendNow = "Send Now";
 const Booking_lbl_Rules = "Rules";
 const Booking_lbl_HotelPolicies = "Hotel Policies";
 const Booking_lbl_Enquiry = "ENQUIRY";
@@ -109,6 +110,11 @@ const Booking_err_txt_pwd= "Password is required field.";
 const Booking_err_txt_cpwd= "Confirm Password is required field.";
 const Booking_err_txt_pwd_match= "Password not match.";
 const Booking_err_txt_terms= "The terms and conditions field is required";
+
+
+const Booking_lbl_Booking_book= "Book";
+const Booking_lbl_Booking_enquiry= "Enquiry";
+
 
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");

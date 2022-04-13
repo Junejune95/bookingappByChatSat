@@ -1,6 +1,7 @@
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 IconData Booking_ic_home = Icons.home;
 IconData Booking_ic_hotel = Icons.hotel;
@@ -38,6 +39,10 @@ IconData Booking_ic_people = Icons.people;
 IconData Booking_ic_auto = Icons.hdr_auto;
 IconData Booking_ic_baggage = Icons.luggage;
 IconData Booking_ic_door = Icons.door_back_door;
+IconData Booking_ic_airbag = MdiIcons.airbag;
+IconData Booking_ic_radio= Icons.radio;
+IconData Booking_ic_speed= Icons.speed;
+IconData Booking_ic_calendar= Icons.calendar_today;
 
 IconData Booking_ic_landing = Icons.flight_land;
 IconData Booking_ic_takeof = Icons.flight_takeoff;
