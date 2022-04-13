@@ -1,3 +1,4 @@
+import 'package:bookingapp/screen/BookingCarBookNowScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -22,7 +23,10 @@ class BookingCarDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: bottomBookNowWidget(context, () {}, ''),
+      bottomNavigationBar: bottomBookNowWidget(context, () {
+        BookingCarBookNowScreen().launch(context,
+            pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+      }, ''),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -71,7 +75,6 @@ class BookingCarDetailScreen extends StatelessWidget {
               descriptionWrapper(
                   'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as'),
               16.height,
-
             ],
           ),
         ),

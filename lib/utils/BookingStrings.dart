@@ -110,5 +110,10 @@ const Booking_err_txt_cpwd= "Confirm Password is required field.";
 const Booking_err_txt_pwd_match= "Password not match.";
 const Booking_err_txt_terms= "The terms and conditions field is required";
 
+
+const Booking_lbl_Booking_book= "Book";
+const Booking_lbl_Booking_enquiry= "Enquiry";
+
+
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");

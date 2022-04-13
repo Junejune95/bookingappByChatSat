@@ -13,7 +13,8 @@ class BookingFlightDetailScreen extends StatefulWidget {
   const BookingFlightDetailScreen({Key? key}) : super(key: key);
 
   @override
-  State<BookingFlightDetailScreen> createState() => _BookingFlightDetailScreenState();
+  State<BookingFlightDetailScreen> createState() =>
+      _BookingFlightDetailScreenState();
 }
 
 class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
@@ -23,7 +24,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
     return Scaffold(
       backgroundColor: Booking_app_Background,
       bottomNavigationBar: Container(
-        height: context.height()/5.5,
+        height: context.height() / 5.5,
         color: Booking_AppBar,
         padding: const EdgeInsets.symmetric(
           vertical: 30,
@@ -40,11 +41,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
             ),
             20.height,
             defaultButton(
-              text: Booking_lbl_BookNow,
-              tap: () {},
-              height: 40,
-              width: 120
-            ),
+                text: Booking_lbl_BookNow, tap: () {}, height: 40, width: 120),
           ],
         ),
       ),
@@ -98,7 +95,10 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
           rowWidget(label: 'Price', value: '\$11', isHighlight: true),
           dividerWidget(color: Booking_greyColor),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

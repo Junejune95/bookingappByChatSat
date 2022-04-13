@@ -42,6 +42,7 @@ dependencies:
   cached_network_image: ^3.2.0
   readmore: ^2.1.0
   material_design_icons_flutter: ^5.0.6595
+  syncfusion_flutter_datepicker: ^20.1.47
 
 dev_dependencies:
   flutter_test:

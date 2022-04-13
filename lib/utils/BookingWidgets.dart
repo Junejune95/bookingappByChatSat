@@ -28,9 +28,11 @@ Widget labelText(
   return Text(
     title,
     style: boldTextStyle(
-        color: color != null ? color : Booking_TextColorSecondary),
+                decoration: TextDecoration.none,
+        color: color != null ? color : Booking_TextColorSecondary,),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
+
   );
 }
 

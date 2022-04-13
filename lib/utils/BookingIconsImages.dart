@@ -42,6 +42,7 @@ IconData Booking_ic_door = Icons.door_back_door;
 IconData Booking_ic_airbag = MdiIcons.airbag;
 IconData Booking_ic_radio= Icons.radio;
 IconData Booking_ic_speed= Icons.speed;
+IconData Booking_ic_calendar= Icons.calendar_today;
 
 IconData Booking_ic_landing = Icons.flight_land;
 IconData Booking_ic_takeof = Icons.flight_takeoff;

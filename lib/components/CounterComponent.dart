@@ -35,13 +35,17 @@ class _CounterComponentState extends State<CounterComponent> {
           ),
         ),
         circleWidget(
-            child: IconButton(
-                padding: EdgeInsets.all(0),
-                color: Booking_TextColorWhite,
-                icon: Icon(
-                  Icons.add,
-                ),
-                onPressed: () => setState(() => _itemCount++)))
+          child: IconButton(
+            padding: EdgeInsets.all(0),
+            color: Booking_TextColorWhite,
+            icon: Icon(
+              Icons.add,
+            ),
+            onPressed: () => setState(
+              () => {_itemCount++},
+            ),
+          ),
+        ),
       ],
     );
   }
