@@ -130,10 +130,19 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
                               : facility.icon = Booking_ic_coffee;
       facilitylist.add(facility);
     });
-    print(facilitylist.length);
     hoteldata['gallery'].forEach((dynamic val) {
       String gal = val;
       gallery.add(gal);
+    });
+    String? gpolicy, cpolicy, capolicy, lcopolicy;
+    hoteldata['policy'].forEach((dynamic val) {
+      val['title'] == 'Guarantee Policy'
+          ? gpolicy = val['content']
+          : val['title'] == 'Children Policy'
+              ? cpolicy = val['content']
+              : val['title'] == 'Cancellation/Amendment Policy'
+                  ? capolicy = val['content']
+                  : lcopolicy = val['content'];
     });
     // ignore: unnecessary_new
     BookingHotelModel bookingHotelModel = new BookingHotelModel(
@@ -145,10 +154,14 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
         image: hoteldata['image'],
         location: hoteldata['location']['name'],
         price: double.parse(hoteldata['price']),
-        content: hoteldata['content'],
+        content: '<h4>Description</h4>' + hoteldata['content'],
         facilitylist: facilitylist,
         gallaries: gallery,
-        video: hoteldata['video']);
+        video: hoteldata['video'],
+        gpolicy: gpolicy,
+        cpolicy: cpolicy,
+        capolicy: capolicy,
+        lcopolicy: lcopolicy);
     return bookingHotelModel;
   } else {
     // ignore: unnecessary_new

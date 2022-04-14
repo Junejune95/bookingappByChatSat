@@ -14,6 +14,7 @@ class BookingHotelModel {
   List<TypeSelectedModel>? facilitylist;
   List<String>? gallaries;
   String? video;
+  String? gpolicy, cpolicy, capolicy, lcopolicy;
 
   BookingHotelModel(
       {required this.id,
@@ -27,20 +28,29 @@ class BookingHotelModel {
       this.content,
       this.facilitylist,
       this.gallaries,
-      this.video});
+      this.video,
+      this.gpolicy,
+      this.cpolicy,
+      this.capolicy,
+      this.lcopolicy});
   factory BookingHotelModel.fromJson(Map<String, dynamic> json) {
     return BookingHotelModel(
-        id: json['id'],
-        rating: json['rating'],
-        name: json['name'],
-        reviewer: json['reviewer'],
-        reviewstatus: json['reviewstatus'],
-        image: json['image'],
-        location: json['location'],
-        price: json['price'],
-        content: json['content'],
-        facilitylist: json['facility'],
-        gallaries: json['gallery'],
-        video: json['video']);
+      id: json['id'],
+      rating: json['rating'],
+      name: json['name'],
+      reviewer: json['reviewer'],
+      reviewstatus: json['reviewstatus'],
+      image: json['image'],
+      location: json['location'],
+      price: json['price'],
+      content: json['content'],
+      facilitylist: json['facility'],
+      gallaries: json['gallery'],
+      video: json['video'],
+      gpolicy: json['gpolicy'],
+      cpolicy: json['cpolicy'],
+      capolicy: json['capolicy'],
+      lcopolicy: json['lcopolicy'],
+    );
   }
 }
