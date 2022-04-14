@@ -8,6 +8,7 @@ import 'package:bookingapp/utils/BookingDetailCommon.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 late Future<BookingHotelModel> bookinghotelmodel;
@@ -15,14 +16,6 @@ late Future<BookingHotelModel> bookinghotelmodel;
 class BookingHotelDetailScreen extends StatelessWidget {
   final int id;
   BookingHotelDetailScreen({Key? key, required this.id}) : super(key: key);
-  List<String> urls = [
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-4.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-1.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-2.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-3.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-5.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/hotel/gallery/hotel-gallery-4.jpg',
-  ];
 
   List<String> highlights = [
     'See amazing works of contemporary art, including Vincent van Gogh’s The Starry Night',
@@ -70,6 +63,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
                       return Text('Error: ${snapshot.error}');
                     else {
                       BookingHotelModel? data = snapshot.data;
+
                       return data != null
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,16 +91,30 @@ class BookingHotelDetailScreen extends StatelessWidget {
                                 20.height,
                                 FilterTagListComponent(
                                   typeList: data.facilitylist ?? [],
-                                  label: 'Facilities',
+                                  label: Booking_lbl_Facilities,
                                   isIcon: true,
                                   callback: (val) {},
                                   labelColor: Booking_Primary,
                                 ),
-                                20.height,
-                                descriptionWrapper(
-                                    'Built in 1986, Hotel Stanford is a distinct addition to New York (NY) and a smart choice for travelers. The excitement of the city center is only 0 KM away. No less exceptional is the hotel’s easy access to the city’s myriad attractions and landmarks, such as'),
-                                28.height,
-                                highlightWidget(),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Html(
+                                    data: data.content,
+                                    style: {
+                                      "p": Style(
+                                        color: Booking_TextColorSecondary,
+                                        fontSize: FontSize.em(1.1),
+                                        lineHeight: LineHeight.em(1.2),
+                                      ),
+                                      "li": Style(
+                                          color: Booking_TextColorSecondary,
+                                          fontSize: FontSize.em(1.1),
+                                          padding: EdgeInsets.only(bottom: 8)),
+                                    },
+                                  ),
+                                ),
                                 10.height,
                                 Padding(
                                   padding: const EdgeInsets.only(left: 16),
