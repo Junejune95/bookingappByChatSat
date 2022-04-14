@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: file_names
 
 import 'package:bookingapp/components/CounterComponent.dart';
+import 'package:bookingapp/models/HotelRoomModel.dart';
 import 'package:bookingapp/screen/BookingEnquiryForm.dart';
+import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -99,7 +101,7 @@ class _BookWidgetState extends State<BookWidget> {
     Booking_lbl_Extra_Price2: false,
     Booking_lbl_Extra_Price3: false,
   };
-
+  late Future<List<HotelRoomModel>> hotelRoomModelList;
   String _selectedDate = '';
 
   String _dateCount = '';
@@ -107,9 +109,17 @@ class _BookWidgetState extends State<BookWidget> {
   String _range = Booking_lbl_CheckIn + ' / ' + Booking_lbl_CheckOut;
 
   String _rangeCount = '';
-
+  String adult = '1';
+  String child = '0';
+  String params = '?';
+  String start_date = '', end_date = '';
   bool isCheckInCalendar = false;
   bool isCheckGuest = false;
+  @override
+  void initState() {
+    hotelRoomModelList = checkHotelAvaliable('10', params);
+    super.initState();
+  }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
@@ -117,6 +127,9 @@ class _BookWidgetState extends State<BookWidget> {
         _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
             ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+        start_date = DateFormat('yyyy-MM-dd').format(args.value.startDate);
+        end_date = DateFormat('yyyy-MM-dd')
+            .format(args.value.endDate ?? args.value.startDate);
       } else if (args.value is DateTime) {
         _selectedDate = args.value.toString();
       } else if (args.value is List<DateTime>) {
@@ -155,7 +168,7 @@ class _BookWidgetState extends State<BookWidget> {
                 ),
               if (isCheckInCalendar == false) 20.height,
               customTextBoxFieldWidget(context,
-                  checkResult: '1 Adult - 0 Child', onTap: () {
+                  checkResult: '$adult Adult - $child Child', onTap: () {
                 setState(() {
                   isCheckGuest = !isCheckGuest;
                 });
@@ -165,90 +178,187 @@ class _BookWidgetState extends State<BookWidget> {
               Center(
                 child: defaultButton(
                   text: Booking_lbl_btn_CheckAvailability,
-                  tap: () {},
+                  tap: () {
+                    setState(() {
+                      hotelRoomModelList = checkHotelAvaliable('10',
+                          '?start_date=$start_date&end_date=$end_date&adults=$adult&children=$child');
+                    });
+                  },
                   height: 50,
                   width: context.width(),
                 ),
               ),
-              ListView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 20,
-                      ),
-                      child: defaultCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            commonCacheImageWidget(
-                                    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/space/space-5.jpg',
-                                    200,
-                                    width: context.width())
-                                .cornerRadiusWithClipRRectOnly(
-                                    topLeft: 10, topRight: 10),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: titleText(
-                                title: 'Room Kerama Islands',
-                                size: 16,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                iconColWidget(Booking_ic_measure, '196 sqt'),
-                                iconColWidget(Booking_ic_bed, 'x5'),
-                                iconColWidget(Booking_ic_people, 'x9'),
-                                iconColWidget(Booking_ic_baby, 'x2'),
-                              ],
-                            ),
-                            14.height,
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: tagrectWidget(
-                                    isIcon: true,
-                                    ic: Booking_ic_recycle,
-                                    bgColor: Booking_greyColor,
-                                    color: iconColorSecondary,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: tagrectWidget(
-                                    isIcon: true,
-                                    ic: Booking_ic_wifi,
-                                    bgColor: Booking_greyColor,
-                                    color: iconColorSecondary,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: tagrectWidget(
-                                    isIcon: true,
-                                    ic: Booking_ic_coffee,
-                                    bgColor: Booking_greyColor,
-                                    color: iconColorSecondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            10.height,
-                          ],
-                        ),
-                      ),
-                    );
-                  })
+              FutureBuilder<List<HotelRoomModel>?>(
+                  future: hotelRoomModelList,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                      // return SpinKitFadingFour(color: Colors.green);
+                      default:
+                        if (snapshot.hasError)
+                          // ignore: curly_braces_in_flow_control_structures
+                          return Text('Error: ${snapshot.error}');
+                        else {
+                          List<HotelRoomModel>? data = snapshot.data;
+                          return data != null
+                              ? ListView.builder(
+                                  itemCount: data.length,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 20,
+                                      ),
+                                      child: defaultCard(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            commonCacheImageWidget(
+                                                    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/space/space-5.jpg',
+                                                    200,
+                                                    width: context.width())
+                                                .cornerRadiusWithClipRRectOnly(
+                                                    topLeft: 10, topRight: 10),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: titleText(
+                                                title: data[index].title,
+                                                size: 16,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                iconColWidget(
+                                                    Booking_ic_measure,
+                                                    data[index].size),
+                                                iconColWidget(Booking_ic_bed,
+                                                    data[index].beds),
+                                                iconColWidget(Booking_ic_people,
+                                                    data[index].adults),
+                                                iconColWidget(Booking_ic_baby,
+                                                    data[index].children),
+                                              ],
+                                            ),
+                                            14.height,
+                                            SizedBox(
+                                              child: ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemCount: data[index]
+                                                      .facilitylist
+                                                      ?.length,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder: (context, i) {
+                                                    return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 10,
+                                                        ),
+                                                        child: tagrectWidget(
+                                                          isIcon: true,
+                                                          ic: data[index]
+                                                              .facilitylist?[i]
+                                                              .icon,
+                                                          bgColor:
+                                                              Booking_greyColor,
+                                                          color:
+                                                              iconColorSecondary,
+                                                        ));
+                                                  }),
+                                              height: 60,
+                                            ),
+                                            // Row(
+                                            //   children: [
+                                            //     SizedBox(
+                                            //       child: ListView.builder(
+                                            //           physics:
+                                            //               const NeverScrollableScrollPhysics(),
+                                            //           shrinkWrap: true,
+                                            //           itemCount: data[index]
+                                            //               .facilitylist
+                                            //               ?.length,
+                                            //               scrollDirection: Axis.horizontal,
+                                            //           itemBuilder:
+                                            //               (context, i) {
+                                            //             return Padding(
+                                            //                 padding:
+                                            //                     const EdgeInsets
+                                            //                         .symmetric(
+                                            //                   horizontal: 10,
+                                            //                 ),
+                                            //                 child:
+                                            //                     tagrectWidget(
+                                            //                   isIcon: true,
+                                            //                   ic: data[index]
+                                            //                       .facilitylist?[
+                                            //                           i]
+                                            //                       .icon,
+                                            //                   bgColor:
+                                            //                       Booking_greyColor,
+                                            //                   color:
+                                            //                       iconColorSecondary,
+                                            //                 ));
+                                            //           }),
+                                            //       height: 100,
+                                            //     )
+                                            //     // Padding(
+                                            //     //   padding: const EdgeInsets
+                                            //     //       .symmetric(
+                                            //     //     horizontal: 10,
+                                            //     //   ),
+                                            //     //   child: tagrectWidget(
+                                            //     //     isIcon: true,
+                                            //     //     ic: Booking_ic_recycle,
+                                            //     //     bgColor: Booking_greyColor,
+                                            //     //     color: iconColorSecondary,
+                                            //     //   ),
+                                            //     // ),
+                                            //     // Padding(
+                                            //     //   padding: const EdgeInsets
+                                            //     //       .symmetric(
+                                            //     //     horizontal: 10,
+                                            //     //   ),
+                                            //     //   child: tagrectWidget(
+                                            //     //     isIcon: true,
+                                            //     //     ic: Booking_ic_wifi,
+                                            //     //     bgColor: Booking_greyColor,
+                                            //     //     color: iconColorSecondary,
+                                            //     //   ),
+                                            //     // ),
+                                            //     // Padding(
+                                            //     //   padding: const EdgeInsets
+                                            //     //       .symmetric(
+                                            //     //     horizontal: 10,
+                                            //     //   ),
+                                            //     //   child: tagrectWidget(
+                                            //     //     isIcon: true,
+                                            //     //     ic: Booking_ic_coffee,
+                                            //     //     bgColor: Booking_greyColor,
+                                            //     //     color: iconColorSecondary,
+                                            //     //   ),
+                                            //     // ),
+                                            //   ],
+                                            // ),
+                                            10.height,
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  })
+                              : Container(
+                                  child: const Text(" No Data Exist "),
+                                );
+                        }
+                    }
+                  }),
             ],
           ),
         ),
@@ -295,7 +405,13 @@ class _BookWidgetState extends State<BookWidget> {
                 title: Booking_lbl_Booking_children,
                 color: Booking_Primary,
               ),
-              CounterComponent(),
+              CounterComponent(
+                callBack: (val) {
+                  setState(() {
+                    adult = val;
+                  });
+                },
+              ),
             ],
           ),
           30.height,
@@ -306,7 +422,14 @@ class _BookWidgetState extends State<BookWidget> {
                 title: Booking_lbl_Booking_adults,
                 color: Booking_Primary,
               ),
-              CounterComponent(),
+              CounterComponent(
+                callBack: (val) {
+                  setState(() {
+                    child = val;
+                    params += '&adults=$child';
+                  });
+                },
+              ),
             ],
           ),
         ],
