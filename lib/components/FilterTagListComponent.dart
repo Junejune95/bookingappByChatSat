@@ -42,34 +42,25 @@ class _FilterTagListComponentState extends State<FilterTagListComponent> {
         HorizontalList(
           itemCount: widget.typeList.length,
           itemBuilder: (context, i) {
-            return Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(8),
-              decoration: boxDecorationWithRoundedCorners(
-                  borderRadius: radius(16),
-                  backgroundColor: widget.typeList[i].isSelected == true
-                      ? Booking_Secondary
-                      : Booking_AppBar),
-              child: widget.isIcon != true
-                  ? Text(
-                      widget.typeList[i].type!,
-                      style: primaryTextStyle(
-                          color: widget.typeList[i].isSelected == true
-                              ? Booking_TextColorWhite
-                              : Booking_TextColorPrimary),
-                    )
-                  : Icon(
-                      widget.typeList[i].icon,
-                      color: widget.typeList[i].isSelected == true
-                          ? Booking_TextColorWhite
-                          : Booking_TextColorPrimary,
-                    ),
-            ).onTap(() {
-              widget.typeList[i].isSelected = !widget.typeList[i].isSelected;
-              setState(() {
-                widget.callback!(widget.typeList[i].id ?? 0);
-              });
-            });
+            return InkWell(
+                onTap: () {
+                  widget.typeList[i].isSelected =
+                      !widget.typeList[i].isSelected;
+
+                  setState(() {
+                    widget.callback!(widget.typeList[i].id ?? 0);
+                  });
+                },
+                child: tagrectWidget(
+                    isIcon: widget.isIcon,
+                    text: widget.typeList[i].type,
+                    color: widget.typeList[i].isSelected == true
+                        ? Booking_TextColorWhite
+                        : Booking_TextColorPrimary,
+                    bgColor: widget.typeList[i].isSelected == true
+                        ? Booking_Secondary
+                        : Booking_AppBar,
+                    ic: widget.typeList[i].icon));
           },
         ),
       ],

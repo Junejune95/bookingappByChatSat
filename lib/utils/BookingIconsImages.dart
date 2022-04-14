@@ -34,6 +34,11 @@ IconData Booking_ic_wifi= Icons.wifi;
 IconData Booking_ic_coffee= Icons.coffee;
 IconData Booking_ic_wakeupcall= Icons.call;
 
+IconData Booking_ic_measure = MdiIcons.pencilRuler;
+IconData Booking_ic_bed = MdiIcons.bed;
+IconData Booking_ic_baby = MdiIcons.humanChild;
+
+
 // Car Services
 IconData Booking_ic_people = Icons.people;
 IconData Booking_ic_auto = Icons.hdr_auto;
