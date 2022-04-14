@@ -98,6 +98,7 @@ const Booking_lbl_btn_Apply= "Apply";
 const Booking_lbl_btn_Search = "Search";
 const Booking_lbl_btn_Detail = "Detail";
 const Booking_lbl_btn_Invoice = "Invoice";
+const Booking_lbl_btn_CheckAvailability = "Check Availability";
 
 // validation
 const Booking_err_txt_name1= "The first name is required field";
@@ -114,6 +115,8 @@ const Booking_err_txt_terms= "The terms and conditions field is required";
 
 const Booking_lbl_Booking_book= "Book";
 const Booking_lbl_Booking_enquiry= "Enquiry";
+const Booking_lbl_Booking_adults= "Adults";
+const Booking_lbl_Booking_children= "Adults";
 
 
 final RegExp emailValidatorRegExp =

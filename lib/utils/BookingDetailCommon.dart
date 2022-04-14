@@ -220,4 +220,45 @@ Padding descriptionWrapper(description) {
       ],
     ),
   );
+
+  
 }
+
+Container customTextBoxFieldWidget(BuildContext context,
+      {required String checkResult, required VoidCallback onTap}) {
+    return Container(
+      width: context.width(),
+      padding: EdgeInsets.all(10),
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          color: Booking_TextColorSecondary.withOpacity(0.3),
+          style: BorderStyle.solid,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            checkResult,
+            style: TextStyle(
+              fontSize: 14,
+              color: Booking_TextColorPrimary,
+              fontWeight: FontWeight.w600,
+              decoration: TextDecoration.none,
+            ),
+          ),
+          GestureDetector(
+            onTap: onTap,
+            child: Icon(
+              Booking_ic_calendar,
+              size: 24,
+              color: Booking_TextColorSecondary,
+            ),
+          )
+        ],
+      ),
+    );
+  }

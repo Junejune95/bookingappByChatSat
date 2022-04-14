@@ -1,17 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/components/FilterTagListComponent.dart';
-import 'package:bookingapp/components/RatingComponent.dart';
-import 'package:bookingapp/screen/BookingImagePreviewScreen.dart';
+import 'package:bookingapp/screen/BookingHotelBookNowScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
-import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:readmore/readmore.dart';
 
 class BookingHotelDetailScreen extends StatelessWidget {
   BookingHotelDetailScreen({Key? key}) : super(key: key);
@@ -34,7 +31,12 @@ class BookingHotelDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: bottomBookNowWidget(context, () {}, '/ night'),
+      bottomNavigationBar: bottomBookNowWidget(context, () {
+         BookingHotelBookNowScreen(
+         
+          ).launch(context,
+              pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+      }, '/ night'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

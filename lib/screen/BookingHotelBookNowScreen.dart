@@ -4,6 +4,7 @@ import 'package:bookingapp/components/CounterComponent.dart';
 import 'package:bookingapp/screen/BookingEnquiryForm.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,12 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class BookingCarBookNowScreen extends StatefulWidget {
-  const BookingCarBookNowScreen({Key? key}) : super(key: key);
+class BookingHotelBookNowScreen extends StatefulWidget {
+  const BookingHotelBookNowScreen({Key? key}) : super(key: key);
 
   @override
-  State<BookingCarBookNowScreen> createState() =>
-      _BookingCarBookNowScreenState();
+  State<BookingHotelBookNowScreen> createState() =>
+      _BookingHotelBookNowScreenState();
 }
 
 class BookingHistoryTab {
@@ -26,7 +27,7 @@ class BookingHistoryTab {
   BookingHistoryTab({required this.title, required this.child});
 }
 
-class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
+class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
@@ -103,30 +104,16 @@ class _BookWidgetState extends State<BookWidget> {
 
   String _dateCount = '';
 
-  String _range = 'Select Date';
+  String _range = Booking_lbl_CheckIn + ' / ' + Booking_lbl_CheckOut;
 
   String _rangeCount = '';
 
   bool isCheckInCalendar = false;
+  bool isCheckGuest = false;
 
-  /// The method for [DateRangePickerSelectionChanged] callback, which will be
-  /// called whenever a selection changed on the date picker widget.
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    /// The argument value will return the changed date as [DateTime] when the
-    /// widget [SfDateRangeSelectionMode] set as single.
-    ///
-    /// The argument value will return the changed dates as [List<DateTime>]
-    /// when the widget [SfDateRangeSelectionMode] set as multiple.
-    ///
-    /// The argument value will return the changed range as [PickerDateRange]
-    /// when the widget [SfDateRangeSelectionMode] set as range.
-    ///
-    /// The argument value will return the changed ranges as
-    /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
-    /// multi range.
     setState(() {
       if (args.value is PickerDateRange) {
-        print(args.value);
         _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
             ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
@@ -166,101 +153,95 @@ class _BookWidgetState extends State<BookWidget> {
                       DateTime.now().subtract(const Duration(days: 4)),
                       DateTime.now().add(const Duration(days: 3))),
                 ),
-              16.height,
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    labelText(
-                      title: 'Number',
-                      color: Booking_Primary,
-                    ),
-                    CounterComponent(),
-                  ],
-                ),
-              ),
-              //Row
-              Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 16, top: 18),
-                child: labelText(
-                    title: Booking_lbl_Extra_Prices_title,
-                    color: Booking_TextColorPrimary),
-              ),
-              ListView(
-                padding: EdgeInsets.all(0),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: prices.keys.map((String key) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          Checkbox(
-                            value: prices[key],
-                            onChanged: (bool? value) {
-                              setState(() {
-                                prices[key] = value! ? true : false;
-                              });
-                            },
-                          ), //Checkbox
-                          SizedBox(
-                            width: 2,
-                          ), //SizedBox
-                          Text(
-                            key,
-                            style: TextStyle(fontSize: 16.0),
-                          ), //Text //SizedBox
-                          /** Checkbox Widget **/
-                        ], //<Widget>[]
-                      ),
-                      labelText(title: '\$100', color: Booking_TextColorPrimary)
-                    ],
-                  );
-                }).toList(),
-              ),
-              dividerWidget(color: Booking_greyColor),
+              if (isCheckInCalendar == false) 20.height,
+              customTextBoxFieldWidget(context,
+                  checkResult: '1 Adult - 0 Child', onTap: () {
+                setState(() {
+                  isCheckGuest = !isCheckGuest;
+                });
+              }),
+              if (isCheckGuest == true) guestWidget(),
               20.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Booking_lbl_fee1,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  labelText(title: '\$100', color: Booking_TextColorPrimary)
-                ],
-              ),
-              26.height,
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Booking_lbl_fee2,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  labelText(title: '\$100', color: Booking_TextColorPrimary)
-                ],
-              ),
-              20.height,
-              dividerWidget(color: Booking_greyColor),
-              20.height,
-
               Center(
                 child: defaultButton(
-                  text: Booking_lbl_BookNow,
+                  text: Booking_lbl_btn_CheckAvailability,
                   tap: () {},
                   height: 50,
-                  width: 180,
+                  width: context.width(),
                 ),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Container guestWidget() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          color: Booking_TextColorSecondary.withOpacity(0.3),
+          style: BorderStyle.solid,
+          width: 0.5,
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              labelText(
+                title: Booking_lbl_Booking_children,
+                color: Booking_Primary,
+              ),
+              CounterComponent(),
+            ],
+          ),
+          30.height,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              labelText(
+                title: Booking_lbl_Booking_adults,
+                color: Booking_Primary,
+              ),
+              CounterComponent(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row checkInOutWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          _range,
+          style: TextStyle(
+            fontSize: 14,
+            color: Booking_TextColorPrimary,
+            fontWeight: FontWeight.w600,
+            decoration: TextDecoration.none,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isCheckInCalendar = !isCheckInCalendar;
+            });
+          },
+          child: Icon(
+            Booking_ic_calendar,
+            size: 24,
+            color: Booking_TextColorSecondary,
+          ),
+        )
+      ],
     );
   }
 }
