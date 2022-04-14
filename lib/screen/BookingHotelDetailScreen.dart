@@ -2,6 +2,7 @@
 
 import 'package:bookingapp/components/FilterTagListComponent.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/screen/BookingHotelBookNowScreen.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
@@ -42,7 +43,10 @@ class BookingHotelDetailScreen extends StatelessWidget {
                   BookingHotelModel? data = snapshot.data;
                   return data != null
                       ? bottomBookNowWidget(
-                          context, () {}, data.price, '/ night')
+                          context, () {
+                            BookingHotelBookNowScreen().launch(context,
+                pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                          }, data.price, '/ night')
                       : Container(
                           child: const Text(" No Data Exist "),
                         );
