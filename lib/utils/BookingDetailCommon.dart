@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:readmore/readmore.dart';
 
-Stack upperImageViewWidget(BuildContext context, List<String> urls) {
+Stack upperImageViewWidget(
+    BuildContext context, String imageUrl, String videoUrl, List<String> urls) {
   return Stack(
     children: [
-      imageViewWidget(context, urls[0]),
+      imageViewWidget(context, imageUrl),
       Positioned(
         left: 20,
         top: 20,
@@ -114,11 +115,12 @@ InkWell videoViewBtn() {
   );
 }
 
-Container reviewBoxWidget(BuildContext context) {
+Container reviewBoxWidget(
+    BuildContext context, int reviewer, String reviewstatus, double rating) {
   return Container(
     width: context.width(),
-    margin: EdgeInsets.all(14),
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    margin: const EdgeInsets.all(14),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     decoration: BoxDecoration(
       color: Booking_Primary_light,
       borderRadius: BorderRadius.circular(10),
@@ -134,12 +136,12 @@ Container reviewBoxWidget(BuildContext context) {
         14.height,
         Row(
           children: [
-            Text('5.0 (10) / Excellent'),
+            Text(rating.toString() + ' (5) / ' + reviewstatus),
             10.width,
             Container(
               width: 6,
               height: 6,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Booking_TextColorSecondary, shape: BoxShape.circle),
             ),
             10.width,
@@ -148,8 +150,8 @@ Container reviewBoxWidget(BuildContext context) {
               child: Row(
                 children: [
                   Text(
-                    '2 Reviews',
-                    style: TextStyle(
+                    reviewer.toString() + ' Reviews',
+                    style: const TextStyle(
                       color: Booking_Secondary,
                       fontWeight: FontWeight.bold,
                     ),
@@ -200,7 +202,7 @@ Padding descriptionWrapper(description) {
       children: [
         labelText(
             title: Booking_lbl_Description, color: Booking_TextColorPrimary),
-            10.height,
+        10.height,
         ReadMoreText(
           description,
           trimLines: 4,

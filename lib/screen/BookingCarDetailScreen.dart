@@ -24,15 +24,15 @@ class BookingCarDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: bottomBookNowWidget(context, () {
-        BookingCarBookNowScreen().launch(context,
+        const BookingCarBookNowScreen().launch(context,
             pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
-      }, ''),
+      }, 0.0, ''),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              upperImageViewWidget(context, urls),
+              upperImageViewWidget(context, '', '', urls),
               12.height,
               Padding(
                 padding: const EdgeInsets.only(left: 16),
@@ -49,7 +49,7 @@ class BookingCarDetailScreen extends StatelessWidget {
               ),
               24.height,
               galleryWidget(urls),
-              reviewBoxWidget(context),
+              reviewBoxWidget(context, 2, 'Excellent', 5.0),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),

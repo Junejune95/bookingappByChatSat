@@ -30,7 +30,9 @@ class HotelListComponent extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap: () => {
-            BookingHotelDetailScreen().launch(context,
+            BookingHotelDetailScreen(
+              id: hotellist[index].id,
+            ).launch(context,
                 pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
           },
           child: defaultCard(
