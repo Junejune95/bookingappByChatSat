@@ -30,6 +30,7 @@ Widget labelText(
     style: boldTextStyle(
       decoration: TextDecoration.none,
       color: color != null ? color : Booking_TextColorSecondary,
+      size: size != null ? size : 16
     ),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
@@ -328,5 +329,30 @@ Container bottomBookNowWidget(
             ),
           )
         ]),
+  );
+}
+
+Widget tagrectWidget(
+    {IconData? ic,
+    Color? bgColor,
+    Color? color,
+    required bool isIcon,
+    String? text}) {
+  return Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(8),
+    decoration: boxDecorationWithRoundedCorners(
+        borderRadius: radius(10),
+        backgroundColor: bgColor != null ? bgColor : Booking_AppBar),
+    child: isIcon != true
+        ? Text(
+            text!,
+            style: primaryTextStyle(
+                color: color != null ? color : Booking_TextColorPrimary),
+          )
+        : Icon(
+            ic,
+            color: color != null ? color : Booking_TextColorPrimary,
+          ),
   );
 }

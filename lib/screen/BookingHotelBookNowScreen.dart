@@ -133,7 +133,7 @@ class _BookWidgetState extends State<BookWidget> {
       child: Container(
         color: Booking_TextColorWhite,
         width: context.width(),
-        height: context.height(),
+        // height: context.height(),
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         child: Material(
           color: Booking_TextColorWhite,
@@ -169,10 +169,108 @@ class _BookWidgetState extends State<BookWidget> {
                   height: 50,
                   width: context.width(),
                 ),
-              )
+              ),
+              ListView.builder(
+                  itemCount: 10,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 20,
+                      ),
+                      child: defaultCard(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            commonCacheImageWidget(
+                                    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/space/space-5.jpg',
+                                    200,
+                                    width: context.width())
+                                .cornerRadiusWithClipRRectOnly(
+                                    topLeft: 10, topRight: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: titleText(
+                                title: 'Room Kerama Islands',
+                                size: 16,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                iconColWidget(Booking_ic_measure, '196 sqt'),
+                                iconColWidget(Booking_ic_bed, 'x5'),
+                                iconColWidget(Booking_ic_people, 'x9'),
+                                iconColWidget(Booking_ic_baby, 'x2'),
+                              ],
+                            ),
+                            14.height,
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: tagrectWidget(
+                                    isIcon: true,
+                                    ic: Booking_ic_recycle,
+                                    bgColor: Booking_greyColor,
+                                    color: iconColorSecondary,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: tagrectWidget(
+                                    isIcon: true,
+                                    ic: Booking_ic_wifi,
+                                    bgColor: Booking_greyColor,
+                                    color: iconColorSecondary,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: tagrectWidget(
+                                    isIcon: true,
+                                    ic: Booking_ic_coffee,
+                                    bgColor: Booking_greyColor,
+                                    color: iconColorSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            10.height,
+                          ],
+                        ),
+                      ),
+                    );
+                  })
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Padding iconColWidget(ic, text) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10, left: 10),
+      child: Column(
+        children: [
+          tagrectWidget(
+            isIcon: true,
+            ic: ic,
+          ),
+          labelText(
+            title: text,
+            color: Booking_TextColorPrimary,
+            size: 14,
+          )
+        ],
       ),
     );
   }

@@ -42,11 +42,11 @@ class BookingHotelDetailScreen extends StatelessWidget {
                 else {
                   BookingHotelModel? data = snapshot.data;
                   return data != null
-                      ? bottomBookNowWidget(
-                          context, () {
-                            BookingHotelBookNowScreen().launch(context,
-                pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
-                          }, data.price, '/ night')
+                      ? bottomBookNowWidget(context, () {
+                          BookingHotelBookNowScreen().launch(context,
+                              pageRouteAnimation:
+                                  PageRouteAnimation.SlideBottomTop);
+                        }, data.price, '/ night')
                       : Container(
                           child: const Text(" No Data Exist "),
                         );
