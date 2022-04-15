@@ -52,6 +52,12 @@ IconData Booking_ic_calendar= Icons.calendar_today;
 IconData Booking_ic_landing = Icons.flight_land;
 IconData Booking_ic_takeof = Icons.flight_takeoff;
 
+// location
+
+IconData Booking_ic_address = Icons.location_on;
+IconData Booking_ic_city = Icons.location_city;
+IconData Booking_ic_state = MdiIcons.officeBuilding;
+IconData Booking_ic_zipcode=MdiIcons.pointOfSale;
 
 // images
 const BookingLogo = 'images/booking_logo.png';

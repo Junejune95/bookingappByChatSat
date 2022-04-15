@@ -2,6 +2,7 @@
 
 import 'package:bookingapp/screen/BookingHistoryScreen.dart';
 import 'package:bookingapp/screen/BookingSignInScreen.dart';
+import 'package:bookingapp/screen/BookingUserInformationScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -36,7 +37,9 @@ class BookingMoreFragment extends StatelessWidget {
         itemWidget(
           Booking_lbl_My_profile,
           Booking_ic_person,
-          () {},
+          () {
+            BookingUserInformationScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+          },
         ),
         dividerWidget(),
         itemWidget(
