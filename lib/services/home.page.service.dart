@@ -127,3 +127,24 @@ Future<HomePageModel> getHomeData() async {
     return homePageModel;
   }
 }
+
+Future<bool> enquiry(String type, String name, String email, String phone,
+    String note, String id) async {
+  var url = Uri.parse(baseUrl + '/booking/addEnquiry');
+  var body = convert.jsonEncode({
+    'service_id': id,
+    'service_type': type,
+    'enquiry_name': name,
+    'enquiry_email': email,
+    'enquiry_phone': phone,
+    'enquiry_note': note
+  });
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json"}, body: body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}

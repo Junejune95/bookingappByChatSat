@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bookingapp/services/home.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
@@ -8,7 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingEnquiryForm extends StatelessWidget {
-  BookingEnquiryForm({Key? key}) : super(key: key);
+  final String type;
+  final int id;
+  BookingEnquiryForm({Key? key, required this.type, required this.id})
+      : super(key: key);
 
   TextEditingController nameCont = TextEditingController();
   TextEditingController emailCont = TextEditingController();
@@ -39,13 +43,30 @@ class BookingEnquiryForm extends StatelessWidget {
                 Center(
                   child: defaultButton(
                     text: Booking_lbl_SendNow,
-                    tap: () {
+                    tap: () async {
                       if (_formKey.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')),
                         );
+                        bool res = await enquiry(
+                            type,
+                            nameCont.text,
+                            emailCont.text,
+                            phoneCont.text,
+                            noteCont.text,
+                            id.toString());
+                        res
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'Thank you for contacting us! We will be in contact shortly.')),
+                              )
+                            : ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Something went wrong.')),
+                              );
                       }
                     },
                     height: 50,

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:bookingapp/components/CounterComponent.dart';
 import 'package:bookingapp/models/HotelRoomModel.dart';
@@ -40,7 +40,10 @@ class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
     ),
     BookingHistoryTab(
       title: Booking_lbl_Booking_enquiry,
-      child: BookingEnquiryForm(),
+      child: BookingEnquiryForm(
+        id: 1,
+        type: 'hotel',
+      ),
     ),
   ];
 

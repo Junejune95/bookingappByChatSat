@@ -28,7 +28,9 @@ class CarListComponent extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () => {
-                  BookingCarDetailScreen().launch(context,
+                  BookingCarDetailScreen(
+                    id: carlist[index].id,
+                  ).launch(context,
                       pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
                 },
                 child: defaultCard(

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/components/CounterComponent.dart';
+import 'package:bookingapp/models/BookingFeeModel.dart';
 import 'package:bookingapp/screen/BookingEnquiryForm.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
@@ -12,7 +13,14 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class BookingCarBookNowScreen extends StatefulWidget {
-  const BookingCarBookNowScreen({Key? key}) : super(key: key);
+  final int id;
+  final List<BookingFeeModel> bookingfee, extrafee;
+  const BookingCarBookNowScreen(
+      {Key? key,
+      required this.id,
+      required this.extrafee,
+      required this.bookingfee})
+      : super(key: key);
 
   @override
   State<BookingCarBookNowScreen> createState() =>
@@ -30,19 +38,23 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  List<BookingHistoryTab> pages = [
-    BookingHistoryTab(
-      title: Booking_lbl_Booking_book,
-      child: BookWidget(),
-    ),
-    BookingHistoryTab(
-      title: Booking_lbl_Booking_enquiry,
-      child: BookingEnquiryForm(),
-    ),
-  ];
+  List<BookingHistoryTab> pages = [];
 
   @override
   void initState() {
+    pages = [
+      BookingHistoryTab(
+        title: Booking_lbl_Booking_book,
+        child: BookWidget(
+          bookingfee: widget.bookingfee,
+          extrafee: widget.extrafee,
+        ),
+      ),
+      BookingHistoryTab(
+        title: Booking_lbl_Booking_enquiry,
+        child: BookingEnquiryForm(id: widget.id, type: 'car'),
+      ),
+    ];
     super.initState();
     tabController = TabController(length: pages.length, vsync: this);
     tabController.addListener(() {
@@ -86,7 +98,9 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
 }
 
 class BookWidget extends StatefulWidget {
-  const BookWidget({Key? key}) : super(key: key);
+  final List<BookingFeeModel> bookingfee, extrafee;
+  const BookWidget({Key? key, required this.bookingfee, required this.extrafee})
+      : super(key: key);
 
   @override
   State<BookWidget> createState() => _BookWidgetState();
@@ -98,6 +112,7 @@ class _BookWidgetState extends State<BookWidget> {
     Booking_lbl_Extra_Price2: false,
     Booking_lbl_Extra_Price3: false,
   };
+  List<bool> _isChecked = [];
 
   String _selectedDate = '';
 
@@ -108,6 +123,12 @@ class _BookWidgetState extends State<BookWidget> {
   String _rangeCount = '';
 
   bool isCheckInCalendar = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isChecked = List<bool>.filled(widget.extrafee.length, false);
+  }
 
   /// The method for [DateRangePickerSelectionChanged] callback, which will be
   /// called whenever a selection changed on the date picker widget.
@@ -177,7 +198,9 @@ class _BookWidgetState extends State<BookWidget> {
                       title: 'Number',
                       color: Booking_Primary,
                     ),
-                    CounterComponent(),
+                    CounterComponent(
+                      callBack: (val) {},
+                    ),
                   ],
                 ),
               ),
@@ -188,67 +211,121 @@ class _BookWidgetState extends State<BookWidget> {
                     title: Booking_lbl_Extra_Prices_title,
                     color: Booking_TextColorPrimary),
               ),
-              ListView(
-                padding: EdgeInsets.all(0),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: prices.keys.map((String key) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          Checkbox(
-                            value: prices[key],
-                            onChanged: (bool? value) {
-                              setState(() {
-                                prices[key] = value! ? true : false;
-                              });
-                            },
-                          ), //Checkbox
-                          SizedBox(
-                            width: 2,
-                          ), //SizedBox
-                          Text(
-                            key,
-                            style: TextStyle(fontSize: 16.0),
-                          ), //Text //SizedBox
-                          /** Checkbox Widget **/
-                        ], //<Widget>[]
-                      ),
-                      labelText(title: '\$100', color: Booking_TextColorPrimary)
-                    ],
-                  );
-                }).toList(),
+              SizedBox(
+                child: ListView.builder(
+                  itemCount: widget.extrafee.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Checkbox(
+                              value: _isChecked[index],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  _isChecked[index] = value ?? false;
+                                });
+                              },
+                            ), //Checkbox
+                            SizedBox(
+                              width: 2,
+                            ), //SizedBox
+                            Text(
+                              widget.extrafee[index].name,
+                              style: TextStyle(fontSize: 16.0),
+                            ), //Text //SizedBox
+                            /** Checkbox Widget **/
+                          ], //<Widget>[]
+                        ),
+                        labelText(
+                            title: '\$' + widget.extrafee[index].price,
+                            color: Booking_TextColorPrimary)
+                      ],
+                    );
+                  },
+                ),
+                height: 150.0,
               ),
+              // ListView(
+              //   padding: EdgeInsets.all(0),
+              //   scrollDirection: Axis.vertical,
+              //   shrinkWrap: true,
+              //   children: prices.keys.map((String key) {
+              //     return Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Row(
+              //           children: <Widget>[
+              //             Checkbox(
+              //               value: prices[key],
+              //               onChanged: (bool? value) {
+              //                 setState(() {
+              //                   prices[key] = value! ? true : false;
+              //                 });
+              //               },
+              //             ), //Checkbox
+              //             SizedBox(
+              //               width: 2,
+              //             ), //SizedBox
+              //             Text(
+              //               key,
+              //               style: TextStyle(fontSize: 16.0),
+              //             ), //Text //SizedBox
+              //             /** Checkbox Widget **/
+              //           ], //<Widget>[]
+              //         ),
+              //         labelText(title: '\$100', color: Booking_TextColorPrimary)
+              //       ],
+              //     );
+              //   }).toList(),
+              // ),
+              dividerWidget(color: Booking_greyColor),
+              10.height,
+              SizedBox(
+                child: ListView.builder(
+                  itemCount: widget.bookingfee.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.bookingfee[index].name,
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        labelText(
+                            title: '\$' + widget.bookingfee[index].price,
+                            color: Booking_TextColorPrimary)
+                      ],
+                    );
+                  },
+                ),
+                height: 70,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       Booking_lbl_fee1,
+              //       style: TextStyle(fontSize: 16.0),
+              //     ),
+              //     labelText(title: '\$100', color: Booking_TextColorPrimary)
+              //   ],
+              // ),
+              // 26.height,
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       Booking_lbl_fee2,
+              //       style: TextStyle(fontSize: 16.0),
+              //     ),
+              //     labelText(title: '\$100', color: Booking_TextColorPrimary)
+              //   ],
+              // ),
               dividerWidget(color: Booking_greyColor),
               20.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Booking_lbl_fee1,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  labelText(title: '\$100', color: Booking_TextColorPrimary)
-                ],
-              ),
-              26.height,
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Booking_lbl_fee2,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  labelText(title: '\$100', color: Booking_TextColorPrimary)
-                ],
-              ),
-              20.height,
-              dividerWidget(color: Booking_greyColor),
-              20.height,
-
               Center(
                 child: defaultButton(
                   text: Booking_lbl_BookNow,
