@@ -5,8 +5,6 @@ import 'package:bookingapp/models/CommonModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import '../models/HotelFilterModel.dart';
-
 Future<List<CarModel>> getCarData(String params) async {
   var url = Uri.parse(baseUrl + '/car/search?' + params);
   var response =

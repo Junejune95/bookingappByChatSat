@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 late Future<BookingHotelModel> bookinghotelmodel;
 
+// ignore: must_be_immutable
 class BookingHotelDetailScreen extends StatelessWidget {
   final int id;
   BookingHotelDetailScreen({Key? key, required this.id}) : super(key: key);
@@ -133,14 +134,14 @@ class BookingHotelDetailScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 16,
                                   ),
-                                  margin: EdgeInsets.symmetric(horizontal: 16),
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
                                   decoration: BoxDecoration(
                                     color: Booking_AppBar,
                                     borderRadius: radius(10),
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       ruleTimeWidget(context,
                                           Booking_lbl_CheckIn, '12:00 AM'),
@@ -166,11 +167,15 @@ class BookingHotelDetailScreen extends StatelessWidget {
                                         color: Booking_TextColorPrimary,
                                       ),
                                       8.height,
-                                      expandWidget('Guarantee Policy'),
-                                      expandWidget('Children Policy'),
+                                      expandWidget('Guarantee Policy',
+                                          data.gpolicy ?? ''),
+                                      expandWidget('Children Policy',
+                                          data.cpolicy ?? ''),
                                       expandWidget(
-                                          'Cancellation/Amendment Policy'),
-                                      expandWidget('Late check-out policy'),
+                                          'Cancellation/Amendment Policy',
+                                          data.capolicy ?? ''),
+                                      expandWidget('Late check-out policy',
+                                          data.lcopolicy ?? ''),
                                     ],
                                   ),
                                 )
@@ -187,7 +192,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
     );
   }
 
-  ExpansionTile expandWidget(String title) {
+  ExpansionTile expandWidget(String title, String content) {
     return ExpansionTile(
       title: Container(
         child: Text(
@@ -204,12 +209,12 @@ class BookingHotelDetailScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 20, bottom: 20),
           child: Text(
-            'Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffee species.',
+            content,
             style: TextStyle(
               fontSize: 16,
               color: Booking_TextColorSecondary,
             ),
-            maxLines: 3,
+            maxLines: 20,
             softWrap: true,
             // textAlign: TextAlign.start,
           ),
@@ -220,7 +225,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
 
   Container ruleTimeWidget(BuildContext context, String label, String time) {
     return Container(
-      width: context.width() / 2.6,
+      width: context.width() / 2.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

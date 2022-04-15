@@ -3,8 +3,11 @@
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
 
+typedef StringCallBack(String val);
+
 class CounterComponent extends StatefulWidget {
-  CounterComponent({Key? key}) : super(key: key);
+  final StringCallBack? callBack;
+  CounterComponent({Key? key, this.callBack}) : super(key: key);
 
   @override
   State<CounterComponent> createState() => _CounterComponentState();
@@ -23,7 +26,10 @@ class _CounterComponentState extends State<CounterComponent> {
                   padding: EdgeInsets.all(0),
                   color: Booking_TextColorWhite,
                   icon: Icon(Icons.remove),
-                  onPressed: () => setState(() => _itemCount--),
+                  onPressed: () => {
+                    setState(() =>
+                        {_itemCount--, widget.callBack!(_itemCount.toString())})
+                  },
                 ),
               )
             : Container(),
@@ -41,9 +47,11 @@ class _CounterComponentState extends State<CounterComponent> {
             icon: Icon(
               Icons.add,
             ),
-            onPressed: () => setState(
-              () => {_itemCount++},
-            ),
+            onPressed: () => {
+              setState(
+                () => {_itemCount++, widget.callBack!(_itemCount.toString())},
+              )
+            },
           ),
         ),
       ],

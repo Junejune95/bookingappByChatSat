@@ -2,6 +2,7 @@ import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
+import 'package:bookingapp/models/HotelRoomModel.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -130,10 +131,19 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
                               : facility.icon = Booking_ic_coffee;
       facilitylist.add(facility);
     });
-    print(facilitylist.length);
     hoteldata['gallery'].forEach((dynamic val) {
       String gal = val;
       gallery.add(gal);
+    });
+    String? gpolicy, cpolicy, capolicy, lcopolicy;
+    hoteldata['policy'].forEach((dynamic val) {
+      val['title'] == 'Guarantee Policy'
+          ? gpolicy = val['content']
+          : val['title'] == 'Children Policy'
+              ? cpolicy = val['content']
+              : val['title'] == 'Cancellation/Amendment Policy'
+                  ? capolicy = val['content']
+                  : lcopolicy = val['content'];
     });
     // ignore: unnecessary_new
     BookingHotelModel bookingHotelModel = new BookingHotelModel(
@@ -145,10 +155,14 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
         image: hoteldata['image'],
         location: hoteldata['location']['name'],
         price: double.parse(hoteldata['price']),
-        content: hoteldata['content'],
+        content: '<h4>Description</h4>' + hoteldata['content'],
         facilitylist: facilitylist,
         gallaries: gallery,
-        video: hoteldata['video']);
+        video: hoteldata['video'],
+        gpolicy: gpolicy,
+        cpolicy: cpolicy,
+        capolicy: capolicy,
+        lcopolicy: lcopolicy);
     return bookingHotelModel;
   } else {
     // ignore: unnecessary_new
@@ -162,5 +176,41 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
         location: '',
         price: 0.0);
     return bookingHotelModel;
+  }
+}
+
+Future<List<HotelRoomModel>> checkHotelAvaliable(
+    String id, String params) async {
+  print(baseUrl + '/hotel/availability/' + id + params);
+  var url = Uri.parse(baseUrl + '/hotel/availability/' + id + params);
+  var response =
+      await http.get(url, headers: {"Content-Type": "application/json"});
+
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    var hotelrooms = jsonResponse['rooms'];
+    List<HotelRoomModel> hotelRoomModelList = [];
+    hotelrooms.forEach((dynamic hoteldata) {
+      List<TypeSelectedModel> facilitylist = [];
+      hoteldata['term_features'].forEach((dynamic val) {
+        TypeSelectedModel facility =
+            // ignore: unnecessary_new
+            new TypeSelectedModel(
+          type: val['title'],
+        );
+        facility.type == 'Laundry and dry cleaning'
+            ? facility.icon = Booking_ic_recycle
+            : facility.type == 'Internet – Wifi'
+                ? facility.icon = Booking_ic_wifi
+                : facility.icon = Booking_ic_coffee;
+        facilitylist.add(facility);
+      });
+      hoteldata['facility'] = facilitylist;
+      HotelRoomModel hotelRoomModel = HotelRoomModel.fromJson(hoteldata);
+      hotelRoomModelList.add(hotelRoomModel);
+    });
+    return hotelRoomModelList;
+  } else {
+    return [];
   }
 }
