@@ -36,6 +36,8 @@ const Booking_lbl_fee1= "Equipment fee";
 const Booking_lbl_fee2= "Facility fee";
 const Booking_lbl_Take_Off= "Take Off";
 const Booking_lbl_Landing= "Landing";
+const Booking_lbl_information= "Information";
+
 
 const Booking_lbl_Pay_amount= "Pay Amount";
 const Booking_lbl_Seat_type= "Seat Type";
@@ -98,11 +100,13 @@ const Booking_lbl_btn_Apply= "Apply";
 const Booking_lbl_btn_Search = "Search";
 const Booking_lbl_btn_Detail = "Detail";
 const Booking_lbl_btn_Invoice = "Invoice";
+const Booking_lbl_btn_Save = "Save";
 const Booking_lbl_btn_CheckAvailability = "Check Availability";
 
 // validation
 const Booking_err_txt_name1= "The first name is required field";
 const Booking_err_txt_name2= "The last name is required field";
+const Booking_err_txt_name= "Name is required field";
 const Booking_err_txt_phone= "Phone is required field";
 const Booking_err_txt_email_token= "The email has already been taken.";
 const Booking_err_txt_email= "Email is required field.";
@@ -112,6 +116,20 @@ const Booking_err_txt_cpwd= "Confirm Password is required field.";
 const Booking_err_txt_pwd_match= "Password not match.";
 const Booking_err_txt_terms= "The terms and conditions field is required";
 
+  //placeholder
+const Booking_placeh_firstName= "First Name";
+const Booking_placeh_birthday= "Birthday";
+const Booking_placeh_lastName= "Last Name";
+const Booking_placeh_name= "Name";
+const Booking_placeh_email= "Email Id";
+const Booking_placeh_phoneNum= "Phone Number";
+const Booking_placeh_note= "Note";
+const Booking_placeh_address1= "Address Line1";
+const Booking_placeh_address2= "Address Line2";
+const Booking_placeh_city= "City";
+const Booking_placeh_state= "State";
+const Booking_placeh_country= "Country";
+const Booking_placeh_zipCode= "Zip Code";
 
 const Booking_lbl_Booking_book= "Book";
 const Booking_lbl_Booking_enquiry= "Enquiry";
