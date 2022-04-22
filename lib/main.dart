@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'app_enum.dart';
 import 'fragments/BookingMoreFragment.dart';
+import 'screen/BookingSplash.dart';
 import 'utils/AppTheme.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Booking App',
       theme: AppThemeData.lightTheme,
-      home: const Checkscreen(),
+      home:  BookingSplash(),
     );
   }
 }
