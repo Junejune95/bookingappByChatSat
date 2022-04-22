@@ -41,32 +41,16 @@ class _BookingSplashState extends State<BookingSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          // Container(
-          //   decoration: BoxDecoration(
-          //     gradient: LinearGradient(
-          //       begin: Alignment.bottomLeft,
-          //       end: Alignment.topLeft,
-          //       colors: [
-          //         Booking_Secondary,
-          //         Booking_TextColorBlue,
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          Align(
-              alignment: Alignment.center,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(BookingLogo),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ))
-        ],
-      ),
+      body: Align(
+          alignment: Alignment.center,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(BookingLogo),
+                fit: BoxFit.contain,
+              ),
+            ),
+          )),
     );
   }
 }
