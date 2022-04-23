@@ -133,7 +133,6 @@ class BookingCarDetailScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                16.height,
                                 descriptionWrapper(data.content),
                                 16.height,
                               ],

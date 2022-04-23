@@ -5,8 +5,8 @@ import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:readmore/readmore.dart';
 
 Stack upperImageViewWidget(
     BuildContext context, String imageUrl, String videoUrl, List<String> urls) {
@@ -197,70 +197,58 @@ Column galleryWidget(urls) {
 Padding descriptionWrapper(description) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        labelText(
-            title: Booking_lbl_Description, color: Booking_TextColorPrimary),
-        10.height,
-        ReadMoreText(
-          description,
-          trimLines: 4,
-
-          colorClickableText: Booking_TextColorSecondary,
-          trimMode: TrimMode.Line,
-          style: TextStyle(
-              color: Booking_TextColorSecondary,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              height: 1.5),
-          trimCollapsedText: 'Show more',
-          // trimExpandedText: 'Show less',
-          lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+    child: Html(
+      data: description,
+      style: {
+        "p": Style(
+          color: Booking_TextColorSecondary,
+          fontSize: FontSize.em(1.1),
+          lineHeight: LineHeight.em(1.2),
         ),
-      ],
+        "li": Style(
+            color: Booking_TextColorSecondary,
+            fontSize: FontSize.em(1.1),
+            padding: EdgeInsets.only(bottom: 8)),
+      },
     ),
   );
-
-  
 }
 
 Container customTextBoxFieldWidget(BuildContext context,
-      {required String checkResult, required VoidCallback onTap}) {
-    return Container(
-      width: context.width(),
-      padding: EdgeInsets.all(10),
-      height: 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(
-          color: Booking_TextColorSecondary.withOpacity(0.3),
-          style: BorderStyle.solid,
-          width: 1,
-        ),
+    {required String checkResult, required VoidCallback onTap}) {
+  return Container(
+    width: context.width(),
+    padding: EdgeInsets.all(10),
+    height: 60,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(8.0),
+      border: Border.all(
+        color: Booking_TextColorSecondary.withOpacity(0.3),
+        style: BorderStyle.solid,
+        width: 1,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            checkResult,
-            style: TextStyle(
-              fontSize: 14,
-              color: Booking_TextColorPrimary,
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.none,
-            ),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          checkResult,
+          style: TextStyle(
+            fontSize: 14,
+            color: Booking_TextColorPrimary,
+            fontWeight: FontWeight.w600,
+            decoration: TextDecoration.none,
           ),
-          GestureDetector(
-            onTap: onTap,
-            child: Icon(
-              Booking_ic_calendar,
-              size: 24,
-              color: Booking_TextColorSecondary,
-            ),
-          )
-        ],
-      ),
-    );
-  }
+        ),
+        GestureDetector(
+          onTap: onTap,
+          child: Icon(
+            Booking_ic_calendar,
+            size: 24,
+            color: Booking_TextColorSecondary,
+          ),
+        )
+      ],
+    ),
+  );
+}

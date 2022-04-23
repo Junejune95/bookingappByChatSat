@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_enum.dart';
 import 'fragments/BookingMoreFragment.dart';
+import 'screen/BookingSplash.dart';
 import 'utils/AppTheme.dart';
 
 bool checkToken = false;
@@ -29,13 +30,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Booking App',
       theme: AppThemeData.lightTheme,
-      home: const Checkscreen(),
+      home: checkToken
+          ? Checkscreen(
+              checktoken: checkToken,
+            )
+          : BookingSplash(),
     );
   }
 }
 
 class Checkscreen extends StatefulWidget {
-  const Checkscreen({Key? key}) : super(key: key);
+  bool checktoken;
+  Checkscreen({Key? key, required this.checktoken}) : super(key: key);
 
   @override
   State<Checkscreen> createState() => _CheckscreenState();
@@ -45,13 +51,20 @@ class _CheckscreenState extends State<Checkscreen> {
   PageController _pageController = PageController();
 
   int _index = 0;
-  List<Widget> screen = [
-    const BookingHomeFragment(),
-    const BookingHotelFragment(),
-    const BookingCarFragment(),
-    const BookingFightFragment(),
-    BookingMoreFragment(),
-  ];
+  List<Widget> screen = [];
+  void initState() {
+    // TODO: implement initState
+    screen = [
+      const BookingHomeFragment(),
+      const BookingHotelFragment(),
+      const BookingCarFragment(),
+      const BookingFightFragment(),
+      BookingMoreFragment(
+        checkToken: widget.checktoken,
+      )
+    ];
+    super.initState();
+  }
 
   _onPageChange(index) {
     _pageController.jumpToPage(index);

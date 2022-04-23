@@ -25,7 +25,10 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Car')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Car'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -63,8 +66,8 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                         // selectedOne = null;
                         return data != null
                             ? CarListComponent(
-                               carlist: data,
-                               isHome: false,
+                                carlist: data,
+                                isHome: false,
                               )
                             : Container(
                                 child: const Text(" No Data Exist "),

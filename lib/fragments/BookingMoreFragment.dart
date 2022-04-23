@@ -12,9 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingMoreFragment extends StatelessWidget {
-  BookingMoreFragment({Key? key}) : super(key: key);
-
-  bool isLogin = false;
+  bool checkToken;
+  BookingMoreFragment({Key? key, required this.checkToken}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class BookingMoreFragment extends StatelessWidget {
       child: Scaffold(
         body: Container(
             color: Booking_Primary,
-            child: isLogin == true
+            child: checkToken == true
                 ? afteruserloginWidget(context)
                 : BookingSignInScreen()),
       ),

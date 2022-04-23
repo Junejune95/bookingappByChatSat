@@ -27,6 +27,7 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fight'),
+         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
