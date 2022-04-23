@@ -14,7 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 class BookingMoreFragment extends StatelessWidget {
   BookingMoreFragment({Key? key}) : super(key: key);
 
-  bool isLogin = true;
+  bool isLogin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,8 @@ class BookingMoreFragment extends StatelessWidget {
           Booking_lbl_My_profile,
           Booking_ic_person,
           () {
-            BookingUserInformationScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+            BookingUserInformationScreen().launch(context,
+                pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
           },
         ),
         dividerWidget(),

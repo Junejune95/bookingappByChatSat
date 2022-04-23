@@ -192,6 +192,17 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
     List<HotelRoomModel> hotelRoomModelList = [];
     hotelrooms.forEach((dynamic hoteldata) {
       List<TypeSelectedModel> facilitylist = [];
+      hoteldata['price'] = double.parse(hoteldata['price'].toString());
+      List<String> pricelist = [];
+      for (var i = 0; i < hoteldata['number']; i++) {
+        i == 0
+            ? pricelist.add(
+                '1 Room (\$' + (hoteldata['price'] * (i + 1)).toString() + ")")
+            : pricelist.add((i + 1).toString() +
+                ' Rooms (\$' +
+                (hoteldata['price'] * (i + 1)).toString() +
+                ")");
+      }
       hoteldata['term_features'].forEach((dynamic val) {
         TypeSelectedModel facility =
             // ignore: unnecessary_new
@@ -206,6 +217,7 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
         facilitylist.add(facility);
       });
       hoteldata['facility'] = facilitylist;
+      hoteldata['price_list'] = pricelist;
       HotelRoomModel hotelRoomModel = HotelRoomModel.fromJson(hoteldata);
       hotelRoomModelList.add(hotelRoomModel);
     });

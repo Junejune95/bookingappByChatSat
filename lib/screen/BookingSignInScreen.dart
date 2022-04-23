@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
+import 'package:bookingapp/services/user.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
@@ -132,7 +133,7 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                       backgroundColor: Booking_Secondary,
                       borderRadius: BorderRadius.circular(50)),
                   child: Icon(Icons.arrow_right_alt, color: white, size: 40),
-                ).onTap(() {
+                ).onTap(() async {
                   if (!isSignUp) {
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
@@ -140,6 +141,9 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
+                      bool loginSuccess =
+                          await userLogin(emailCont.text, passCont.text);
+                      print(loginSuccess);
                     }
                   } else {
                     isSignUp = !isSignUp;
@@ -149,6 +153,13 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
+                      bool registerSuccess = await userRegister(
+                          emailCont.text,
+                          passCont.text,
+                          firstName.text,
+                          lastName.text,
+                          phoneNumber.text);
+                      print(registerSuccess);
                     }
                     // setState(() {});
                   }
@@ -218,10 +229,10 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
         hintText: 'Email Id',
         suffixIcon: Icon(Booking_ic_email),
       ),
-        validator: (value) {
+      validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        }else if(!emailValidatorRegExp.hasMatch(value)){
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
           return Booking_err_txt_email_invalid;
         }
         return null;

@@ -203,6 +203,9 @@ class _BookWidgetState extends State<BookWidget> {
                           return Text('Error: ${snapshot.error}');
                         else {
                           List<HotelRoomModel>? data = snapshot.data;
+                          var dpList = data != null
+                              ? List<String>.filled(data.length, "")
+                              : [];
                           return data != null
                               ? ListView.builder(
                                   itemCount: data.length,
@@ -278,6 +281,28 @@ class _BookWidgetState extends State<BookWidget> {
                                                   }),
                                               height: 60,
                                             ),
+                                            if (data[index]
+                                                .price_list!
+                                                .isNotEmpty)
+                                              DropdownButton<String>(
+                                                items: data[index]
+                                                    .price_list!
+                                                    .map((String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                value: data[index]
+                                                    .price_list![0]
+                                                    .toString(),
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    dpList[index] = val;
+                                                  });
+                                                },
+                                              ),
                                             // Row(
                                             //   children: [
                                             //     SizedBox(

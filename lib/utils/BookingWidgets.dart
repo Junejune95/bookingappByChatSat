@@ -28,10 +28,9 @@ Widget labelText(
   return Text(
     title,
     style: boldTextStyle(
-      decoration: TextDecoration.none,
-      color: color != null ? color : Booking_TextColorSecondary,
-      size: size != null ? size : 16
-    ),
+        decoration: TextDecoration.none,
+        color: color != null ? color : Booking_TextColorSecondary,
+        size: size != null ? size : 16),
     maxLines: maxLines != null ? maxLines : 1,
     overflow: TextOverflow.ellipsis,
   );
@@ -174,13 +173,14 @@ Container defaultCard(
     {required Widget child,
     double? width,
     EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin}) {
+    EdgeInsetsGeometry? margin,
+    Color? color}) {
   return Container(
     width: width != null ? width : SizeConfig.screenWidth,
     padding: padding != null ? padding : const EdgeInsets.all(0),
     margin: margin != null ? margin : const EdgeInsets.all(0),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: color != null ? color : Colors.white,
       borderRadius: radius(8),
       boxShadow: defaultBoxShadow(
         shadowColor: Booking_Primary.withOpacity(0.2),

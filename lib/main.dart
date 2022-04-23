@@ -4,12 +4,18 @@ import 'package:bookingapp/fragments/BookingHomeFragment.dart';
 import 'package:bookingapp/fragments/BookingHotelFragment.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_enum.dart';
 import 'fragments/BookingMoreFragment.dart';
 import 'utils/AppTheme.dart';
 
-void main() {
+bool checkToken = false;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var bearToken = prefs.getString('access_token');
+  checkToken = bearToken != null;
   runApp(const MyApp());
 }
 
