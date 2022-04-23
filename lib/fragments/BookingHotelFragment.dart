@@ -27,6 +27,7 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hotel'),
+         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:bookingapp/main.dart';
+import 'package:bookingapp/screen/BookingWalkThroughScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -33,7 +34,7 @@ class _BookingSplashState extends State<BookingSplash> {
     setState(
       () {
         finish(context);
-        Checkscreen().launch(context);
+        BookingWalkThrough().launch(context);
       },
     );
   }

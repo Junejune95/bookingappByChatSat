@@ -2,7 +2,13 @@
 
 const Booking_lbl_app_Name = "Booking";
 const Booking_lbl_app_Sub_title = "Booking Apps";
+const Booking_lbl_Walk1Title= "Booking Hotel";
+const Booking_lbl_Walk2Title= "Booking Flight";
+const Booking_lbl_Walk3Title= "Booking Car";
+const Bookking_lbl_Walk1SubTitle= "Each payment process is so simple and hassle-free, and I don not need to be worried about being scammedEach Payment process is so simple and hassle-free";
+
 const Booking_lbl_Location = "Location";
+const Booking_lbl_getStart = "Get Start";
 const Booking_lbl_CheckIn = "Check In";
 const Booking_lbl_CheckOut = "Check Out";
 const Booking_lbl_Guests = "Guests";
@@ -90,6 +96,9 @@ const Booking_lbl_Booking_SortBy1= "Recommended";
 const Booking_lbl_Booking_SortBy2= "Price (Low to high)";
 const Booking_lbl_Booking_SortBy3= "Price (High to low)";
 const Booking_lbl_Booking_SortBy4= "Rating (High to low)";
+
+
+
 
 
 
