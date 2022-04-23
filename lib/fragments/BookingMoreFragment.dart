@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/screen/BookingHistoryScreen.dart';
+import 'package:bookingapp/screen/BookingLanguageScreen.dart';
 import 'package:bookingapp/screen/BookingSignInScreen.dart';
 import 'package:bookingapp/screen/BookingUserInformationScreen.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
@@ -57,9 +58,11 @@ class BookingMoreFragment extends StatelessWidget {
         ),
         dividerWidget(),
         itemWidget(
-          Booking_lbl_Setting,
-          Booking_ic_setting,
-          () {},
+          Booking_lbl_Language,
+          Booking_ic_language,
+          () {
+               BookingLanguageScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+          },
         ),
         dividerWidget(),
         itemWidget(

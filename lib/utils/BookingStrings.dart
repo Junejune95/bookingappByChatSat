@@ -79,7 +79,7 @@ const Booking_lbl_Hotel_service7= "Tickets";
 const Booking_lbl_My_profile= "My Profile";
 const Booking_lbl_Booking_history= "Booking History";
 const Booking_lbl_Change_password= "Change Password";
-const Booking_lbl_Setting= "Setting";
+const Booking_lbl_Language= "Language";
 const Booking_lbl_Log_out= "Log Out";
 
 

@@ -4,11 +4,13 @@ import 'package:bookingapp/fragments/BookingHomeFragment.dart';
 import 'package:bookingapp/fragments/BookingHotelFragment.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'app_enum.dart';
 import 'fragments/BookingMoreFragment.dart';
 import 'screen/BookingSplash.dart';
 import 'utils/AppTheme.dart';
+import 'utils/localStrings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,11 +22,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Booking App',
       theme: AppThemeData.lightTheme,
+       translations: LocaleString(),
       home:  BookingSplash(),
+       locale: Locale('en','US'),
     );
   }
 }

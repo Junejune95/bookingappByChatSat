@@ -45,6 +45,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.1.47
   flutter_html: ^2.2.1
   dots_indicator: ^2.1.0
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
