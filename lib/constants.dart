@@ -44,8 +44,7 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
-const String baseUrl =
-    "http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/api";
+const String baseUrl = "https://booking.hiyan.xyz/api";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

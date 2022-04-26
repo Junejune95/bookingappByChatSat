@@ -1,11 +1,14 @@
 import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
+import 'package:bookingapp/models/BookingFeeModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
 import 'package:bookingapp/models/HotelRoomModel.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<BookingHotelModel>> getHotelData(String params) async {
   var url = Uri.parse(baseUrl + '/hotel/search?' + params);
@@ -111,6 +114,7 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
     var hoteldata = jsonResponse['data'];
 
     List<TypeSelectedModel> facilitylist = [];
+    List<BookingFeeModel> extra_price = [], booking_fee = [];
     List<String> gallery = [];
     hoteldata['terms']['6']['child'].forEach((dynamic val) {
       TypeSelectedModel facility =
@@ -145,6 +149,16 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
                   ? capolicy = val['content']
                   : lcopolicy = val['content'];
     });
+
+    hoteldata['extra_price'].forEach((dynamic val) {
+      val['desc'] = "";
+      BookingFeeModel bookingFeeModel = BookingFeeModel.fromJson(val);
+      extra_price.add(bookingFeeModel);
+    });
+    hoteldata['booking_fee'].forEach((dynamic val) {
+      BookingFeeModel bookingFeeModel = BookingFeeModel.fromJson(val);
+      booking_fee.add(bookingFeeModel);
+    });
     // ignore: unnecessary_new
     BookingHotelModel bookingHotelModel = new BookingHotelModel(
         id: hoteldata['id'],
@@ -162,6 +176,8 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
         gpolicy: gpolicy,
         cpolicy: cpolicy,
         capolicy: capolicy,
+        extra_price: extra_price,
+        booking_fee: booking_fee,
         lcopolicy: lcopolicy);
     return bookingHotelModel;
   } else {
@@ -224,5 +240,57 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
     return hotelRoomModelList;
   } else {
     return [];
+  }
+}
+
+Future<bool> addToCart() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var bearToken = 'Bearer ' + (prefs.getString('access_token') ?? "");
+  var url = Uri.parse(baseUrl + '/booking/addToCart');
+  var body = convert.jsonEncode({
+    "service_id": 9,
+    "service_type": "hotel",
+    "start_date": "2022-07-08",
+    "end_date": "2022-07-09",
+    "extra_price": [
+      {
+        "name": "Service VIP ",
+        "price": "200",
+        "type": "one_time",
+        "number": 0,
+        "enable": true,
+        "price_html": "\$200",
+        "price_type": ""
+      },
+      {
+        "name": "Breakfasts",
+        "price": "100",
+        "type": "one_time",
+        "number": 1,
+        "enable": 1,
+        "price_html": "\$100",
+        "price_type": ""
+      }
+    ],
+    "adults": 1,
+    "children": 0,
+    "rooms": [
+      {"id": 33, "number_selected": 1},
+      {"id": 34, "number_selected": 0},
+      {"id": 35, "number_selected": 0},
+      {"id": 36, "number_selected": 0}
+    ]
+  });
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json", "Authorization": bearToken},
+      body: body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    print(jsonResponse.toString());
+
+    return true;
+  } else {
+    return false;
   }
 }

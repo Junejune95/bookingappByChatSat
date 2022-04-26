@@ -44,7 +44,10 @@ class BookingHotelDetailScreen extends StatelessWidget {
                   BookingHotelModel? data = snapshot.data;
                   return data != null
                       ? bottomBookNowWidget(context, () {
-                          BookingHotelBookNowScreen().launch(context,
+                          BookingHotelBookNowScreen(
+                            extra_price: data.extra_price ?? [],
+                            booking_fee: data.booking_fee ?? [],
+                          ).launch(context,
                               pageRouteAnimation:
                                   PageRouteAnimation.SlideBottomTop);
                         }, data.price, '/ night')

@@ -1,7 +1,7 @@
-// ignore_for_file: file_names, non_constant_identifier_names
-
 import 'package:bookingapp/components/CounterComponent.dart';
+import 'package:bookingapp/models/BookingFeeModel.dart';
 import 'package:bookingapp/models/HotelRoomModel.dart';
+import 'package:bookingapp/screen/BookingCheckoutScreen.dart';
 import 'package:bookingapp/screen/BookingEnquiryForm.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
@@ -15,7 +15,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class BookingHotelBookNowScreen extends StatefulWidget {
-  const BookingHotelBookNowScreen({Key? key}) : super(key: key);
+  final List<BookingFeeModel> extra_price, booking_fee;
+  const BookingHotelBookNowScreen(
+      {Key? key, required this.extra_price, required this.booking_fee})
+      : super(key: key);
 
   @override
   State<BookingHotelBookNowScreen> createState() =>
@@ -33,22 +36,26 @@ class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  List<BookingHistoryTab> pages = [
-    BookingHistoryTab(
-      title: Booking_lbl_Booking_book,
-      child: BookWidget(),
-    ),
-    BookingHistoryTab(
-      title: Booking_lbl_Booking_enquiry,
-      child: BookingEnquiryForm(
-        id: 1,
-        type: 'hotel',
-      ),
-    ),
-  ];
+  List<BookingHistoryTab> pages = [];
 
   @override
   void initState() {
+    pages = [
+      BookingHistoryTab(
+        title: Booking_lbl_Booking_book,
+        child: BookWidget(
+          extra_price: widget.extra_price,
+          booking_fee: widget.booking_fee,
+        ),
+      ),
+      BookingHistoryTab(
+        title: Booking_lbl_Booking_enquiry,
+        child: BookingEnquiryForm(
+          id: 1,
+          type: 'hotel',
+        ),
+      ),
+    ];
     super.initState();
     tabController = TabController(length: pages.length, vsync: this);
     tabController.addListener(() {
@@ -92,7 +99,10 @@ class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
 }
 
 class BookWidget extends StatefulWidget {
-  const BookWidget({Key? key}) : super(key: key);
+  final List<BookingFeeModel> extra_price, booking_fee;
+  const BookWidget(
+      {Key? key, required this.extra_price, required this.booking_fee})
+      : super(key: key);
 
   @override
   State<BookWidget> createState() => _BookWidgetState();
@@ -118,6 +128,8 @@ class _BookWidgetState extends State<BookWidget> {
   String start_date = '', end_date = '';
   bool isCheckInCalendar = false;
   bool isCheckGuest = false;
+  bool toBook = false;
+  var dpList = <String?>[];
   @override
   void initState() {
     hotelRoomModelList = checkHotelAvaliable('10', params);
@@ -203,9 +215,7 @@ class _BookWidgetState extends State<BookWidget> {
                           return Text('Error: ${snapshot.error}');
                         else {
                           List<HotelRoomModel>? data = snapshot.data;
-                          var dpList = data != null
-                              ? List<String>.filled(data.length, "")
-                              : [];
+                          data != null ? dpList.length = data.length : "";
                           return data != null
                               ? ListView.builder(
                                   itemCount: data.length,
@@ -294,12 +304,15 @@ class _BookWidgetState extends State<BookWidget> {
                                                     child: Text(value),
                                                   );
                                                 }).toList(),
-                                                value: data[index]
-                                                    .price_list![0]
-                                                    .toString(),
+                                                value: dpList[index] != null
+                                                    ? dpList[index]
+                                                    : null,
                                                 onChanged: (val) {
+                                                  dpList.insert(index, val!);
                                                   setState(() {
-                                                    dpList[index] = val;
+                                                    dpList;
+                                                    toBook = true;
+                                                    print(dpList);
                                                   });
                                                 },
                                               ),
@@ -387,6 +400,70 @@ class _BookWidgetState extends State<BookWidget> {
                         }
                     }
                   }),
+              if (toBook)
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: widget.extra_price.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) {
+                                return Row(
+                                  children: [
+                                    Checkbox(
+                                      checkColor: Colors.white,
+                                      value: false,
+                                      onChanged: (bool? value) {
+                                        setState(() {});
+                                      },
+                                    ),
+                                    Text(widget.extra_price[i].name +
+                                        " " +
+                                        "\$" +
+                                        widget.extra_price[i].price)
+                                  ],
+                                );
+                              }),
+                          height: 60,
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text("Total rooms 10"),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                                "Service Fee \$" + widget.booking_fee[0].price))
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text("Total Price \$1500"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: defaultButton(
+                          text: Booking_lbl_BookNow,
+                          tap: () async {
+                            await addToCart();
+                            const BookingCheckoutScreen().launch(context,
+                                pageRouteAnimation:
+                                    PageRouteAnimation.SlideBottomTop);
+                          },
+                          height: 40,
+                          width: 120),
+                    ),
+                  ],
+                )
             ],
           ),
         ),

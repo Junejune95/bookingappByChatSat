@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bookingapp/models/UserModel.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
@@ -7,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookinUserLocationComponent extends StatelessWidget {
-  BookinUserLocationComponent({Key? key}) : super(key: key);
+  final UserModel userModel;
+  BookinUserLocationComponent({Key? key, required this.userModel})
+      : super(key: key);
 
   TextEditingController addressCont1 = TextEditingController();
 
@@ -21,6 +24,11 @@ class BookinUserLocationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    addressCont1.text = userModel.address;
+    addressCont2.text = userModel.address2;
+    cityCont.text = userModel.city;
+    stateCont.text = userModel.state;
+    zipCodeCont.text = userModel.zipcode;
     return Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -33,8 +41,6 @@ class BookinUserLocationComponent extends StatelessWidget {
                 buildAddress2Field(),
                 16.height,
                 buildCityField(),
-                16.height,
-                buildStateField(),
                 16.height,
                 buildStateField(),
                 16.height,

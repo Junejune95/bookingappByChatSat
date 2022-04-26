@@ -11,6 +11,7 @@ class HotelRoomModel {
   double price;
   int available_no;
   List<String>? price_list;
+  List<double>? prices;
 
   HotelRoomModel(
       {required this.title,
@@ -21,7 +22,8 @@ class HotelRoomModel {
       this.facilitylist,
       required this.price,
       required this.available_no,
-      this.price_list});
+      this.price_list,
+      this.prices});
   factory HotelRoomModel.fromJson(Map<String, dynamic> json) {
     return HotelRoomModel(
       title: json['title'],
@@ -33,6 +35,7 @@ class HotelRoomModel {
       price: json['price'],
       available_no: json['number'],
       price_list: json['price_list'],
+      prices: json['prices'],
     );
   }
 }

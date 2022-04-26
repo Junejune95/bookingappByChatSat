@@ -59,6 +59,7 @@ IconData Booking_ic_city = Icons.location_city;
 IconData Booking_ic_state = MdiIcons.officeBuilding;
 IconData Booking_ic_zipcode = MdiIcons.pointOfSale;
 
+IconData Booking_ic_note = Icons.note;
 // images
 const BookingLogo = 'images/booking_logo.png';
 const Booking_ic_walk1 = 'images/booking_walk1.gif';

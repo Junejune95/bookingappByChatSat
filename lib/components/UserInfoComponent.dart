@@ -1,3 +1,4 @@
+import 'package:bookingapp/models/UserModel.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
@@ -7,7 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class UserInformation extends StatefulWidget {
-  UserInformation({Key? key}) : super(key: key);
+  final UserModel userModel;
+  UserInformation({Key? key, required this.userModel}) : super(key: key);
 
   @override
   State<UserInformation> createState() => _UserInformationState();
@@ -38,22 +40,20 @@ class _UserInformationState extends State<UserInformation> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(children: [
-            buildNameField(),
+            buildNameField(widget.userModel.name),
             16.height,
-            buildEmailField(),
+            buildEmailField(widget.userModel.email),
             16.height,
-            buildFirstNameField(),
+            buildFirstNameField(widget.userModel.first_name),
             16.height,
-            buildLastNameField(),
+            buildLastNameField(widget.userModel.last_name),
             16.height,
-            buildPhoneNumberField(),
-             16.height,
+            buildPhoneNumberField(widget.userModel.phone),
+            16.height,
             buildBdDateField(),
             16.height,
             builAboutField(),
-           
             30.height,
-
             Center(
               child: defaultButton(
                 text: Booking_lbl_btn_Save,
@@ -76,7 +76,8 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
-  AppTextField buildNameField() {
+  AppTextField buildNameField(String name) {
+    nameCont.text = widget.userModel.name;
     return AppTextField(
       controller: nameCont,
       textFieldType: TextFieldType.NAME,
@@ -93,7 +94,8 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
-  AppTextField buildFirstNameField() {
+  AppTextField buildFirstNameField(String firstName) {
+    firstNameCont.text = widget.userModel.first_name;
     return AppTextField(
       controller: firstNameCont,
       textFieldType: TextFieldType.NAME,
@@ -110,7 +112,8 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
-  AppTextField buildLastNameField() {
+  AppTextField buildLastNameField(String lastName) {
+    lastNameCont.text = widget.userModel.last_name;
     return AppTextField(
       controller: lastNameCont,
       textFieldType: TextFieldType.NAME,
@@ -127,7 +130,8 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
-  AppTextField buildPhoneNumberField() {
+  AppTextField buildPhoneNumberField(String phone) {
+    phoneCont.text = widget.userModel.phone;
     return AppTextField(
       controller: phoneCont,
       textFieldType: TextFieldType.PHONE,
@@ -141,7 +145,8 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
-  AppTextField buildEmailField() {
+  AppTextField buildEmailField(String email) {
+    emailCont.text = email;
     return AppTextField(
       controller: emailCont,
       textFieldType: TextFieldType.EMAIL,
@@ -160,37 +165,41 @@ class _UserInformationState extends State<UserInformation> {
     );
   }
 
- TextField buildBdDateField() {
+  TextField buildBdDateField() {
     return TextField(
-       controller: birthdayCont, //editing controller of this TextField
-                decoration: InputDecoration( 
-                   suffixIcon: Icon(Icons.calendar_today), //icon of text field
-                   labelText: Booking_placeh_birthday//label text of field
-                ),
-                readOnly: true,  //set it true, so that user will not able to edit text
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101)
-                  );
-                  
-                  if(pickedDate != null ){
-                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
-                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                        //you can implement different kind of Date Format here according to your requirement
+      controller: birthdayCont, //editing controller of this TextField
+      decoration: InputDecoration(
+          suffixIcon: Icon(Icons.calendar_today), //icon of text field
+          labelText: Booking_placeh_birthday //label text of field
+          ),
+      readOnly: true, //set it true, so that user will not able to edit text
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(
+                2000), //DateTime.now() - not to allow to choose before today.
+            lastDate: DateTime(2101));
 
-                      setState(() {
-                         birthdayCont.text = formattedDate; //set output date to TextField value. 
-                      });
-                  }else{
-                      print("Date is not selected");
-                  }
-                },
-    
+        if (pickedDate != null) {
+          print(
+              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          print(
+              formattedDate); //formatted date output using intl package =>  2021-03-16
+          //you can implement different kind of Date Format here according to your requirement
+
+          setState(() {
+            birthdayCont.text =
+                formattedDate; //set output date to TextField value.
+          });
+        } else {
+          print("Date is not selected");
+        }
+      },
     );
   }
+
   AppTextField builAboutField() {
     return AppTextField(
       controller: aboutCont,
