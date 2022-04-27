@@ -16,12 +16,12 @@ class BookingCarDetailScreen extends StatelessWidget {
   BookingCarDetailScreen({Key? key, required this.id}) : super(key: key);
 
   List<String> urls = [
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-2.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-4.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-1.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-3.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-5.jpg',
-    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/car/gallery-6.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-2.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-4.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-1.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-3.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-5.jpg',
+    'https://booking.hiyan.xyz/uploads/demo/car/gallery-6.jpg',
   ];
 
   @override

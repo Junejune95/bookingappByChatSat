@@ -262,7 +262,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(
-              'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/flight/airline/img1.jpg'),
+              'https://booking.hiyan.xyz/uploads/demo/flight/airline/img1.jpg'),
           fit: BoxFit.cover,
         ),
         boxShadow: defaultBoxShadow(

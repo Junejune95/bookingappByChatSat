@@ -9,14 +9,13 @@ List<BookingTypeModel> getBookingTypeList() {
   List<BookingTypeModel> list = [];
 
   list.add(BookingTypeModel(icon: Booking_ic_hotel, name: Booking_lbl_Hotel));
-  list.add(BookingTypeModel(icon: Booking_ic_space, name: Booking_lbl_Space));
-  list.add(BookingTypeModel(icon: Booking_ic_tour, name: Booking_lbl_Tour));
+  // list.add(BookingTypeModel(icon: Booking_ic_space, name: Booking_lbl_Space));
+  // list.add(BookingTypeModel(icon: Booking_ic_tour, name: Booking_lbl_Tour));
   list.add(BookingTypeModel(icon: Booking_ic_car, name: Booking_lbl_Car));
   list.add(BookingTypeModel(icon: Booking_ic_fight, name: Booking_lbl_Fight));
 
   return list;
 }
-
 
 List<TypeSelectedModel> propertyTypeList = [
   TypeSelectedModel(type: "Apartments", isSelected: false),
@@ -42,12 +41,11 @@ List<TypeSelectedModel> facilitiesList = [
 ];
 
 List<TypeSelectedModel> hotelServiceList = [
-    TypeSelectedModel(type: "Havana Lobby bar", isSelected: false),
-    TypeSelectedModel(type: "Fiesta Restaurant", isSelected: false),
-    TypeSelectedModel(type: "Hotel transport services", isSelected: false),
-    TypeSelectedModel(type: "Free luggage deposit", isSelected: false),
-    TypeSelectedModel(type: "Laundry Services", isSelected: false),
-    TypeSelectedModel(type: "Pets welcome", isSelected: false),
-    TypeSelectedModel(type: "Tickets", isSelected: false),
-
+  TypeSelectedModel(type: "Havana Lobby bar", isSelected: false),
+  TypeSelectedModel(type: "Fiesta Restaurant", isSelected: false),
+  TypeSelectedModel(type: "Hotel transport services", isSelected: false),
+  TypeSelectedModel(type: "Free luggage deposit", isSelected: false),
+  TypeSelectedModel(type: "Laundry Services", isSelected: false),
+  TypeSelectedModel(type: "Pets welcome", isSelected: false),
+  TypeSelectedModel(type: "Tickets", isSelected: false),
 ];

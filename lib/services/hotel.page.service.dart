@@ -22,7 +22,7 @@ Future<List<BookingHotelModel>> getHotelData(String params) async {
       // ignore: unnecessary_new
       BookingHotelModel bookingHotelModel = new BookingHotelModel(
           id: val['id'],
-          rating: double.parse(val['review_score']['score_total']),
+          rating: double.parse(val['review_score']['score_total'].toString()),
           name: val['title'],
           reviewer: val['review_score']['total_review'],
           reviewstatus: val['review_score']['review_text'],
@@ -135,7 +135,7 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
                               : facility.icon = Booking_ic_coffee;
       facilitylist.add(facility);
     });
-    hoteldata['gallery'].forEach((dynamic val) {
+    hoteldata['gallery']?.forEach((dynamic val) {
       String gal = val;
       gallery.add(gal);
     });
@@ -150,19 +150,20 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
                   : lcopolicy = val['content'];
     });
 
-    hoteldata['extra_price'].forEach((dynamic val) {
+    hoteldata['extra_price']?.forEach((dynamic val) {
       val['desc'] = "";
       BookingFeeModel bookingFeeModel = BookingFeeModel.fromJson(val);
       extra_price.add(bookingFeeModel);
     });
-    hoteldata['booking_fee'].forEach((dynamic val) {
+    hoteldata['booking_fee']?.forEach((dynamic val) {
       BookingFeeModel bookingFeeModel = BookingFeeModel.fromJson(val);
       booking_fee.add(bookingFeeModel);
     });
     // ignore: unnecessary_new
     BookingHotelModel bookingHotelModel = new BookingHotelModel(
         id: hoteldata['id'],
-        rating: double.parse(hoteldata['review_score']['score_total']),
+        rating:
+            double.parse(hoteldata['review_score']['score_total'].toString()),
         name: hoteldata['title'],
         reviewer: hoteldata['review_score']['total_review'],
         reviewstatus: hoteldata['review_score']['score_text'],
@@ -210,14 +211,18 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
       List<TypeSelectedModel> facilitylist = [];
       hoteldata['price'] = double.parse(hoteldata['price'].toString());
       List<String> pricelist = [];
+      List<double> prices = [];
       for (var i = 0; i < hoteldata['number']; i++) {
-        i == 0
-            ? pricelist.add(
-                '1 Room (\$' + (hoteldata['price'] * (i + 1)).toString() + ")")
-            : pricelist.add((i + 1).toString() +
-                ' Rooms (\$' +
-                (hoteldata['price'] * (i + 1)).toString() +
-                ")");
+        prices.add((hoteldata['price'] * (i + 1)));
+        if (i == 0) {
+          pricelist.add(
+              '1 Room (\$' + (hoteldata['price'] * (i + 1)).toString() + ")");
+        } else {
+          pricelist.add((i + 1).toString() +
+              ' Rooms (\$' +
+              (hoteldata['price'] * (i + 1)).toString() +
+              ")");
+        }
       }
       hoteldata['term_features'].forEach((dynamic val) {
         TypeSelectedModel facility =
@@ -234,6 +239,7 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
       });
       hoteldata['facility'] = facilitylist;
       hoteldata['price_list'] = pricelist;
+      hoteldata['prices'] = prices;
       HotelRoomModel hotelRoomModel = HotelRoomModel.fromJson(hoteldata);
       hotelRoomModelList.add(hotelRoomModel);
     });
@@ -243,48 +249,86 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
   }
 }
 
-Future<bool> addToCart() async {
+Future<String> addToCart(
+    int serviceid,
+    String serviceType,
+    String startDate,
+    String endDate,
+    List<dynamic>? extra_price,
+    int? adults,
+    int? child,
+    int? number,
+    List<dynamic>? rooms) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var bearToken = 'Bearer ' + (prefs.getString('access_token') ?? "");
   var url = Uri.parse(baseUrl + '/booking/addToCart');
+  var body = serviceType == "hotel"
+      ? convert.jsonEncode({
+          "service_id": serviceid,
+          "service_type": "hotel",
+          "start_date": startDate,
+          "end_date": endDate,
+          "extra_price": extra_price,
+          "adults": adults,
+          "children": child,
+          "rooms": rooms
+        })
+      : convert.jsonEncode({
+          "service_id": serviceid,
+          "service_type": "car",
+          "start_date": startDate,
+          "end_date": endDate,
+          "extra_price": extra_price,
+          "number": number
+        });
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json", "Authorization": bearToken},
+      body: body);
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    print(jsonResponse.toString());
+
+    return jsonResponse['booking_code'];
+  } else {
+    return "";
+  }
+}
+
+Future<bool> checkOut(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+    String city,
+    String state,
+    String country,
+    String add1,
+    String? add2,
+    String customerNote,
+    String paymentGateway,
+    String bookingCode) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var bearToken = 'Bearer ' + (prefs.getString('access_token') ?? "");
+  var url = Uri.parse(baseUrl + '/booking/doCheckout');
   var body = convert.jsonEncode({
-    "service_id": 9,
-    "service_type": "hotel",
-    "start_date": "2022-07-08",
-    "end_date": "2022-07-09",
-    "extra_price": [
-      {
-        "name": "Service VIP ",
-        "price": "200",
-        "type": "one_time",
-        "number": 0,
-        "enable": true,
-        "price_html": "\$200",
-        "price_type": ""
-      },
-      {
-        "name": "Breakfasts",
-        "price": "100",
-        "type": "one_time",
-        "number": 1,
-        "enable": 1,
-        "price_html": "\$100",
-        "price_type": ""
-      }
-    ],
-    "adults": 1,
-    "children": 0,
-    "rooms": [
-      {"id": 33, "number_selected": 1},
-      {"id": 34, "number_selected": 0},
-      {"id": 35, "number_selected": 0},
-      {"id": 36, "number_selected": 0}
-    ]
+    "code": bookingCode,
+    "first_name": firstName,
+    "last_name": lastName,
+    "email": email,
+    "phone": phone,
+    "address_line_1": add1,
+    "address_line_2": add2 ?? "",
+    "city": city,
+    "state": state,
+    "zip_code": "123",
+    "country": country,
+    "customer_notes": customerNote,
+    "payment_gateway": paymentGateway,
+    "term_conditions": "on"
   });
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);
-  print(response.statusCode);
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     print(jsonResponse.toString());

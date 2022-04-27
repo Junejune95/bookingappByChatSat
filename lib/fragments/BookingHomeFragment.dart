@@ -9,8 +9,11 @@ import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+typedef StringCallBack(String val);
+
 class BookingHomeFragment extends StatelessWidget {
-  const BookingHomeFragment({Key? key}) : super(key: key);
+  final StringCallBack? callBack;
+  const BookingHomeFragment({Key? key, this.callBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,11 @@ class BookingHomeFragment extends StatelessWidget {
                                   subtitle: data.subtitle,
                                 ),
                                 20.height,
-                                BookingTypeComponent(),
+                                BookingTypeComponent(
+                                  callBack: (val) {
+                                    callBack!(val.toString());
+                                  },
+                                ),
                                 20.height,
                                 titleWrapper(
                                     title: data.htitle,
@@ -66,7 +73,10 @@ class BookingHomeFragment extends StatelessWidget {
                                     title: data.ctitle,
                                     subtitle: data.csubtitle),
                                 20.height,
-                                CarListComponent(carlist: data.carlist,isHome: true,)
+                                CarListComponent(
+                                  carlist: data.carlist,
+                                  isHome: true,
+                                )
                               ],
                             )
                           : Container(

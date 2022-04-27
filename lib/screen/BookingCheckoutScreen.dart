@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bookingapp/screen/BookingMakeCheckout.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
@@ -8,7 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingCheckoutScreen extends StatelessWidget {
-  const BookingCheckoutScreen({Key? key}) : super(key: key);
+  String? startDate, endDate, adults, child;
+  double? totalPrice;
+  List<String>? choiceRoom;
+  String? bookingCode;
+  BookingCheckoutScreen(
+      {Key? key,
+      this.startDate,
+      this.endDate,
+      this.adults,
+      this.child,
+      this.totalPrice,
+      this.choiceRoom,
+      this.bookingCode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +32,35 @@ class BookingCheckoutScreen extends StatelessWidget {
         title: const Text('Booking Check Out'),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(child: BookingUserDataInfo()),
+        child: SingleChildScrollView(
+            child: BookingUserDataInfo(
+                startDate: startDate,
+                endDate: endDate,
+                totalPrice: totalPrice,
+                choiceRoom: choiceRoom,
+                adults: adults,
+                child: child,
+                bookingCode: bookingCode)),
       ),
     );
   }
 }
 
 class BookingUserDataInfo extends StatefulWidget {
-  BookingUserDataInfo({Key? key}) : super(key: key);
+  String? startDate, endDate, adults, child;
+  double? totalPrice;
+  List<String>? choiceRoom;
+  String? bookingCode;
+  BookingUserDataInfo(
+      {Key? key,
+      this.startDate,
+      this.endDate,
+      this.adults,
+      this.child,
+      this.totalPrice,
+      this.choiceRoom,
+      this.bookingCode})
+      : super(key: key);
 
   @override
   State<BookingUserDataInfo> createState() => _BookingUserDataInfoState();
@@ -90,6 +125,27 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
+                    BookingMakeCheckout(
+                            firstName: firstNameCont.text,
+                            lastName: lastNameCont.text,
+                            email: emailCont.text,
+                            city: city.text,
+                            state: state.text,
+                            country: country.text,
+                            address1: address1.text,
+                            address2: address2.text,
+                            note: notes.text,
+                            phone: phoneCont.text,
+                            startDate: widget.startDate,
+                            endDate: widget.endDate,
+                            totalPrice: widget.totalPrice,
+                            choiceRoom: widget.choiceRoom,
+                            adults: widget.adults,
+                            child: widget.child,
+                            bookingCode: widget.bookingCode)
+                        .launch(context,
+                            pageRouteAnimation:
+                                PageRouteAnimation.SlideBottomTop);
                   }
                 },
                 height: 50,
@@ -197,8 +253,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
         }
         return null;
       },
@@ -214,11 +268,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
         suffixIcon: Icon(Booking_ic_address),
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
-        }
         return null;
       },
     );
@@ -235,8 +284,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
         }
         return null;
       },
@@ -254,8 +301,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
         }
         return null;
       },
@@ -273,8 +318,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
         }
         return null;
       },
@@ -292,8 +335,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return Booking_err_txt_email;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return Booking_err_txt_email_invalid;
         }
         return null;
       },

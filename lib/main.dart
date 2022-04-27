@@ -59,7 +59,11 @@ class _CheckscreenState extends State<Checkscreen> {
   void initState() {
     // TODO: implement initState
     screen = [
-      const BookingHomeFragment(),
+      BookingHomeFragment(
+        callBack: (val) {
+          _onPageChange(int.parse(val));
+        },
+      ),
       const BookingHotelFragment(),
       const BookingCarFragment(),
       const BookingFightFragment(),

@@ -15,9 +15,13 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class BookingHotelBookNowScreen extends StatefulWidget {
+  final int id;
   final List<BookingFeeModel> extra_price, booking_fee;
   const BookingHotelBookNowScreen(
-      {Key? key, required this.extra_price, required this.booking_fee})
+      {Key? key,
+      required this.extra_price,
+      required this.booking_fee,
+      required this.id})
       : super(key: key);
 
   @override
@@ -44,9 +48,9 @@ class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
       BookingHistoryTab(
         title: Booking_lbl_Booking_book,
         child: BookWidget(
-          extra_price: widget.extra_price,
-          booking_fee: widget.booking_fee,
-        ),
+            extra_price: widget.extra_price,
+            booking_fee: widget.booking_fee,
+            id: widget.id),
       ),
       BookingHistoryTab(
         title: Booking_lbl_Booking_enquiry,
@@ -100,8 +104,12 @@ class _BookingHotelBookNowScreenState extends State<BookingHotelBookNowScreen>
 
 class BookWidget extends StatefulWidget {
   final List<BookingFeeModel> extra_price, booking_fee;
+  final int id;
   const BookWidget(
-      {Key? key, required this.extra_price, required this.booking_fee})
+      {Key? key,
+      required this.extra_price,
+      required this.booking_fee,
+      required this.id})
       : super(key: key);
 
   @override
@@ -130,9 +138,12 @@ class _BookWidgetState extends State<BookWidget> {
   bool isCheckGuest = false;
   bool toBook = false;
   var dpList = <String?>[];
+  double totalPrice = 0.0;
+  List<String> choiceRooms = [];
+  List<dynamic> rooms = [];
   @override
   void initState() {
-    hotelRoomModelList = checkHotelAvaliable('10', params);
+    hotelRoomModelList = checkHotelAvaliable(widget.id.toString(), "");
     super.initState();
   }
 
@@ -195,7 +206,8 @@ class _BookWidgetState extends State<BookWidget> {
                   text: Booking_lbl_btn_CheckAvailability,
                   tap: () {
                     setState(() {
-                      hotelRoomModelList = checkHotelAvaliable('10',
+                      hotelRoomModelList = checkHotelAvaliable(
+                          widget.id.toString(),
                           '?start_date=$start_date&end_date=$end_date&adults=$adult&children=$child');
                     });
                   },
@@ -216,6 +228,7 @@ class _BookWidgetState extends State<BookWidget> {
                         else {
                           List<HotelRoomModel>? data = snapshot.data;
                           data != null ? dpList.length = data.length : "";
+                          data != null ? rooms.length = data.length : "";
                           return data != null
                               ? ListView.builder(
                                   itemCount: data.length,
@@ -234,7 +247,7 @@ class _BookWidgetState extends State<BookWidget> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             commonCacheImageWidget(
-                                                    'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/space/space-5.jpg',
+                                                    'https://booking.hiyan.xyz/uploads/demo/space/space-5.jpg',
                                                     200,
                                                     width: context.width())
                                                 .cornerRadiusWithClipRRectOnly(
@@ -308,11 +321,25 @@ class _BookWidgetState extends State<BookWidget> {
                                                     ? dpList[index]
                                                     : null,
                                                 onChanged: (val) {
+                                                  var priceIndex = data[index]
+                                                      .price_list!
+                                                      .indexOf(val ?? "");
                                                   dpList.insert(index, val!);
                                                   setState(() {
                                                     dpList;
                                                     toBook = true;
-                                                    print(dpList);
+                                                    totalPrice += data[index]
+                                                        .prices![priceIndex];
+                                                    rooms.insert(index, {
+                                                      "id": data[index].id,
+                                                      "number_selected":
+                                                          (priceIndex + 1)
+                                                    });
+                                                    choiceRooms.add(
+                                                        data[index].title +
+                                                            " *" +
+                                                            (priceIndex + 1)
+                                                                .toString());
                                                   });
                                                 },
                                               ),
@@ -454,8 +481,17 @@ class _BookWidgetState extends State<BookWidget> {
                       child: defaultButton(
                           text: Booking_lbl_BookNow,
                           tap: () async {
-                            await addToCart();
-                            const BookingCheckoutScreen().launch(context,
+                            var response = await addToCart(widget.id, "hotel",
+                                start_date, end_date, [], 1, 0, null, rooms);
+                            BookingCheckoutScreen(
+                              startDate: start_date,
+                              endDate: end_date,
+                              totalPrice: totalPrice,
+                              choiceRoom: choiceRooms,
+                              adults: adult,
+                              child: child,
+                              bookingCode: response,
+                            ).launch(context,
                                 pageRouteAnimation:
                                     PageRouteAnimation.SlideBottomTop);
                           },

@@ -2,7 +2,9 @@
 
 import 'package:bookingapp/components/CounterComponent.dart';
 import 'package:bookingapp/models/BookingFeeModel.dart';
+import 'package:bookingapp/screen/BookingCheckoutScreen.dart';
 import 'package:bookingapp/screen/BookingEnquiryForm.dart';
+import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingDetailCommon.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
@@ -46,9 +48,9 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
       BookingHistoryTab(
         title: Booking_lbl_Booking_book,
         child: BookWidget(
-          bookingfee: widget.bookingfee,
-          extrafee: widget.extrafee,
-        ),
+            bookingfee: widget.bookingfee,
+            extrafee: widget.extrafee,
+            id: widget.id),
       ),
       BookingHistoryTab(
         title: Booking_lbl_Booking_enquiry,
@@ -99,7 +101,12 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
 
 class BookWidget extends StatefulWidget {
   final List<BookingFeeModel> bookingfee, extrafee;
-  const BookWidget({Key? key, required this.bookingfee, required this.extrafee})
+  final int id;
+  const BookWidget(
+      {Key? key,
+      required this.bookingfee,
+      required this.extrafee,
+      required this.id})
       : super(key: key);
 
   @override
@@ -115,6 +122,8 @@ class _BookWidgetState extends State<BookWidget> {
   List<bool> _isChecked = [];
 
   String _selectedDate = '';
+  String startDate = '';
+  String endDate = '';
 
   String _dateCount = '';
 
@@ -151,6 +160,9 @@ class _BookWidgetState extends State<BookWidget> {
         _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
             ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+        startDate = DateFormat('yyyy-MM-dd').format(args.value.startDate);
+        endDate = DateFormat('yyyy-MM-dd')
+            .format(args.value.endDate ?? args.value.startDate);
       } else if (args.value is DateTime) {
         _selectedDate = args.value.toString();
       } else if (args.value is List<DateTime>) {
@@ -210,37 +222,38 @@ class _BookWidgetState extends State<BookWidget> {
                   color: Booking_TextColorPrimary),
             ),
             SizedBox(
-              height:200,
+              height: 200,
               child: ListView(
-                children: List.generate(widget.extrafee.length, (index) =>   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          Checkbox(
-                            value: _isChecked[index],
-                            onChanged: (bool? value) {
-                              setState(() {
-                                _isChecked[index] = value ?? false;
-                              });
-                            },
-                          ), //Checkbox
-                          SizedBox(
-                            width: 2,
-                          ), //SizedBox
-                          Text(
-                            widget.extrafee[index].name,
-                            style: TextStyle(fontSize: 16.0),
-                          ), //Text //SizedBox
-                          /** Checkbox Widget **/
-                        ], //<Widget>[]
-                      ),
-                      labelText(
-                          title: '\$' + widget.extrafee[index].price,
-                          color: Booking_TextColorPrimary)
-                    ],
-                ))
-              ),
+                  children: List.generate(
+                      widget.extrafee.length,
+                      (index) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Checkbox(
+                                    value: _isChecked[index],
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        _isChecked[index] = value ?? false;
+                                      });
+                                    },
+                                  ), //Checkbox
+                                  SizedBox(
+                                    width: 2,
+                                  ), //SizedBox
+                                  Text(
+                                    widget.extrafee[index].name,
+                                    style: TextStyle(fontSize: 16.0),
+                                  ), //Text //SizedBox
+                                  /** Checkbox Widget **/
+                                ], //<Widget>[]
+                              ),
+                              labelText(
+                                  title: '\$' + widget.extrafee[index].price,
+                                  color: Booking_TextColorPrimary)
+                            ],
+                          ))),
             ),
             dividerWidget(color: Booking_greyColor),
             10.height,
@@ -270,7 +283,21 @@ class _BookWidgetState extends State<BookWidget> {
             Center(
               child: defaultButton(
                 text: Booking_lbl_BookNow,
-                tap: () {},
+                tap: () async {
+                  var response = await addToCart(widget.id, "car", startDate,
+                      endDate, [], null, null, 1, []);
+                  BookingCheckoutScreen(
+                          startDate: startDate,
+                          endDate: endDate,
+                          totalPrice: 100.0,
+                          choiceRoom: [],
+                          adults: "1",
+                          child: "0",
+                          bookingCode: response)
+                      .launch(context,
+                          pageRouteAnimation:
+                              PageRouteAnimation.SlideBottomTop);
+                },
                 height: 50,
                 width: 180,
               ),

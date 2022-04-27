@@ -2,6 +2,7 @@
 import 'package:bookingapp/models/CommonModel.dart';
 
 class HotelRoomModel {
+  int id;
   String title;
   String size;
   String beds;
@@ -12,9 +13,11 @@ class HotelRoomModel {
   int available_no;
   List<String>? price_list;
   List<double>? prices;
+  int? number_selected;
 
   HotelRoomModel(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.size,
       required this.beds,
       required this.adults,
@@ -23,9 +26,11 @@ class HotelRoomModel {
       required this.price,
       required this.available_no,
       this.price_list,
-      this.prices});
+      this.prices,
+      this.number_selected});
   factory HotelRoomModel.fromJson(Map<String, dynamic> json) {
     return HotelRoomModel(
+      id: json['id'],
       title: json['title'],
       size: json['size_html'],
       beds: json['beds_html'],
@@ -35,6 +40,7 @@ class HotelRoomModel {
       price: json['price'],
       available_no: json['number'],
       price_list: json['price_list'],
+      number_selected: json['number_selected'] ?? 0,
       prices: json['prices'],
     );
   }

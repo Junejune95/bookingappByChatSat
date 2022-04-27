@@ -6,7 +6,11 @@ import 'package:bookingapp/utils/BookingDataGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+typedef StringCallBack(String val);
+
 class BookingTypeComponent extends StatefulWidget {
+  final StringCallBack? callBack;
+  const BookingTypeComponent({Key? key, this.callBack}) : super(key: key);
   @override
   State<BookingTypeComponent> createState() => _BookingTypeComponentState();
 }
@@ -28,6 +32,7 @@ class _BookingTypeComponentState extends State<BookingTypeComponent> {
                 onTap: () {
                   setState(() {
                     _selectedIndex = index;
+                    widget.callBack!((index + 1).toString());
                   });
                 },
                 child: Container(

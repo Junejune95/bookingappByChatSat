@@ -45,6 +45,7 @@ class BookingHotelDetailScreen extends StatelessWidget {
                   return data != null
                       ? bottomBookNowWidget(context, () {
                           BookingHotelBookNowScreen(
+                            id: data.id,
                             extra_price: data.extra_price ?? [],
                             booking_fee: data.booking_fee ?? [],
                           ).launch(context,

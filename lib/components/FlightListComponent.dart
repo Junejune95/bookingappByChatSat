@@ -32,7 +32,7 @@ class FlightListComponent extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
                     child: commonCacheImageWidget(
-                        'http://booking.qxlxt1pglq-xlm41kzlk3dy.p.runcloud.link/uploads/demo/flight/airline/img1.jpg',
+                        'https://booking.hiyan.xyz/uploads/demo/flight/airline/img1.jpg',
                         0),
                   ).cornerRadiusWithClipRRect(10),
                 ),
