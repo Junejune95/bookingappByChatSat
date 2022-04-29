@@ -285,7 +285,7 @@ class _BookWidgetState extends State<BookWidget> {
                 text: Booking_lbl_BookNow,
                 tap: () async {
                   var response = await addToCart(widget.id, "car", startDate,
-                      endDate, [], null, null, 1, []);
+                      endDate, [], null, null, 1, [], []);
                   BookingCheckoutScreen(
                           startDate: startDate,
                           endDate: endDate,

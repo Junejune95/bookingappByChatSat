@@ -1,16 +1,25 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/components/CounterComponent.dart';
+import 'package:bookingapp/models/FightModel.dart';
+import 'package:bookingapp/screen/BookingCheckoutScreen.dart';
+import 'package:bookingapp/services/flight.page.service.dart';
+import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+late Future<FlightModel?> flightModel;
+
 class BookingFlightDetailScreen extends StatefulWidget {
-  const BookingFlightDetailScreen({Key? key}) : super(key: key);
+  final int id;
+  const BookingFlightDetailScreen({Key? key, required this.id})
+      : super(key: key);
 
   @override
   State<BookingFlightDetailScreen> createState() =>
@@ -20,6 +29,13 @@ class BookingFlightDetailScreen extends StatefulWidget {
 class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
   int _itemCount = 0;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    flightModel = getFlightDetail(widget.id.toString());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Booking_app_Background,
@@ -27,7 +43,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
         height: context.height() / 5.5,
         color: Booking_AppBar,
         padding: const EdgeInsets.symmetric(
-          vertical: 30,
+          vertical: 15,
           horizontal: 20,
         ),
         child: Column(
@@ -39,28 +55,91 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                 titleText(title: '99'),
               ],
             ),
-            20.height,
+            12.height,
             defaultButton(
-                text: Booking_lbl_BookNow, tap: () {}, height: 40, width: 120),
+                text: Booking_lbl_BookNow,
+                tap: () async {
+                  var response = await addToCart(
+                      widget.id,
+                      "flight",
+                      "",
+                      "endDate",
+                      [],
+                      null,
+                      null,
+                      1,
+                      [],
+                      [
+                        {
+                          "max_passenger": 17,
+                          "person": "adult",
+                          "number": 1,
+                          "price": 30
+                        }
+                      ]);
+                  BookingCheckoutScreen(
+                          startDate: "2022-03-11T05:58:50.000000Z",
+                          endDate: "2022-03-11T05:58:50.000000Z",
+                          totalPrice: 100.0,
+                          choiceRoom: [],
+                          adults: "1",
+                          child: "0",
+                          bookingCode: response)
+                      .launch(context,
+                          pageRouteAnimation:
+                              PageRouteAnimation.SlideBottomTop);
+                },
+                height: 40,
+                width: 120),
           ],
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              headerWidget(context),
-              cardWidget(),
-              cardWidget(),
-              cardWidget(),
-            ],
-          ),
+          child: FutureBuilder<FlightModel?>(
+              future: flightModel,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  // return SpinKitFadingFour(color: Colors.green);
+                  default:
+                    if (snapshot.hasError)
+                      // ignore: curly_braces_in_flow_control_structures
+                      return Text('Error: ${snapshot.error}');
+                    else {
+                      FlightModel? data = snapshot.data;
+                      return data != null
+                          ? Column(
+                              children: [
+                                headerWidget(context, data),
+                                ListView.builder(
+                                    itemCount: data.seats?.length,
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return cardWidget(
+                                          data.seats![index].seat_type,
+                                          data.seats![index].person,
+                                          data.seats![index].baggage_check_in,
+                                          data.seats![index].price);
+                                    }),
+                              ],
+                            )
+                          : Container(
+                              child: const Text(" No Data Exist "),
+                            );
+                    }
+                }
+              }),
         ),
       ),
     );
   }
 
-  Container cardWidget() {
+  Container cardWidget(
+      String seatType, String person, String check_in, double price) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 16,
@@ -79,20 +158,23 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
           8.height,
           rowWidget(
             label: 'Seat Type',
-            value: 'First Class',
+            value: seatType,
           ),
           dividerWidget(color: Booking_greyColor),
           rowWidget(
             label: 'Baggage',
-            value: 'Adult',
+            value: person,
           ),
           dividerWidget(color: Booking_greyColor),
           rowWidget(
             label: 'Check-in',
-            value: '12 Kgs',
+            value: check_in,
           ),
           dividerWidget(color: Booking_greyColor),
-          rowWidget(label: 'Price', value: '\$11', isHighlight: true),
+          rowWidget(
+              label: 'Price',
+              value: '\$' + price.toString(),
+              isHighlight: true),
           dividerWidget(color: Booking_greyColor),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -106,7 +188,9 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                   title: 'Number',
                   color: Booking_Primary,
                 ),
-                CounterComponent(),
+                CounterComponent(
+                  callBack: (val) {},
+                ),
               ],
             ),
           ),
@@ -141,10 +225,10 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
     );
   }
 
-  Container headerWidget(BuildContext context) {
+  Container headerWidget(BuildContext context, FlightModel flightModel) {
     return Container(
       color: Booking_AppBar,
-      height: context.height() / 2.4,
+      height: context.height() / 2,
       child: Padding(
         padding: const EdgeInsets.only(
           top: 20,
@@ -169,26 +253,37 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                     flightLogoWidget(),
                     16.width,
                     titleText(
-                        title: 'SALLY CARTWRIGHT | VJ573',
-                        width: context.width() / 2)
+                        title: flightModel.title, width: context.width() / 2)
                   ],
                 ),
-                30.height,
+                20.height,
                 timeChartWidget(
                   ic: Booking_ic_takeof,
-                  time: '20:54',
-                  date: 'Wed, 09 Mar 22',
-                  location: 'North Bethanymouth',
+                  time: flightModel.departuretime.isNotEmpty
+                      ? DateFormat("hh:mm")
+                          .format(DateTime.parse(flightModel.departuretime))
+                      : "",
+                  date: flightModel.departuretime.isNotEmpty
+                      ? DateFormat('EEE, MMM d yy')
+                          .format(DateTime.parse(flightModel.departuretime))
+                      : "",
+                  location: flightModel.airport_from,
                 ),
-                30.height,
+                10.height,
                 timeChartWidget(
                   ic: Booking_ic_landing,
-                  time: '20:54',
-                  date: 'Wed, 09 Mar 22',
-                  location: 'North Bethanymouth',
+                  time: flightModel.arrivaltime.isNotEmpty
+                      ? DateFormat("hh:mm")
+                          .format(DateTime.parse(flightModel.arrivaltime))
+                      : "",
+                  date: flightModel.arrivaltime.isNotEmpty
+                      ? DateFormat('EEE, MMM d yy')
+                          .format(DateTime.parse(flightModel.arrivaltime))
+                      : "",
+                  location: flightModel.airport_to,
                 ),
-                30.height,
-                timeWidget(),
+                10.height,
+                timeWidget(flightModel.duration),
               ],
             ),
           ],
@@ -197,7 +292,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
     );
   }
 
-  Row timeWidget() {
+  Row timeWidget(String duration) {
     return Row(
       children: [
         Icon(
@@ -207,7 +302,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
         ),
         20.width,
         titleText(
-          title: '7 hr',
+          title: duration + ' hr',
           size: textSizeLargeMedium.toInt(),
         ),
       ],

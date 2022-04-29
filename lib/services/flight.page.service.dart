@@ -19,13 +19,15 @@ Future<List<FlightModel>> getFlightData(String params) async {
           id: val['id'],
           title: val['title'],
           image: val['image'] ?? "",
-          content: val['content'] ?? "",
-          price: val['price'] ?? 0.0,
+          price: val['price'] != null ? double.parse(val['price']) : 0.0,
           saleprice: val['sale_price'] ?? "",
-          departuretime: "",
-          arrivaltime: "",
-          duration: "",
-          location: val['location'] ?? "");
+          departuretime: val['departure_time'],
+          arrivaltime: val['arrival_time'],
+          duration: val['duration'],
+          location_from: val['location_from']['name'] ?? "",
+          location_to: val['location_to']['name'] ?? "",
+          airport_from: '',
+          airport_to: '');
       flightmodelList.add(flightModel);
     });
     return flightmodelList;
@@ -69,5 +71,36 @@ Future<FligthFilterModel> getFlightFilter() async {
     FligthFilterModel carFilterModel = new FligthFilterModel(
         minprice: 0, maxprice: 0, flighttypelist: [], inflightexplist: []);
     return carFilterModel;
+  }
+}
+
+Future<FlightModel?> getFlightDetail(String id) async {
+  var url = Uri.parse(baseUrl + '/flight/getData/' + id);
+  var response =
+      await http.get(url, headers: {"Content-Type": "application/json"});
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    // ignore: unnecessary_new
+    List<FlighSeattModel> seats = [];
+    jsonResponse['data']['flight_seat'].forEach((dynamic val) {
+      val['max_passengers'] = val['max_passengers'].toString();
+      val['baggage_check_in'] = val['baggage_check_in'].toString();
+      val['baggage_cabin'] = val['baggage_cabin'].toString();
+      val['price'] = double.parse(val['price']);
+      seats.add(FlighSeattModel.fromJson(val));
+    });
+    jsonResponse['data']['seats'] = seats;
+    jsonResponse['data']['image'] = jsonResponse['data']['image'] ?? "";
+    jsonResponse['data']['airport_from'] =
+        jsonResponse['data']['airport_from']!['name'] ?? "";
+    jsonResponse['data']['airport_to'] =
+        jsonResponse['data']['airport_to']!['name'] ?? "";
+    FlightModel flightModel = FlightModel.fromJson(jsonResponse['data']);
+    return flightModel;
+  } else {
+    // ignore: unnecessary_new
+    // return null;
+    return null;
   }
 }

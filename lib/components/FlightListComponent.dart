@@ -8,6 +8,7 @@ import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class FlightListComponent extends StatelessWidget {
@@ -31,9 +32,7 @@ class FlightListComponent extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
-                    child: commonCacheImageWidget(
-                        'https://booking.hiyan.xyz/uploads/demo/flight/airline/img1.jpg',
-                        0),
+                    child: commonCacheImageWidget(flightlist[index].image, 0),
                   ).cornerRadiusWithClipRRect(10),
                 ),
                 10.height,
@@ -43,7 +42,7 @@ class FlightListComponent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       titleText(
-                          title: flightlist[index].title,
+                          title: flightlist[index].airport_from,
                           width: context.width() / 3),
                       priceWrapper(
                           price: flightlist[index].price,
@@ -54,13 +53,17 @@ class FlightListComponent extends StatelessWidget {
                   ),
                 ),
                 20.height,
-                commonWidget(Booking_ic_takeof, Booking_lbl_Take_Off),
+                commonWidget(Booking_ic_takeof, Booking_lbl_Take_Off,
+                    flightlist[index].departuretime),
                 26.height,
-                commonWidget(Booking_ic_landing, Booking_lbl_Landing),
+                commonWidget(Booking_ic_landing, Booking_lbl_Landing,
+                    flightlist[index].arrivaltime),
                 28.height,
                 InkWell(
                   onTap: () => {
-                    BookingFlightDetailScreen().launch(context,
+                    BookingFlightDetailScreen(
+                      id: flightlist[index].id,
+                    ).launch(context,
                         pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
                   },
                   child: Container(
@@ -84,7 +87,7 @@ class FlightListComponent extends StatelessWidget {
         });
   }
 
-  Widget commonWidget(ic, label) {
+  Widget commonWidget(ic, label, String time) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Row(
@@ -109,7 +112,8 @@ class FlightListComponent extends StatelessWidget {
               ),
               10.height,
               titleText(
-                title: 'Wed Mar 09 20:54 PM',
+                title: DateFormat('EEE MMM d hh:m:s a')
+                    .format(DateTime.parse(time)),
                 size: textSizeLargeMedium.toInt(),
               )
             ],

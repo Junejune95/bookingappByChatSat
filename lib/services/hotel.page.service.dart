@@ -252,13 +252,14 @@ Future<List<HotelRoomModel>> checkHotelAvaliable(
 Future<String> addToCart(
     int serviceid,
     String serviceType,
-    String startDate,
-    String endDate,
+    String? startDate,
+    String? endDate,
     List<dynamic>? extra_price,
     int? adults,
     int? child,
     int? number,
-    List<dynamic>? rooms) async {
+    List<dynamic>? rooms,
+    List<dynamic>? flight_seat) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var bearToken = 'Bearer ' + (prefs.getString('access_token') ?? "");
   var url = Uri.parse(baseUrl + '/booking/addToCart');
@@ -273,14 +274,20 @@ Future<String> addToCart(
           "children": child,
           "rooms": rooms
         })
-      : convert.jsonEncode({
-          "service_id": serviceid,
-          "service_type": "car",
-          "start_date": startDate,
-          "end_date": endDate,
-          "extra_price": extra_price,
-          "number": number
-        });
+      : serviceType == "car"
+          ? convert.jsonEncode({
+              "service_id": serviceid,
+              "service_type": "car",
+              "start_date": startDate,
+              "end_date": endDate,
+              "extra_price": extra_price,
+              "number": number
+            })
+          : convert.jsonEncode({
+              "service_id": serviceid,
+              "service_type": "flight",
+              "flight_seat": flight_seat
+            });
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);

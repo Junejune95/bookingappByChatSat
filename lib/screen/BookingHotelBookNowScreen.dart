@@ -481,8 +481,17 @@ class _BookWidgetState extends State<BookWidget> {
                       child: defaultButton(
                           text: Booking_lbl_BookNow,
                           tap: () async {
-                            var response = await addToCart(widget.id, "hotel",
-                                start_date, end_date, [], 1, 0, null, rooms);
+                            var response = await addToCart(
+                                widget.id,
+                                "hotel",
+                                start_date,
+                                end_date,
+                                [],
+                                1,
+                                0,
+                                null,
+                                rooms,
+                                []);
                             BookingCheckoutScreen(
                               startDate: start_date,
                               endDate: end_date,
