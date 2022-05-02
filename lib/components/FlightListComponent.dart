@@ -2,6 +2,7 @@
 
 import 'package:bookingapp/models/FightModel.dart';
 import 'package:bookingapp/screen/BookingFlightDetailScreen.dart';
+import 'package:bookingapp/services/flight.page.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingConstants.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -9,17 +10,27 @@ import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loadmore/loadmore.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class FlightListComponent extends StatelessWidget {
+class FlightListComponent extends StatefulWidget {
   FlightListComponent({Key? key, required this.flightlist}) : super(key: key);
 
   final List<FlightModel> flightlist;
+  @override
+  State<FlightListComponent> createState() => _FlightListComponentState();
+}
+
+class _FlightListComponentState extends State<FlightListComponent> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: flightlist.length,
+        itemCount: widget.flightlist.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -32,7 +43,8 @@ class FlightListComponent extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: AspectRatio(
                     aspectRatio: 3 / 2,
-                    child: commonCacheImageWidget(flightlist[index].image, 0),
+                    child: commonCacheImageWidget(
+                        widget.flightlist[index].image, 0),
                   ).cornerRadiusWithClipRRect(10),
                 ),
                 10.height,
@@ -42,10 +54,10 @@ class FlightListComponent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       titleText(
-                          title: flightlist[index].airport_from,
+                          title: widget.flightlist[index].airport_from,
                           width: context.width() / 3),
                       priceWrapper(
-                          price: flightlist[index].price,
+                          price: widget.flightlist[index].price,
                           unit: 'avg/person',
                           isFullScreen: true,
                           isFromText: false),
@@ -54,15 +66,15 @@ class FlightListComponent extends StatelessWidget {
                 ),
                 20.height,
                 commonWidget(Booking_ic_takeof, Booking_lbl_Take_Off,
-                    flightlist[index].departuretime),
+                    widget.flightlist[index].departuretime),
                 26.height,
                 commonWidget(Booking_ic_landing, Booking_lbl_Landing,
-                    flightlist[index].arrivaltime),
+                    widget.flightlist[index].arrivaltime),
                 28.height,
                 InkWell(
                   onTap: () => {
                     BookingFlightDetailScreen(
-                      id: flightlist[index].id,
+                      id: widget.flightlist[index].id,
                     ).launch(context,
                         pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
                   },
@@ -85,6 +97,13 @@ class FlightListComponent extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Future<bool> _loadMore() async {
+    print("onLoadMore");
+    List<FlightModel> moreFlights = await getFlightData("");
+    widget.flightlist.addAll(moreFlights);
+    return true;
   }
 
   Widget commonWidget(ic, label, String time) {

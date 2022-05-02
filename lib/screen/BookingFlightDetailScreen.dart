@@ -101,7 +101,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
-                  // return SpinKitFadingFour(color: Colors.green);
+                    return const Center(child: CircularProgressIndicator());
                   default:
                     if (snapshot.hasError)
                       // ignore: curly_braces_in_flow_control_structures

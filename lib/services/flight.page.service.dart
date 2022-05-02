@@ -30,6 +30,7 @@ Future<List<FlightModel>> getFlightData(String params) async {
           airport_to: '');
       flightmodelList.add(flightModel);
     });
+    print("GGG");
     return flightmodelList;
   } else {
     return [];

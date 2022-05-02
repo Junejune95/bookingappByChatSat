@@ -288,12 +288,14 @@ Future<String> addToCart(
               "service_type": "flight",
               "flight_seat": flight_seat
             });
+  print(body.toString());
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);
+  print(bearToken);
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
-    print(jsonResponse.toString());
+    print(jsonResponse.toString() + " gg add to cart ");
 
     return jsonResponse['booking_code'];
   } else {

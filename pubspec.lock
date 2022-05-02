@@ -255,7 +255,7 @@ packages:
     source: sdk
     version: "0.0.0"
   fluttertoast:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: fluttertoast
       url: "https://pub.dartlang.org"
@@ -317,6 +317,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  loadmore:
+    dependency: "direct main"
+    description:
+      name: loadmore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   matcher:
     dependency: transitive
     description:

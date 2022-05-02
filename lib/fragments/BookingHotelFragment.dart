@@ -27,7 +27,7 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hotel'),
-         automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -41,7 +41,6 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
                   10.width,
                   FilterButtonComponent(
                     type: 'Hotel',
-
                     callBack: (val) {
                       setState(() {
                         hotelList = getHotelData(val);
@@ -56,7 +55,7 @@ class _BookingHotelFragmentState extends State<BookingHotelFragment> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                    // return SpinKitFadingFour(color: Colors.green);
+                      return const Center(child: CircularProgressIndicator());
                     default:
                       if (snapshot.hasError)
                         // ignore: curly_braces_in_flow_control_structures

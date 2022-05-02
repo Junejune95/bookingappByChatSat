@@ -98,51 +98,58 @@ class HotelListComponent extends StatelessWidget {
       spacing: 16,
       itemCount: hotellist.length,
       itemBuilder: (context, index) {
-        return defaultCard(
-          width: 220,
-          margin: EdgeInsets.symmetric(vertical: 10),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return InkWell(
+            onTap: () => {
+                  BookingHotelDetailScreen(
+                    id: hotellist[index].id,
+                  ).launch(context,
+                      pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
+                },
+            child: defaultCard(
+              width: 220,
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: AspectRatio(
-                      aspectRatio: 3 / 2,
-                      child: Image.network(
-                        hotellist[index].image,
-                        fit: BoxFit.cover,
-                      ).cornerRadiusWithClipRRect(8),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: AspectRatio(
+                          aspectRatio: 3 / 2,
+                          child: Image.network(
+                            hotellist[index].image,
+                            fit: BoxFit.cover,
+                          ).cornerRadiusWithClipRRect(8),
+                        ),
+                      ),
+                      10.height,
+                      titleText(
+                        title: hotellist[index].name,
+                        size: 16,
+                      ),
+                      12.height,
+                      locationWrapper(location: hotellist[index].location),
+                      12.height,
+                      priceWrapper(
+                          price: hotellist[index].price,
+                          unit: 'night',
+                          isFullScreen: false),
+                      12.height,
+                    ],
                   ),
-                  10.height,
-                  titleText(
-                    title: hotellist[index].name,
-                    size: 16,
-                  ),
-                  12.height,
-                  locationWrapper(location: hotellist[index].location),
-                  12.height,
-                  priceWrapper(
-                      price: hotellist[index].price,
-                      unit: 'night',
-                      isFullScreen: false),
-                  12.height,
+                  Positioned(
+                      top: 15,
+                      right: 15,
+                      child: const Icon(
+                        Icons.favorite,
+                        color: Booking_TextColorWhite,
+                        size: 24,
+                      ).onTap(() {})),
                 ],
               ),
-              Positioned(
-                  top: 15,
-                  right: 15,
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Booking_TextColorWhite,
-                    size: 24,
-                  ).onTap(() {})),
-            ],
-          ),
-        );
+            ));
       },
     );
   }

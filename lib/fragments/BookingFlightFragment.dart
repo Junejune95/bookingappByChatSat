@@ -15,11 +15,58 @@ class BookingFightFragment extends StatefulWidget {
 
 class _BookingFightFragmentState extends State<BookingFightFragment> {
   late Future<List<FlightModel>> flightList;
+  ScrollController _scrollController = ScrollController();
+  List<FlightModel> flight_list = [];
+  bool firstTime = true;
+  bool noMoreData = false;
+  bool loadMoreRunning = false;
+  int page = 1;
   @override
   void initState() {
     // TODO: implement initState
+    _scrollController.addListener(_scrollListener);
+    flightList = getFlightData("page=" + page.toString());
     super.initState();
-    flightList = getFlightData("");
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  _scrollListener() async {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange &&
+        noMoreData == false) {
+      page += 1;
+      setState(() {
+        loadMoreRunning = true;
+      });
+      List<FlightModel> newData =
+          await getFlightData("page=" + page.toString());
+
+      setState(() {
+        // fetchPost(gcm);
+        firstTime = false;
+        loadMoreRunning = false;
+        newData.isNotEmpty ? flight_list.addAll(newData) : noMoreData = true;
+        if (noMoreData) {
+          _scrollController.removeListener(_scrollListener);
+          fetchResults();
+        }
+      });
+    }
+  }
+
+  fetchResults() {
+    Future.delayed(const Duration(seconds: 1), () {
+      print("in delay");
+      setState(() {
+        noMoreData = false;
+      });
+    });
   }
 
   @override
@@ -27,9 +74,10 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fight'),
-         automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             Padding(
@@ -42,7 +90,7 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
                   FilterButtonComponent(
                     callBack: (val) {
                       setState(() {
-                        flightList = getFlightData(val);
+                        flightList = getFlightData(val + "&page=$page");
                       });
                     },
                     type: 'Flight',
@@ -55,18 +103,21 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                    // return SpinKitFadingFour(color: Colors.green);
+                      return const Center(child: CircularProgressIndicator());
                     default:
                       if (snapshot.hasError)
                         // ignore: curly_braces_in_flow_control_structures
                         return Text('Error: ${snapshot.error}');
                       else {
                         List<FlightModel>? data = snapshot.data;
-
+                        data != null && firstTime
+                            ? flight_list.addAll(data)
+                            : "";
                         // selectedOne = null;
+
                         return data != null
                             ? FlightListComponent(
-                                flightlist: data,
+                                flightlist: flight_list,
                               )
                             : Container(
                                 child: const Text(" No Data Exist "),
@@ -74,6 +125,17 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
                       }
                   }
                 }),
+            if (loadMoreRunning == true)
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 40),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            SizedBox(
+              height: noMoreData == true && firstTime == false ? 50 : 0,
+              child: const Text('You have fetched all of the content'),
+            ),
           ],
         ),
       ),

@@ -107,96 +107,105 @@ class CarListComponent extends StatelessWidget {
       spacing: 16,
       itemCount: carlist.length,
       itemBuilder: (context, index) {
-        return defaultCard(
-          width: 280,
-          margin: EdgeInsets.symmetric(vertical: 10),
-          // padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return InkWell(
+            onTap: () => {
+                  BookingCarDetailScreen(
+                    id: carlist[index].id,
+                  ).launch(context,
+                      pageRouteAnimation: PageRouteAnimation.SlideBottomTop)
+                },
+            child: defaultCard(
+              width: 280,
+              margin: EdgeInsets.symmetric(vertical: 10),
+              // padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Stack(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                    child: AspectRatio(
-                      aspectRatio: 3 / 2,
-                      child: Image.network(
-                        carlist[index].image,
-                        fit: BoxFit.cover,
-                      ).cornerRadiusWithClipRRect(8),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 12),
+                        child: AspectRatio(
+                          aspectRatio: 3 / 2,
+                          child: Image.network(
+                            carlist[index].image,
+                            fit: BoxFit.cover,
+                          ).cornerRadiusWithClipRRect(8),
+                        ),
+                      ),
+                      10.height,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: titleText(title: carlist[index].title, size: 16),
+                      ),
+                      12.height,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child:
+                            locationWrapper(location: carlist[index].location),
+                      ),
+                      12.height,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.price_change,
+                              color: Booking_TextColorSecondary,
+                            ),
+                            12.width,
+                            priceWrapper(
+                                price: carlist[index].price,
+                                unit: 'day',
+                                isFullScreen: false,
+                                alignment: MainAxisAlignment.start),
+                          ],
+                        ),
+                      ),
+                      16.height,
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Booking_AppBar,
+                          borderRadius:
+                              radiusOnly(bottomLeft: 8, bottomRight: 8),
+                        ),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            carServiceWidget(
+                              carlist[index].passenger.toString(),
+                              Booking_ic_people,
+                            ),
+                            carServiceWidget(
+                              carlist[index].gear,
+                              Booking_ic_auto,
+                            ),
+                            carServiceWidget(
+                              carlist[index].baggage.toString(),
+                              Booking_ic_baggage,
+                            ),
+                            carServiceWidget(
+                              carlist[index].door.toString(),
+                              Booking_ic_door,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  10.height,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: titleText(title: carlist[index].title, size: 16),
-                  ),
-                  12.height,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: locationWrapper(location: carlist[index].location),
-                  ),
-                  12.height,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.price_change,
-                          color: Booking_TextColorSecondary,
-                        ),
-                        12.width,
-                        priceWrapper(
-                            price: carlist[index].price,
-                            unit: 'day',
-                            isFullScreen: false,
-                            alignment: MainAxisAlignment.start),
-                      ],
-                    ),
-                  ),
-                  16.height,
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Booking_AppBar,
-                      borderRadius: radiusOnly(bottomLeft: 8, bottomRight: 8),
-                    ),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        carServiceWidget(
-                          carlist[index].passenger.toString(),
-                          Booking_ic_people,
-                        ),
-                        carServiceWidget(
-                          carlist[index].gear,
-                          Booking_ic_auto,
-                        ),
-                        carServiceWidget(
-                          carlist[index].baggage.toString(),
-                          Booking_ic_baggage,
-                        ),
-                        carServiceWidget(
-                          carlist[index].door.toString(),
-                          Booking_ic_door,
-                        ),
-                      ],
-                    ),
-                  )
+                  Positioned(
+                      top: 15,
+                      right: 15,
+                      child: const Icon(
+                        Icons.favorite_outline,
+                        color: Booking_TextColorPrimary,
+                        size: 24,
+                      ).onTap(() {})),
                 ],
               ),
-              Positioned(
-                  top: 15,
-                  right: 15,
-                  child: const Icon(
-                    Icons.favorite_outline,
-                    color: Booking_TextColorPrimary,
-                    size: 24,
-                  ).onTap(() {})),
-            ],
-          ),
-        );
+            ));
       },
     );
   }
