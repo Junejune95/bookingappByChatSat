@@ -1,3 +1,4 @@
+import 'package:bookingapp/components/BookingLoadingComponent.dart';
 import 'package:bookingapp/components/BookingTypeFilterComponent.dart';
 import 'package:bookingapp/components/CarListComponent.dart';
 import 'package:bookingapp/components/DestinationListComponent.dart';
@@ -27,7 +28,10 @@ class BookingHomeFragment extends StatelessWidget {
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
-                    return const Center(child: CircularProgressIndicator());
+                    return BookingLoadingComponent(
+                        height: context.height(),
+                        width: context.width(),
+                      );
                   default:
                     if (snapshot.hasError)
                       // ignore: curly_braces_in_flow_control_structures

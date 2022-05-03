@@ -1,3 +1,4 @@
+import 'package:bookingapp/components/BookingLoadingComponent.dart';
 import 'package:bookingapp/components/CarListComponent.dart';
 import 'package:bookingapp/components/FilterButtonComponent.dart';
 import 'package:bookingapp/components/SortByComponent.dart';
@@ -55,7 +56,10 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
+                      return BookingLoadingComponent(
+                        height: context.height(),
+                        width: context.width(),
+                      );
                     default:
                       if (snapshot.hasError)
                         // ignore: curly_braces_in_flow_control_structures
