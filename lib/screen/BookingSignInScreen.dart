@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingSignInScreen extends StatefulWidget {
+  String? localeCheck;
+  BookingSignInScreen({Key? key, this.localeCheck}) : super(key: key);
   @override
   BookingSignInScreenState createState() => BookingSignInScreenState();
 }
@@ -107,7 +109,10 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                       Text(
                           isSignUp
                               ? 'Please enter your information below.'
-                              : 'Please login to your account',
+                              : widget.localeCheck != null &&
+                                      widget.localeCheck == "MM"
+                                  ? 'သင့်အကောင့်သို့ ဝင်ရောက်ပါ'
+                                  : 'Please login to your account',
                           style: boldTextStyle()),
                       20.height,
                       buildEmailField(),

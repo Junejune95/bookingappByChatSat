@@ -14,11 +14,18 @@ import 'utils/AppTheme.dart';
 import 'utils/localStrings.dart';
 
 bool checkToken = false;
+var localeCheck = "US";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var bearToken = prefs.getString('access_token');
+  localeCheck = prefs.getString("locale") == null ||
+          (prefs.getString("locale") != null &&
+              prefs.getString("locale") == "US")
+      ? "US"
+      : "MM";
   checkToken = bearToken != null;
+
   runApp(const MyApp());
 }
 
@@ -30,13 +37,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Booking App',
+      title: 'Trip planner',
       theme: AppThemeData.lightTheme,
       translations: LocaleString(),
       home: checkToken
-          ? Checkscreen(
-              checktoken: checkToken,
-            )
+          ? Checkscreen(checktoken: checkToken, localeCheck: localeCheck)
           : BookingSplash(),
       locale: Locale('en', 'US'),
     );
@@ -45,7 +50,9 @@ class MyApp extends StatelessWidget {
 
 class Checkscreen extends StatefulWidget {
   bool checktoken;
-  Checkscreen({Key? key, required this.checktoken}) : super(key: key);
+  String? localeCheck;
+  Checkscreen({Key? key, required this.checktoken, this.localeCheck})
+      : super(key: key);
 
   @override
   State<Checkscreen> createState() => _CheckscreenState();
@@ -63,6 +70,7 @@ class _CheckscreenState extends State<Checkscreen> {
         callBack: (val) {
           _onPageChange(int.parse(val));
         },
+        localeCheck: widget.localeCheck,
       ),
       const BookingHotelFragment(),
       const BookingCarFragment(),

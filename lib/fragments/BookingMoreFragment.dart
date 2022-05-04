@@ -16,10 +16,16 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Future<UserModel>? userModel;
+final List locale = [
+  {'name': 'English', 'locale': Locale('en', 'US')},
+  {'name': 'Myanmar', 'locale': Locale('mm', 'MM')},
+];
 
 class BookingMoreFragment extends StatelessWidget {
   bool checkToken;
-  BookingMoreFragment({Key? key, required this.checkToken}) : super(key: key);
+  String? localeCheck;
+  BookingMoreFragment({Key? key, required this.checkToken, this.localeCheck})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +95,45 @@ class BookingMoreFragment extends StatelessWidget {
           Booking_lbl_Language,
           Booking_ic_language,
           () {
-            BookingLanguageScreen().launch(context,
-                pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+            // BookingLanguageScreen().launch(context,
+            //     pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+            showDialog(
+                context: context,
+                builder: (builder) {
+                  return AlertDialog(
+                    title: Text('Choose Your Language'),
+                    content: Container(
+                      width: double.maxFinite,
+                      child: ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                child: Text(locale[index]['name']),
+                                onTap: () async {
+                                  // updateLanguage(locale[index]['locale']);
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setString(
+                                      "locale",
+                                      locale[index]['name'] == "Myanmar"
+                                          ? "MM"
+                                          : "US");
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              color: Colors.blue,
+                            );
+                          },
+                          itemCount: locale.length),
+                    ),
+                  );
+                });
           },
         ),
         dividerWidget(),

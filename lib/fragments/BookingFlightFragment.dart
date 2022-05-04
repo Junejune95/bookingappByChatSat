@@ -40,7 +40,8 @@ class _BookingFightFragmentState extends State<BookingFightFragment> {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange &&
-        noMoreData == false) {
+        noMoreData == false &&
+        loadMoreRunning == false) {
       page += 1;
       setState(() {
         loadMoreRunning = true;

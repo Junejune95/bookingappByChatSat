@@ -14,7 +14,9 @@ typedef StringCallBack(String val);
 
 class BookingHomeFragment extends StatelessWidget {
   final StringCallBack? callBack;
-  const BookingHomeFragment({Key? key, this.callBack}) : super(key: key);
+  final String? localeCheck;
+  const BookingHomeFragment({Key? key, this.callBack, this.localeCheck})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,9 @@ class BookingHomeFragment extends StatelessWidget {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return BookingLoadingComponent(
-                        height: context.height(),
-                        width: context.width(),
-                      );
+                      height: context.height(),
+                      width: context.width(),
+                    );
                   default:
                     if (snapshot.hasError)
                       // ignore: curly_braces_in_flow_control_structures
@@ -45,10 +47,15 @@ class BookingHomeFragment extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                titleWrapper(
-                                  title: data.title,
-                                  subtitle: data.subtitle,
-                                ),
+                                localeCheck != null && localeCheck == "MM"
+                                    ? titleWrapper(
+                                        title: "မင်္ဂလာပါ",
+                                        subtitle: "ဘယ်သွားချင်လဲ",
+                                      )
+                                    : titleWrapper(
+                                        title: data.title,
+                                        subtitle: data.subtitle,
+                                      ),
                                 20.height,
                                 BookingTypeComponent(
                                   callBack: (val) {
@@ -56,26 +63,44 @@ class BookingHomeFragment extends StatelessWidget {
                                   },
                                 ),
                                 20.height,
-                                titleWrapper(
-                                    title: data.htitle,
-                                    subtitle: data.hsubtitle),
+                                localeCheck != null && localeCheck == "MM"
+                                    ? titleWrapper(
+                                        title: "အရောင်းရဆုံးစာရင်း",
+                                        subtitle:
+                                            "တွေးခေါ်မြော်မြင်သော ဒီဇိုင်းအတွက် ဟိုတယ်အဆင့်သတ်မှတ်ထားသည်",
+                                      )
+                                    : titleWrapper(
+                                        title: data.htitle,
+                                        subtitle: data.hsubtitle),
                                 20.height,
                                 HotelListComponent(
                                   isHome: true,
                                   hotellist: data.hotellist,
                                 ),
                                 20.height,
-                                titleWrapper(
-                                    title: data.dtitle,
-                                    subtitle: data.dsubtitle),
+                                localeCheck != null && localeCheck == "MM"
+                                    ? titleWrapper(
+                                        title: "ထိပ်တန်းနေရာများ",
+                                        subtitle:
+                                            "It is a long established fact that a reader",
+                                      )
+                                    : titleWrapper(
+                                        title: data.dtitle,
+                                        subtitle: data.dsubtitle),
                                 20.height,
                                 DestinationListComponent(
                                   destinationlist: data.distlist,
                                 ),
                                 20.height,
-                                titleWrapper(
-                                    title: data.ctitle,
-                                    subtitle: data.csubtitle),
+                                localeCheck != null && localeCheck == "MM"
+                                    ? titleWrapper(
+                                        title: "ကားခေတ်စားခြင်း",
+                                        subtitle:
+                                            "ကမ္ဘာတစ်ဝှမ်းရှိ မယုံနိုင်လောက်အောင် လုပ်ဆောင်ရမည့်အရာများကို စာရင်းပြုစုပါ",
+                                      )
+                                    : titleWrapper(
+                                        title: data.ctitle,
+                                        subtitle: data.csubtitle),
                                 20.height,
                                 CarListComponent(
                                   carlist: data.carlist,

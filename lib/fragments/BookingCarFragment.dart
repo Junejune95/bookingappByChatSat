@@ -16,11 +16,63 @@ class BookingCarFragment extends StatefulWidget {
 
 class _BookingCarFragmentState extends State<BookingCarFragment> {
   late Future<List<CarModel>> carList;
+  List<CarModel> car_list = [];
+  ScrollController _scrollController = ScrollController();
+  bool firstTime = true;
+  bool noMoreData = false;
+  bool loadMoreRunning = false;
+  int page = 1;
   @override
   void initState() {
     // TODO: implement initState
+    _scrollController.addListener(_scrollListener);
     super.initState();
     carList = getCarData("");
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  _scrollListener() async {
+    print(_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange &&
+        noMoreData == false &&
+        loadMoreRunning == false);
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange &&
+        noMoreData == false &&
+        loadMoreRunning == false) {
+      page += 1;
+      setState(() {
+        loadMoreRunning = true;
+      });
+      List<CarModel> newData = await getCarData("page=" + page.toString());
+      print(newData.length);
+      setState(() {
+        // fetchPost(gcm);
+        firstTime = false;
+        loadMoreRunning = false;
+        newData.isNotEmpty ? car_list.addAll(newData) : noMoreData = true;
+        if (noMoreData) {
+          _scrollController.removeListener(_scrollListener);
+          fetchResults();
+        }
+      });
+    }
+  }
+
+  fetchResults() {
+    Future.delayed(const Duration(seconds: 1), () {
+      print("in delay");
+      setState(() {
+        noMoreData = false;
+      });
+    });
   }
 
   @override
@@ -31,6 +83,7 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
         title: const Text('Car'),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             Padding(
@@ -43,7 +96,7 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                   FilterButtonComponent(
                     callBack: (val) {
                       setState(() {
-                        carList = getCarData(val);
+                        carList = getCarData(val + "&page=$page");
                       });
                     },
                     type: 'Car',
@@ -66,11 +119,11 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                         return Text('Error: ${snapshot.error}');
                       else {
                         List<CarModel>? data = snapshot.data;
-
+                        data != null && firstTime ? car_list.addAll(data) : "";
                         // selectedOne = null;
                         return data != null
                             ? CarListComponent(
-                                carlist: data,
+                                carlist: car_list,
                                 isHome: false,
                               )
                             : Container(
@@ -79,6 +132,17 @@ class _BookingCarFragmentState extends State<BookingCarFragment> {
                       }
                   }
                 }),
+            if (loadMoreRunning == true)
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 40),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            SizedBox(
+              height: noMoreData == true && firstTime == false ? 50 : 0,
+              child: const Text('You have fetched all of the content'),
+            ),
           ],
         ),
       ),
