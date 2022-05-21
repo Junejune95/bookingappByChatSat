@@ -303,7 +303,7 @@ Future<String> addToCart(
   }
 }
 
-Future<bool> checkOut(
+Future<dynamic> checkOut(
     String firstName,
     String lastName,
     String email,
@@ -335,15 +335,34 @@ Future<bool> checkOut(
     "payment_gateway": paymentGateway,
     "term_conditions": "on"
   });
+  print({
+    "code": bookingCode,
+    "first_name": firstName,
+    "last_name": lastName,
+    "email": email,
+    "phone": phone,
+    "address_line_1": add1,
+    "address_line_2": add2 ?? "",
+    "city": city,
+    "state": state,
+    "zip_code": "123",
+    "country": country,
+    "customer_notes": customerNote,
+    "payment_gateway": "ngenius",
+    "term_conditions": "on"
+  });
+  print(bearToken);
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
-    print(jsonResponse.toString());
+    print(jsonResponse.toString() + " checking bro");
 
-    return true;
+    return paymentGateway == "ngenius"
+        ? {"url": jsonResponse['url']}
+        : {"url": ""};
   } else {
-    return false;
+    return null;
   }
 }

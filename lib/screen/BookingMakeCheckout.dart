@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/main.dart';
+import 'package:bookingapp/screen/BookingPaymentWebView.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
@@ -204,7 +205,8 @@ class _BookingInfoState extends State<BookingInfo> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
-                    await checkOut(
+
+                    dynamic response = await checkOut(
                         widget.firstName,
                         widget.lastName,
                         widget.email,
@@ -215,16 +217,24 @@ class _BookingInfoState extends State<BookingInfo> {
                         widget.address1,
                         widget.address2,
                         widget.note,
-                        _character == 1 ? "offline_payment" : "ngenius_payment",
+                        _character == 1 ? "offline_payment" : "ngenius",
                         widget.bookingCode ?? "");
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     var bearToken = prefs.getString('access_token');
-
-                    Checkscreen(
-                      checktoken: bearToken != null,
-                    ).launch(context,
-                        pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                    if (response != null && response['url'] != "") {
+                      BookingPaymentScreen(
+                        url: response['url'],
+                      ).launch(context,
+                          pageRouteAnimation:
+                              PageRouteAnimation.SlideBottomTop);
+                    } else {
+                      Checkscreen(
+                        checktoken: bearToken != null,
+                      ).launch(context,
+                          pageRouteAnimation:
+                              PageRouteAnimation.SlideBottomTop);
+                    }
                   }
                 },
                 height: 50,

@@ -14,6 +14,7 @@ Future<HomePageModel> getHomeData() async {
 
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
+    print(jsonResponse);
     List<BookingHotelModel> hotelmodelList = [];
     List<DestinationModel> distmodelList = [];
     List<CarModel> carmodelList = [];
@@ -58,21 +59,21 @@ Future<HomePageModel> getHomeData() async {
           content: val['content'] ?? '');
       distmodelList.add(distinationModel);
     });
+    // jsonResponse['data'][4]['model']['data'].forEach((dynamic val) {
+    //   // ignore: unnecessary_new
+    //   TourModel tourModel = new TourModel(
+    //       id: val['id'],
+    //       rating: double.parse(val['review_score']['score_total']),
+    //       title: val['title'],
+    //       reviewer: val['review_score']['total_review'],
+    //       image: val['image'],
+    //       location: val['location']['name'],
+    //       price: double.parse(val['price'].toString()),
+    //       saleprice: double.parse(val['sale_price'].toString().toString()),
+    //       content: val['content']);
+    //   tourList.add(tourModel);
+    // });
     jsonResponse['data'][4]['model']['data'].forEach((dynamic val) {
-      // ignore: unnecessary_new
-      TourModel tourModel = new TourModel(
-          id: val['id'],
-          rating: double.parse(val['review_score']['score_total']),
-          title: val['title'],
-          reviewer: val['review_score']['total_review'],
-          image: val['image'],
-          location: val['location']['name'],
-          price: double.parse(val['price']),
-          saleprice: double.parse(val['sale_price']),
-          content: val['content']);
-      tourList.add(tourModel);
-    });
-    jsonResponse['data'][6]['model']['data'].forEach((dynamic val) {
       // ignore: unnecessary_new
       CarModel carModel = new CarModel(
         id: val['id'],
@@ -103,8 +104,8 @@ Future<HomePageModel> getHomeData() async {
     homePageModel.ttitle = jsonResponse['data'][4]['model']['title'];
     homePageModel.tsubtitle = jsonResponse['data'][4]['model']['desc'];
     homePageModel.carlist = carmodelList;
-    homePageModel.ctitle = jsonResponse['data'][6]['model']['title'];
-    homePageModel.csubtitle = jsonResponse['data'][6]['model']['desc'];
+    homePageModel.ctitle = jsonResponse['data'][4]['model']['title'];
+    homePageModel.csubtitle = jsonResponse['data'][4]['model']['desc'];
     return homePageModel;
   } else {
     HomePageModel homePageModel =

@@ -468,8 +468,10 @@ class _BookWidgetState extends State<BookWidget> {
                         ),
                         Padding(
                             padding: const EdgeInsets.all(10),
-                            child: Text(
-                                "Service Fee \$" + widget.booking_fee[0].price))
+                            child: Text("Service Fee \$" +
+                                (widget.booking_fee.isEmpty
+                                    ? "0"
+                                    : widget.booking_fee[0].price)))
                       ],
                     ),
                     const Padding(
