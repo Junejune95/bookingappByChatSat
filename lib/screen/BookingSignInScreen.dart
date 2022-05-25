@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
+import 'package:bookingapp/main.dart';
 import 'package:bookingapp/services/user.service.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -148,7 +149,12 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                       );
                       bool loginSuccess =
                           await userLogin(emailCont.text, passCont.text);
-                      print(loginSuccess);
+                      if (loginSuccess) {
+                        Checkscreen(checktoken: true, localeCheck: localeCheck)
+                            .launch(context,
+                                pageRouteAnimation:
+                                    PageRouteAnimation.SlideBottomTop);
+                      }
                     }
                   } else {
                     isSignUp = !isSignUp;
@@ -164,7 +170,12 @@ class BookingSignInScreenState extends State<BookingSignInScreen> {
                           firstName.text,
                           lastName.text,
                           phoneNumber.text);
-                      print(registerSuccess);
+                      if (registerSuccess) {
+                        Checkscreen(checktoken: true, localeCheck: localeCheck)
+                            .launch(context,
+                                pageRouteAnimation:
+                                    PageRouteAnimation.SlideBottomTop);
+                      }
                     }
                     // setState(() {});
                   }
