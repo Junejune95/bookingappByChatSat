@@ -61,5 +61,5 @@ IconData Booking_ic_zipcode = MdiIcons.pointOfSale;
 
 IconData Booking_ic_note = Icons.note;
 // images
-const BookingLogo = 'images/booking_logo.png';
+const BookingLogo = 'images/icon.png';
 const Booking_ic_walk1 = 'images/booking_walk1.gif';
