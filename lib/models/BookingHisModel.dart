@@ -45,6 +45,7 @@ class BookingHis {
       required this.type,
       required this.buyer_fees});
   factory BookingHis.fromJson(Map<String, dynamic> json) {
+    print(json['is_paid'].toString() + "  json['is_paid'] ");
     return BookingHis(
         serviceTitle: json['service'],
         gateway: json['gateway'],
@@ -53,10 +54,10 @@ class BookingHis {
         total: json['total'],
         email: json['email'],
         id: json['id'],
-        address: json['address'],
+        address: json['address'] ?? "",
         address2: json['address2'] ?? "",
-        city: json['city'],
-        state: json['state'],
+        city: json['city'] ?? "",
+        state: json['state'] ?? "",
         zipcode: json['zip_code'] != null ? json['zip_code'].toString() : "",
         start_date: json['start_date'],
         end_date: json['end_date'],
@@ -65,7 +66,7 @@ class BookingHis {
         phone: json['phone'],
         paid: json['paid'] ?? "0",
         type: json['object_model'],
-        isPaid: json['is_paid'] ?? false,
+        isPaid: json['is_paid'] == 1,
         buyer_fees: json['buyer_fees']);
   }
 }

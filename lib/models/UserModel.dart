@@ -23,13 +23,13 @@ class UserModel {
       last_name: json['last_name'],
       email: json['email'],
       id: json['id'],
-      address: json['address'],
+      address: json['address'] ?? "",
       address2: json['address2'] ?? "",
-      city: json['city'],
-      state: json['state'],
+      city: json['city'] ?? "",
+      state: json['state'] ?? "",
       zipcode: json['zip_code'] != null ? json['zip_code'].toString() : "",
       created_at: json['created_at'],
-      phone: json['phone'],
+      phone: json['phone'] ?? "",
     );
   }
 }

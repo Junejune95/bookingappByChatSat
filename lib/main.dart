@@ -83,7 +83,10 @@ class _CheckscreenState extends State<Checkscreen> {
   }
 
   _onPageChange(index) {
-    _pageController.jumpToPage(index);
+    setState(() {
+      _index = index;
+      _pageController.jumpToPage(index);
+    });
   }
 
   @override

@@ -62,6 +62,9 @@ Future<UserModel> getCurrentUser() async {
     print(response.body);
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
+      jsonResponse['data']['name'] = jsonResponse['data']['first_name'] +
+          " " +
+          jsonResponse['data']['last_name'];
       UserModel userModel = UserModel.fromJson(jsonResponse['data']);
 
       return userModel;
