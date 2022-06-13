@@ -26,6 +26,7 @@ class BookingCheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(choiceRoom);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

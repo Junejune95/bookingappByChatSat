@@ -254,7 +254,7 @@ Future<String> addToCart(
     String serviceType,
     String? startDate,
     String? endDate,
-    List<dynamic>? extra_price,
+    List<BookingFeeModel>? extra_price,
     int? adults,
     int? child,
     int? number,
@@ -269,7 +269,7 @@ Future<String> addToCart(
           "service_type": "hotel",
           "start_date": startDate,
           "end_date": endDate,
-          "extra_price": extra_price,
+          "extra_price": extra_price.toString(),
           "adults": adults,
           "children": child,
           "rooms": rooms
@@ -288,7 +288,7 @@ Future<String> addToCart(
               "service_type": "flight",
               "flight_seat": flight_seat
             });
-  print(body.toString());
+
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);

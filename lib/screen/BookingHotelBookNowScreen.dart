@@ -139,11 +139,15 @@ class _BookWidgetState extends State<BookWidget> {
   bool toBook = false;
   var dpList = <String?>[];
   double totalPrice = 0.0;
-  List<String> choiceRooms = [];
+  List<String?> choiceRooms = [];
   List<dynamic> rooms = [];
+  List<bool> checkExtra = [];
+
+  var total = 0;
   @override
   void initState() {
     hotelRoomModelList = checkHotelAvaliable(widget.id.toString(), "");
+    checkExtra = List.filled(widget.extra_price.length, false, growable: true);
     super.initState();
   }
 
@@ -229,6 +233,7 @@ class _BookWidgetState extends State<BookWidget> {
                           List<HotelRoomModel>? data = snapshot.data;
                           data != null ? dpList.length = data.length : "";
                           data != null ? rooms.length = data.length : "";
+                          data != null ? choiceRooms.length = data.length : "";
                           return data != null
                               ? ListView.builder(
                                   itemCount: data.length,
@@ -330,16 +335,33 @@ class _BookWidgetState extends State<BookWidget> {
                                                     toBook = true;
                                                     totalPrice += data[index]
                                                         .prices![priceIndex];
+                                                    rooms.isNotEmpty
+                                                        ? rooms.removeWhere(
+                                                            (item) =>
+                                                                item?['id'] ==
+                                                                data[index]
+                                                                    .id) //removes the item where the amount is 4
+                                                        : null;
+
                                                     rooms.insert(index, {
                                                       "id": data[index].id,
                                                       "number_selected":
                                                           (priceIndex + 1)
                                                     });
-                                                    choiceRooms.add(
+                                                    choiceRooms.insert(
+                                                        index,
                                                         data[index].title +
                                                             " *" +
                                                             (priceIndex + 1)
                                                                 .toString());
+                                                    for (var room in rooms) {
+                                                      if (room != null) {
+                                                        total += int.parse(room[
+                                                                'number_selected']
+                                                            .toString());
+                                                      }
+                                                    }
+                                                    print(choiceRooms);
                                                   });
                                                 },
                                               ),
@@ -443,9 +465,26 @@ class _BookWidgetState extends State<BookWidget> {
                                   children: [
                                     Checkbox(
                                       checkColor: Colors.white,
-                                      value: false,
+                                      value: checkExtra[i],
                                       onChanged: (bool? value) {
-                                        setState(() {});
+                                        setState(() {
+                                          if (checkExtra[i] == null) {
+                                            widget.extra_price[i].enabled =
+                                                true;
+                                            checkExtra[i] = true;
+                                          } else {
+                                            widget.extra_price[i].enabled =
+                                                !checkExtra[i];
+                                            checkExtra[i] = !checkExtra[i];
+                                          }
+                                          if (checkExtra[i]) {
+                                            totalPrice += double.parse(
+                                                widget.extra_price[i].price);
+                                          } else {
+                                            totalPrice -= double.parse(
+                                                widget.extra_price[i].price);
+                                          }
+                                        });
                                       },
                                     ),
                                     Text(widget.extra_price[i].name +
@@ -462,9 +501,9 @@ class _BookWidgetState extends State<BookWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text("Total rooms 10"),
+                          child: Text("Total rooms $total"),
                         ),
                         Padding(
                             padding: const EdgeInsets.all(10),
@@ -474,37 +513,37 @@ class _BookWidgetState extends State<BookWidget> {
                                     : widget.booking_fee[0].price)))
                       ],
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: Text("Total Price \$1500"),
+                      child: Text("Total Price \$ $totalPrice"),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: defaultButton(
                           text: Booking_lbl_BookNow,
                           tap: () async {
-                            var response = await addToCart(
-                                widget.id,
-                                "hotel",
-                                start_date,
-                                end_date,
-                                [],
-                                1,
-                                0,
-                                null,
-                                rooms,
-                                []);
-                            BookingCheckoutScreen(
-                              startDate: start_date,
-                              endDate: end_date,
-                              totalPrice: totalPrice,
-                              choiceRoom: choiceRooms,
-                              adults: adult,
-                              child: child,
-                              bookingCode: response,
-                            ).launch(context,
-                                pageRouteAnimation:
-                                    PageRouteAnimation.SlideBottomTop);
+                            print(rooms);
+                            // var response = await addToCart(
+                            //     widget.id,
+                            //     "hotel",
+                            //     start_date,
+                            //     end_date,
+                            //     widget.extra_price,
+                            //     1,
+                            //     0,
+                            //     null,
+                            //     rooms, []);
+                            // BookingCheckoutScreen(
+                            //   startDate: start_date,
+                            //   endDate: end_date,
+                            //   totalPrice: totalPrice,
+                            //   choiceRoom: choiceRooms,
+                            //   adults: adult,
+                            //   child: child,
+                            //   bookingCode: response,
+                            // ).launch(context,
+                            //     pageRouteAnimation:
+                            //         PageRouteAnimation.SlideBottomTop);
                           },
                           height: 40,
                           width: 120),

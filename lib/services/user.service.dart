@@ -59,7 +59,6 @@ Future<UserModel> getCurrentUser() async {
       "Content-Type": "application/json",
       "Authorization": bearToken
     });
-    print(response.body);
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
       jsonResponse['data']['name'] = jsonResponse['data']['first_name'] +

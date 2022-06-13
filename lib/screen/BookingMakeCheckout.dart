@@ -138,10 +138,11 @@ class _BookingInfoState extends State<BookingInfo> {
               children: [Text("End Date"), Text(widget.startDate ?? "")],
             ),
             16.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("Adult "), Text(widget.startDate ?? "")],
-            ),
+            if (widget.adults != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("Adult "), Text(widget.adults ?? "")],
+              ),
             16.height,
             SizedBox(
               child: ListView.builder(
