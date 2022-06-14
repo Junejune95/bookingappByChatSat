@@ -523,27 +523,27 @@ class _BookWidgetState extends State<BookWidget> {
                           text: Booking_lbl_BookNow,
                           tap: () async {
                             print(rooms);
-                            // var response = await addToCart(
-                            //     widget.id,
-                            //     "hotel",
-                            //     start_date,
-                            //     end_date,
-                            //     widget.extra_price,
-                            //     1,
-                            //     0,
-                            //     null,
-                            //     rooms, []);
-                            // BookingCheckoutScreen(
-                            //   startDate: start_date,
-                            //   endDate: end_date,
-                            //   totalPrice: totalPrice,
-                            //   choiceRoom: choiceRooms,
-                            //   adults: adult,
-                            //   child: child,
-                            //   bookingCode: response,
-                            // ).launch(context,
-                            //     pageRouteAnimation:
-                            //         PageRouteAnimation.SlideBottomTop);
+                            var response = await addToCart(
+                                widget.id,
+                                "hotel",
+                                start_date,
+                                end_date,
+                                widget.extra_price,
+                                1,
+                                0,
+                                null,
+                                rooms, []);
+                            BookingCheckoutScreen(
+                              startDate: start_date,
+                              endDate: end_date,
+                              totalPrice: totalPrice,
+                              choiceRoom: choiceRooms,
+                              adults: adult,
+                              child: child,
+                              bookingCode: response,
+                            ).launch(context,
+                                pageRouteAnimation:
+                                    PageRouteAnimation.SlideBottomTop);
                           },
                           height: 40,
                           width: 120),

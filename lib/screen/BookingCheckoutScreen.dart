@@ -11,7 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 class BookingCheckoutScreen extends StatelessWidget {
   String? startDate, endDate, adults, child;
   double? totalPrice;
-  List<String>? choiceRoom;
+  List<String?>? choiceRoom;
   String? bookingCode;
   BookingCheckoutScreen(
       {Key? key,
@@ -50,7 +50,7 @@ class BookingCheckoutScreen extends StatelessWidget {
 class BookingUserDataInfo extends StatefulWidget {
   String? startDate, endDate, adults, child;
   double? totalPrice;
-  List<String>? choiceRoom;
+  List<String?>? choiceRoom;
   String? bookingCode;
   BookingUserDataInfo(
       {Key? key,

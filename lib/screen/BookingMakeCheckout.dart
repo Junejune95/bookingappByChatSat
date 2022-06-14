@@ -21,7 +21,7 @@ class BookingMakeCheckout extends StatelessWidget {
       country,
       note;
   double? totalPrice;
-  List<String>? choiceRoom;
+  List<String?>? choiceRoom;
   String? bookingCode;
   BookingMakeCheckout(
       {Key? key,
@@ -79,7 +79,7 @@ class BookingMakeCheckout extends StatelessWidget {
 class BookingInfo extends StatefulWidget {
   String? startDate, endDate, adults, child;
   double? totalPrice;
-  List<String>? choiceRoom;
+  List<String?>? choiceRoom;
   String? bookingCode;
   String firstName,
       lastName,
@@ -151,8 +151,9 @@ class _BookingInfoState extends State<BookingInfo> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.choiceRoom?[index] ?? ""),
-                      Text("\$500")
+                      if (widget.choiceRoom?[index] != null)
+                        Text(widget.choiceRoom?[index] ?? ""),
+                      if (widget.choiceRoom?[index] != null) Text("\$500")
                     ],
                   );
                 },
