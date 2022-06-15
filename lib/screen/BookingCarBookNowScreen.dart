@@ -299,6 +299,7 @@ class _BookWidgetState extends State<BookWidget> {
               child: defaultButton(
                 text: Booking_lbl_BookNow,
                 tap: () async {
+                  print("on click");
                   var response = await addToCart(widget.id, "car", startDate,
                       endDate, [], null, null, number, [], []);
                   var difference = DateTime.parse(endDate)

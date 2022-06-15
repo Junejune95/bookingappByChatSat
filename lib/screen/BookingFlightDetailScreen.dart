@@ -30,6 +30,8 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
   int _itemCount = 0;
   List<FlighSeattModel?> seats = [];
   late FlightModel flightModelData;
+  List<double?> prices = [];
+  var totalPrice = 0.0;
   @override
   void initState() {
     // TODO: implement initState
@@ -54,20 +56,20 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 titleText(title: 'Pay Amount'),
-                titleText(title: '99'),
+                titleText(title: '\$' + totalPrice.toString()),
               ],
             ),
             12.height,
             defaultButton(
                 text: Booking_lbl_BookNow,
                 tap: () async {
-                  print(seats);
                   var response = await addToCart(widget.id, "flight", "",
                       "endDate", [], null, null, 1, [], seats);
+
                   BookingCheckoutScreen(
                           startDate: "",
                           endDate: "",
-                          totalPrice: 100.0,
+                          totalPrice: totalPrice,
                           choiceRoom: [],
                           adults: "0",
                           child: "0",
@@ -98,6 +100,10 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                     else {
                       FlightModel? data = snapshot.data;
                       data != null ? flightModelData = data : '';
+                      data != null && prices.length == 0
+                          ? prices =
+                              List<double>.filled(data.seats!.length, 0.0)
+                          : "";
                       return data != null
                           ? Column(
                               children: [
@@ -195,6 +201,21 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                       seats = flight_seats;
 
                       seats[seatIndex]!.number = int.parse(val);
+                      seats[seatIndex]!.calprice =
+                          int.parse(val) * seats[seatIndex]!.price;
+                      prices[seatIndex] =
+                          seats[seatIndex]!.price * int.parse(val);
+                      var total = 0.0;
+                      print(seatIndex);
+                      print(prices);
+                      for (var p in prices) {
+                        setState(() {
+                          total += p ?? 0.0;
+                        });
+                      }
+                      setState(() {
+                        totalPrice = total;
+                      });
                     });
                     // seat!.number = int.parse(val);
                     // seats.insert(seatIndex, seat);

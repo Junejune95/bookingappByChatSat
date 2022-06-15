@@ -34,8 +34,8 @@ class FlightModel {
         image: json['image'],
         price: json['price'] ?? 0.0,
         saleprice: json['sale_price'] ?? "",
-        arrivaltime: json['arrivaltime'] ?? "2022-03-11T08:58:50.000000Z",
-        departuretime: json['departuretime'] ?? "2022-03-11T08:58:50.000000Z",
+        arrivaltime: json['arrival_time'] ?? "2022-03-11T08:58:50.000000Z",
+        departuretime: json['departure_time'] ?? "2022-03-11T08:58:50.000000Z",
         duration: json['duration'] ?? "3",
         location_from: json['location_from'] ?? "",
         location_to: json['location_to'] ?? "",
@@ -51,6 +51,7 @@ class FlighSeattModel {
   String max_passenger, seat_type, person, baggage_check_in, baggage_cabin;
   int? number;
   dynamic? seattypes;
+  double? calprice;
 
   FlighSeattModel(
       {required this.id,
@@ -61,7 +62,8 @@ class FlighSeattModel {
       required this.baggage_check_in,
       required this.baggage_cabin,
       this.number,
-      this.seattypes});
+      this.seattypes,
+      this.calprice});
   factory FlighSeattModel.fromJson(Map<String, dynamic> json) {
     return FlighSeattModel(
         id: json['id'],

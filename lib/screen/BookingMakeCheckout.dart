@@ -181,7 +181,7 @@ class _BookingInfoState extends State<BookingInfo> {
                       14.height,
                       Text(
                         widget.flight!.departuretime.isNotEmpty
-                            ? DateFormat('EEE, MMM d yy').format(
+                            ? DateFormat('EEE, MMM d yyyy').format(
                                 DateTime.parse(widget.flight!.departuretime))
                             : "",
                         style: TextStyle(
@@ -230,7 +230,7 @@ class _BookingInfoState extends State<BookingInfo> {
                       14.height,
                       Text(
                         widget.flight!.arrivaltime.isNotEmpty
-                            ? DateFormat('EEE, MMM d yy').format(
+                            ? DateFormat('EEE, MMM d yyyy').format(
                                 DateTime.parse(widget.flight!.arrivaltime))
                             : "",
                         style: TextStyle(
@@ -277,6 +277,30 @@ class _BookingInfoState extends State<BookingInfo> {
                       if (widget.choiceRoom?[index] != null)
                         Text(widget.choiceRoom?[index] ?? ""),
                       if (widget.choiceRoom?[index] != null) Text("\$500")
+                    ],
+                  );
+                },
+              ),
+              height: 70,
+            ),
+            SizedBox(
+              child: ListView.builder(
+                itemCount: widget.seats?.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (widget.seats?[index] != null &&
+                          widget.seats?[index]!.number != 0)
+                        Text((widget.seats?[index]!.seat_type ?? "") +
+                            (": ") +
+                            (widget.seats?[index]!.number.toString() ?? "") +
+                            " * \$" +
+                            (widget.seats?[index]!.price.toString() ?? "")),
+                      if (widget.seats?[index] != null &&
+                          widget.seats?[index]!.number != 0)
+                        Text("\$" +
+                            (widget.seats?[index]!.calprice.toString() ?? ""))
                     ],
                   );
                 },

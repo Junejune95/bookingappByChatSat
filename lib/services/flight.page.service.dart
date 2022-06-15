@@ -79,7 +79,7 @@ Future<FlightModel?> getFlightDetail(String id) async {
   var url = Uri.parse(baseUrl + '/flight/getData/' + id);
   var response =
       await http.get(url, headers: {"Content-Type": "application/json"});
-  print(response.statusCode);
+  print(response.body);
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     // ignore: unnecessary_new

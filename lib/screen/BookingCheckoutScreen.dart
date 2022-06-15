@@ -360,9 +360,6 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
         suffixIcon: Icon(Booking_ic_note),
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return Booking_err_txt_email;
-        }
         return null;
       },
     );
