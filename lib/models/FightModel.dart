@@ -49,6 +49,8 @@ class FlighSeattModel {
   int id;
   double price;
   String max_passenger, seat_type, person, baggage_check_in, baggage_cabin;
+  int? number;
+  dynamic? seattypes;
 
   FlighSeattModel(
       {required this.id,
@@ -57,7 +59,9 @@ class FlighSeattModel {
       required this.price,
       required this.person,
       required this.baggage_check_in,
-      required this.baggage_cabin});
+      required this.baggage_cabin,
+      this.number,
+      this.seattypes});
   factory FlighSeattModel.fromJson(Map<String, dynamic> json) {
     return FlighSeattModel(
         id: json['id'],
@@ -66,6 +70,18 @@ class FlighSeattModel {
         price: json['price'],
         person: json['person'],
         baggage_check_in: json['baggage_check_in'],
-        baggage_cabin: json['baggage_cabin']);
+        baggage_cabin: json['baggage_cabin'],
+        number: json['number'] ?? 0,
+        seattypes: json['seattypes']);
   }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'max_passenger': max_passenger,
+        'seat_type': seattypes,
+        'price': price,
+        'person': person,
+        'baggage_check_in': baggage_check_in,
+        'baggage_cabin': baggage_cabin,
+        'number': number ?? 0
+      };
 }

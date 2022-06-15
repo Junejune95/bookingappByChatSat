@@ -89,6 +89,7 @@ Future<FlightModel?> getFlightDetail(String id) async {
       val['baggage_check_in'] = val['baggage_check_in'].toString();
       val['baggage_cabin'] = val['baggage_cabin'].toString();
       val['price'] = double.parse(val['price']);
+      val['seattypes'] = val['seat_type'];
       seats.add(FlighSeattModel.fromJson(val));
     });
     jsonResponse['data']['seats'] = seats;

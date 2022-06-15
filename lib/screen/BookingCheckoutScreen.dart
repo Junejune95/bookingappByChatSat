@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:bookingapp/models/FightModel.dart';
 import 'package:bookingapp/screen/BookingMakeCheckout.dart';
 import 'package:bookingapp/utils/BookingColors.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -13,6 +14,10 @@ class BookingCheckoutScreen extends StatelessWidget {
   double? totalPrice;
   List<String?>? choiceRoom;
   String? bookingCode;
+  String? name;
+  int? number;
+  FlightModel? flight;
+  List<FlighSeattModel?>? seats;
   BookingCheckoutScreen(
       {Key? key,
       this.startDate,
@@ -21,7 +26,11 @@ class BookingCheckoutScreen extends StatelessWidget {
       this.child,
       this.totalPrice,
       this.choiceRoom,
-      this.bookingCode})
+      this.bookingCode,
+      this.name,
+      this.number,
+      this.flight,
+      this.seats})
       : super(key: key);
 
   @override
@@ -41,7 +50,11 @@ class BookingCheckoutScreen extends StatelessWidget {
                 choiceRoom: choiceRoom,
                 adults: adults,
                 child: child,
-                bookingCode: bookingCode)),
+                bookingCode: bookingCode,
+                name: name,
+                number: number,
+                seats: seats,
+                flight: flight)),
       ),
     );
   }
@@ -52,6 +65,11 @@ class BookingUserDataInfo extends StatefulWidget {
   double? totalPrice;
   List<String?>? choiceRoom;
   String? bookingCode;
+  String? name;
+  int? number;
+
+  FlightModel? flight;
+  List<FlighSeattModel?>? seats;
   BookingUserDataInfo(
       {Key? key,
       this.startDate,
@@ -60,7 +78,11 @@ class BookingUserDataInfo extends StatefulWidget {
       this.child,
       this.totalPrice,
       this.choiceRoom,
-      this.bookingCode})
+      this.bookingCode,
+      this.name,
+      this.number,
+      this.flight,
+      this.seats})
       : super(key: key);
 
   @override
@@ -143,7 +165,11 @@ class _BookingUserDataInfoState extends State<BookingUserDataInfo> {
                             choiceRoom: widget.choiceRoom,
                             adults: widget.adults,
                             child: widget.child,
-                            bookingCode: widget.bookingCode)
+                            bookingCode: widget.bookingCode,
+                            title: widget.name,
+                            number: widget.number,
+                            seats: widget.seats,
+                            flight: widget.flight)
                         .launch(context,
                             pageRouteAnimation:
                                 PageRouteAnimation.SlideBottomTop);

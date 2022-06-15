@@ -1,11 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bookingapp/main.dart';
+import 'package:bookingapp/models/FightModel.dart';
 import 'package:bookingapp/screen/BookingPaymentWebView.dart';
 import 'package:bookingapp/services/hotel.page.service.dart';
+import 'package:bookingapp/utils/BookingColors.dart';
+import 'package:bookingapp/utils/BookingConstants.dart';
+import 'package:bookingapp/utils/BookingIconsImages.dart';
 import 'package:bookingapp/utils/BookingStrings.dart';
 import 'package:bookingapp/utils/BookingWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingMakeCheckout extends StatelessWidget {
@@ -23,6 +28,10 @@ class BookingMakeCheckout extends StatelessWidget {
   double? totalPrice;
   List<String?>? choiceRoom;
   String? bookingCode;
+  String? title;
+  int? number;
+  FlightModel? flight;
+  List<FlighSeattModel?>? seats;
   BookingMakeCheckout(
       {Key? key,
       required this.firstName,
@@ -41,7 +50,11 @@ class BookingMakeCheckout extends StatelessWidget {
       this.child,
       this.totalPrice,
       this.choiceRoom,
-      this.bookingCode})
+      this.bookingCode,
+      this.title,
+      this.number,
+      this.flight,
+      this.seats})
       : super(key: key);
 
   @override
@@ -54,23 +67,28 @@ class BookingMakeCheckout extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
             child: BookingInfo(
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                city: city,
-                state: state,
-                country: country,
-                address1: address1,
-                address2: address2,
-                note: note,
-                phone: phone,
-                startDate: startDate,
-                endDate: endDate,
-                totalPrice: totalPrice,
-                choiceRoom: choiceRoom,
-                adults: adults,
-                child: child,
-                bookingCode: bookingCode)),
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          city: city,
+          state: state,
+          country: country,
+          address1: address1,
+          address2: address2,
+          note: note,
+          phone: phone,
+          startDate: startDate,
+          endDate: endDate,
+          totalPrice: totalPrice,
+          choiceRoom: choiceRoom,
+          adults: adults,
+          child: child,
+          bookingCode: bookingCode,
+          title: title,
+          number: number,
+          flight: flight,
+          seats: seats,
+        )),
       ),
     );
   }
@@ -81,6 +99,10 @@ class BookingInfo extends StatefulWidget {
   double? totalPrice;
   List<String?>? choiceRoom;
   String? bookingCode;
+  String? title;
+  int? number;
+  FlightModel? flight;
+  List<FlighSeattModel?>? seats;
   String firstName,
       lastName,
       email,
@@ -109,7 +131,11 @@ class BookingInfo extends StatefulWidget {
       this.child,
       this.totalPrice,
       this.choiceRoom,
-      this.bookingCode})
+      this.bookingCode,
+      this.title,
+      this.number,
+      this.flight,
+      this.seats})
       : super(key: key);
 
   @override
@@ -130,18 +156,115 @@ class _BookingInfoState extends State<BookingInfo> {
           child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("Start Date"), Text(widget.startDate ?? "")],
+              children: [Text(""), Text(widget.title ?? ''), Text("")],
             ),
+            if (widget.flight != null)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Booking_ic_takeof,
+                    size: 30,
+                    color: Booking_Secondary,
+                  ),
+                  20.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      titleText(
+                          title: widget.flight!.departuretime.isNotEmpty
+                              ? DateFormat("hh:mm").format(
+                                  DateTime.parse(widget.flight!.departuretime))
+                              : "",
+                          size: textSizeLargeMedium.toInt()),
+                      14.height,
+                      Text(
+                        widget.flight!.departuretime.isNotEmpty
+                            ? DateFormat('EEE, MMM d yy').format(
+                                DateTime.parse(widget.flight!.departuretime))
+                            : "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Booking_TextColorSecondary,
+                            fontSize: textSizeMedium),
+                      ),
+                      14.height,
+                      Text(
+                        widget.flight!.location_from,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Booking_TextColorSecondary,
+                            fontSize: textSizeMedium),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            if (widget.startDate != null && widget.startDate != "")
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("Start Date"), Text(widget.startDate ?? "")],
+              ),
             16.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("End Date"), Text(widget.startDate ?? "")],
-            ),
+            if (widget.flight != null)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Booking_ic_landing,
+                    size: 30,
+                    color: Booking_Secondary,
+                  ),
+                  20.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      titleText(
+                          title: widget.flight!.arrivaltime.isNotEmpty
+                              ? DateFormat("hh:mm").format(
+                                  DateTime.parse(widget.flight!.arrivaltime))
+                              : "",
+                          size: textSizeLargeMedium.toInt()),
+                      14.height,
+                      Text(
+                        widget.flight!.arrivaltime.isNotEmpty
+                            ? DateFormat('EEE, MMM d yy').format(
+                                DateTime.parse(widget.flight!.arrivaltime))
+                            : "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Booking_TextColorSecondary,
+                            fontSize: textSizeMedium),
+                      ),
+                      14.height,
+                      Text(
+                        widget.flight!.location_to,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Booking_TextColorSecondary,
+                            fontSize: textSizeMedium),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            if (widget.endDate != null && widget.endDate != "")
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("End Date"), Text(widget.endDate ?? "")],
+              ),
             16.height,
-            if (widget.adults != null)
+            if (widget.adults != null && widget.adults != '0')
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [Text("Adult "), Text(widget.adults ?? "")],
+              ),
+            if (widget.number != null && widget.number != '0')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("Number "), Text(widget.number!.toString())],
               ),
             16.height,
             SizedBox(
@@ -165,7 +288,7 @@ class _BookingInfoState extends State<BookingInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Total Price"),
-                Text(widget.totalPrice?.toString() ?? "")
+                Text("\$" + (widget.totalPrice?.toString() ?? ""))
               ],
             ),
             Column(

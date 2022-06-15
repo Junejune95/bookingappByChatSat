@@ -2,6 +2,7 @@ import 'package:bookingapp/constants.dart';
 import 'package:bookingapp/models/BookingCommonModel.dart';
 import 'package:bookingapp/models/BookingFeeModel.dart';
 import 'package:bookingapp/models/CommonModel.dart';
+import 'package:bookingapp/models/FightModel.dart';
 import 'package:bookingapp/models/HotelFilterModel.dart';
 import 'package:bookingapp/models/HotelRoomModel.dart';
 import 'package:bookingapp/utils/BookingIconsImages.dart';
@@ -259,10 +260,16 @@ Future<String> addToCart(
     int? child,
     int? number,
     List<dynamic>? rooms,
-    List<dynamic>? flight_seat) async {
+    List<FlighSeattModel?>? flight_seat) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var bearToken = 'Bearer ' + (prefs.getString('access_token') ?? "");
   var url = Uri.parse(baseUrl + '/booking/addToCart');
+  List<dynamic> seats = [];
+  if (flight_seat!.isNotEmpty) {
+    for (var flight in flight_seat) {
+      seats.add(flight!.toJson());
+    }
+  }
   var body = serviceType == "hotel"
       ? convert.jsonEncode({
           "service_id": serviceid,
@@ -286,13 +293,13 @@ Future<String> addToCart(
           : convert.jsonEncode({
               "service_id": serviceid,
               "service_type": "flight",
-              "flight_seat": flight_seat
+              "flight_seat": seats
             });
-
+  print(body);
   var response = await http.post(url,
       headers: {"Content-Type": "application/json", "Authorization": bearToken},
       body: body);
-  print(bearToken);
+  print(response.statusCode);
   if (response.statusCode == 200) {
     var jsonResponse = convert.jsonDecode(response.body);
     print(jsonResponse.toString() + " gg add to cart ");

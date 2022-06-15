@@ -28,6 +28,8 @@ class BookingFlightDetailScreen extends StatefulWidget {
 
 class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
   int _itemCount = 0;
+  List<FlighSeattModel?> seats = [];
+  late FlightModel flightModelData;
   @override
   void initState() {
     // TODO: implement initState
@@ -59,32 +61,19 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
             defaultButton(
                 text: Booking_lbl_BookNow,
                 tap: () async {
-                  var response = await addToCart(
-                      widget.id,
-                      "flight",
-                      "",
-                      "endDate",
-                      [],
-                      null,
-                      null,
-                      1,
-                      [],
-                      [
-                        {
-                          "max_passenger": 17,
-                          "person": "adult",
-                          "number": 1,
-                          "price": 30
-                        }
-                      ]);
+                  print(seats);
+                  var response = await addToCart(widget.id, "flight", "",
+                      "endDate", [], null, null, 1, [], seats);
                   BookingCheckoutScreen(
-                          startDate: "2022-03-11T05:58:50.000000Z",
-                          endDate: "2022-03-11T05:58:50.000000Z",
+                          startDate: "",
+                          endDate: "",
                           totalPrice: 100.0,
                           choiceRoom: [],
-                          adults: "1",
+                          adults: "0",
                           child: "0",
-                          bookingCode: response)
+                          bookingCode: response,
+                          seats: seats,
+                          flight: flightModelData)
                       .launch(context,
                           pageRouteAnimation:
                               PageRouteAnimation.SlideBottomTop);
@@ -108,6 +97,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                       return Text('Error: ${snapshot.error}');
                     else {
                       FlightModel? data = snapshot.data;
+                      data != null ? flightModelData = data : '';
                       return data != null
                           ? Column(
                               children: [
@@ -120,10 +110,14 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return cardWidget(
+                                          index,
+                                          data.seats![index].id,
                                           data.seats![index].seat_type,
                                           data.seats![index].person,
                                           data.seats![index].baggage_check_in,
-                                          data.seats![index].price);
+                                          data.seats![index].price,
+                                          data.seats![index],
+                                          data.seats!);
                                     }),
                               ],
                             )
@@ -139,7 +133,14 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
   }
 
   Container cardWidget(
-      String seatType, String person, String check_in, double price) {
+      int seatIndex,
+      int id,
+      String seatType,
+      String person,
+      String check_in,
+      double price,
+      FlighSeattModel? seat,
+      List<FlighSeattModel?> flight_seats) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 16,
@@ -189,7 +190,15 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
                   color: Booking_Primary,
                 ),
                 CounterComponent(
-                  callBack: (val) {},
+                  callBack: (val) {
+                    setState(() {
+                      seats = flight_seats;
+
+                      seats[seatIndex]!.number = int.parse(val);
+                    });
+                    // seat!.number = int.parse(val);
+                    // seats.insert(seatIndex, seat);
+                  },
                 ),
               ],
             ),
@@ -330,7 +339,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
             titleText(title: time, size: textSizeLargeMedium.toInt()),
             14.height,
             Text(
-              'Wed, 09 Mar 22',
+              date,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Booking_TextColorSecondary,
@@ -338,7 +347,7 @@ class _BookingFlightDetailScreenState extends State<BookingFlightDetailScreen> {
             ),
             14.height,
             Text(
-              'North Bethanymouth',
+              location,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Booking_TextColorSecondary,

@@ -44,12 +44,14 @@ class BookingCarDetailScreen extends StatelessWidget {
                   return data != null
                       ? bottomBookNowWidget(context, () {
                           BookingCarBookNowScreen(
-                            id: data.id,
-                            bookingfee: data.bookingfee ?? [],
-                            extrafee: data.extrafee ?? [],
-                          ).launch(context,
-                              pageRouteAnimation:
-                                  PageRouteAnimation.SlideBottomTop);
+                                  id: data.id,
+                                  bookingfee: data.bookingfee ?? [],
+                                  extrafee: data.extrafee ?? [],
+                                  name: data.title,
+                                  price: data.price)
+                              .launch(context,
+                                  pageRouteAnimation:
+                                      PageRouteAnimation.SlideBottomTop);
                         }, data.price, '/ day')
                       : Container(
                           child: const Text(" No Data Exist "),

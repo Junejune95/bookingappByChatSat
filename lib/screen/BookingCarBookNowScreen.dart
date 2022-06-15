@@ -17,11 +17,15 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class BookingCarBookNowScreen extends StatefulWidget {
   final int id;
   final List<BookingFeeModel> bookingfee, extrafee;
+  final String name;
+  final double price;
   const BookingCarBookNowScreen(
       {Key? key,
       required this.id,
       required this.extrafee,
-      required this.bookingfee})
+      required this.bookingfee,
+      required this.name,
+      required this.price})
       : super(key: key);
 
   @override
@@ -50,7 +54,9 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
         child: BookWidget(
             bookingfee: widget.bookingfee,
             extrafee: widget.extrafee,
-            id: widget.id),
+            id: widget.id,
+            name: widget.name,
+            price: widget.price),
       ),
       BookingHistoryTab(
         title: Booking_lbl_Booking_enquiry,
@@ -102,11 +108,15 @@ class _BookingCarBookNowScreenState extends State<BookingCarBookNowScreen>
 class BookWidget extends StatefulWidget {
   final List<BookingFeeModel> bookingfee, extrafee;
   final int id;
+  final String name;
+  final double price;
   const BookWidget(
       {Key? key,
       required this.bookingfee,
       required this.extrafee,
-      required this.id})
+      required this.id,
+      required this.name,
+      required this.price})
       : super(key: key);
 
   @override
@@ -132,6 +142,7 @@ class _BookWidgetState extends State<BookWidget> {
   String _rangeCount = '';
 
   bool isCheckInCalendar = false;
+  int number = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -209,7 +220,11 @@ class _BookWidgetState extends State<BookWidget> {
                     color: Booking_Primary,
                   ),
                   CounterComponent(
-                    callBack: (val) {},
+                    callBack: (val) {
+                      setState(() {
+                        number = int.parse(val);
+                      });
+                    },
                   ),
                 ],
               ),
@@ -285,15 +300,21 @@ class _BookWidgetState extends State<BookWidget> {
                 text: Booking_lbl_BookNow,
                 tap: () async {
                   var response = await addToCart(widget.id, "car", startDate,
-                      endDate, [], null, null, 1, [], []);
+                      endDate, [], null, null, number, [], []);
+                  var difference = DateTime.parse(endDate)
+                      .difference(DateTime.parse(startDate))
+                      .inDays;
+                  print(difference * widget.price * number);
                   BookingCheckoutScreen(
                           startDate: startDate,
                           endDate: endDate,
-                          totalPrice: 100.0,
+                          totalPrice: difference * widget.price * number,
                           choiceRoom: [],
-                          adults: "1",
+                          adults: "0",
                           child: "0",
-                          bookingCode: response)
+                          bookingCode: response,
+                          name: widget.name,
+                          number: number)
                       .launch(context,
                           pageRouteAnimation:
                               PageRouteAnimation.SlideBottomTop);
