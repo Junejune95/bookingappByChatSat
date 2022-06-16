@@ -534,16 +534,20 @@ class _BookWidgetState extends State<BookWidget> {
                                 null,
                                 rooms, []);
                             BookingCheckoutScreen(
-                              startDate: start_date,
-                              endDate: end_date,
-                              totalPrice: totalPrice,
-                              choiceRoom: choiceRooms,
-                              adults: adult,
-                              child: child,
-                              bookingCode: response,
-                            ).launch(context,
-                                pageRouteAnimation:
-                                    PageRouteAnimation.SlideBottomTop);
+                                    startDate: start_date,
+                                    endDate: end_date,
+                                    totalPrice: totalPrice,
+                                    choiceRoom: choiceRooms,
+                                    adults: adult,
+                                    child: child,
+                                    bookingCode: response,
+                                    name: "",
+                                    number: 0,
+                                    seats: [],
+                                    flight: null)
+                                .launch(context,
+                                    pageRouteAnimation:
+                                        PageRouteAnimation.SlideBottomTop);
                           },
                           height: 40,
                           width: 120),

@@ -315,7 +315,9 @@ class _BookWidgetState extends State<BookWidget> {
                           child: "0",
                           bookingCode: response,
                           name: widget.name,
-                          number: number)
+                          number: number,
+                          seats: [],
+                          flight: null)
                       .launch(context,
                           pageRouteAnimation:
                               PageRouteAnimation.SlideBottomTop);
