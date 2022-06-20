@@ -305,7 +305,6 @@ class _BookWidgetState extends State<BookWidget> {
                   var difference = DateTime.parse(endDate)
                       .difference(DateTime.parse(startDate))
                       .inDays;
-                  print(difference * widget.price * number);
                   BookingCheckoutScreen(
                           startDate: startDate,
                           endDate: endDate,

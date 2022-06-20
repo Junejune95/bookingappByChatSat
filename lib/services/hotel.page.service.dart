@@ -157,6 +157,7 @@ Future<BookingHotelModel> getHotelDetail(String id) async {
       extra_price.add(bookingFeeModel);
     });
     hoteldata['booking_fee']?.forEach((dynamic val) {
+      val['desc'] = "";
       BookingFeeModel bookingFeeModel = BookingFeeModel.fromJson(val);
       booking_fee.add(bookingFeeModel);
     });

@@ -145,6 +145,7 @@ Future<List<BookingHis>> userBookingHis(String status) async {
         val['service'] = val['service']['title'];
         List<BookingFeeModel> fee = [];
         val['buyer_fees'].forEach((buyer) {
+          buyer['desc'] = "";
           fee.add(BookingFeeModel.fromJson(buyer));
         });
         val['buyer_fees'] = fee;
